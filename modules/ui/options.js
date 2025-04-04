@@ -73,6 +73,8 @@ document
       selectStyleElement();
     } else if (id === "optionsTab") {
       optionsContent.style.display = "block";
+    } else if (id === "regenTab") {
+      customization === 1 ? (customizationMenu.style.display = "block") : (regenContent.style.display = "block");
     } else if (id === "toolsTab") {
       customization === 1 ? (customizationMenu.style.display = "block") : (toolsContent.style.display = "block");
     } else if (id === "aboutTab") {
