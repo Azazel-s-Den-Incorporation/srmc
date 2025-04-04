@@ -42,11 +42,11 @@ function toggleOptions(event) {
 // Toggle "New Map!" pane on hover
 optionsTrigger.addEventListener("mouseenter", function () {
   if (optionsTrigger.classList.contains("glow")) return;
-  if (byId("options").style.display === "none") regenerate.style.display = "block";
+  if (byId("options").style.display === "none") azazelsden.style.display = "block";
 });
 
 collapsible.addEventListener("mouseleave", function () {
-  regenerate.style.display = "none";
+  azazelsden.style.display = "none";
 });
 
 // Activate options tab on click
