@@ -19,7 +19,7 @@ function showOptions(event) {
     optionsTrigger.classList.remove("glow");
   }
 
-  azazelsden.style.display = "none";
+  // azazelsden.style.display = "none";
   byId("options").style.display = "block";
   optionsTrigger.style.display = "none";
 
@@ -39,7 +39,7 @@ function toggleOptions(event) {
   else hideOptions(event);
 }
 
-// // Toggle "New Map!" pane on hover
+// Toggle "New Map!" pane on hover
 // optionsTrigger.addEventListener("mouseenter", function () {
 //   if (optionsTrigger.classList.contains("glow")) return;
 //   if (byId("options").style.display === "none") azazelsden.style.display = "block";
