@@ -284,10 +284,17 @@ async function checkLoadParameters() {
     } else showUploadErrorMessage("Map link is not a valid URL", maplink);
   }
 
+  // loading from the server
+  if (byId("onloadBehavior").value === "server") {
+    WARN && console.warn("Load map from Server");
+    loadMapFromServer();
+    return;
+    } else showUploadErrorMessage("Map file is not a valid.");
+
   // if there is a seed (user of MFCG provided), generate map for it
   if (params.get("seed")) {
     WARN && console.warn("Generate map for seed");
-    await generateMapOnLoad();
+    generateMapOnLoad();
     return;
   }
 

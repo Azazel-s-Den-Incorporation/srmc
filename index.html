@@ -1829,11 +1829,11 @@
               <td>Onload behavior</td>
               <td>
                 <select id="onloadBehavior" data-stored="onloadBehavior">
-                  <option value="random" selected>Generate random map</option>
-                  <option value="lastSaved">Open last saved map</option>
+                  <option value="lastSaved" >Open last saved map</option>
+                  <option value="server" selected>Open from server</option>
                 </select>
               </td>
-              <td></td>
+              <td></td>FD
             </tr>
 
             <tr data-tip="Toggle Azgaar Assistant (help bubble on the bottom right corner)">
@@ -2276,6 +2276,10 @@
         </div>
 
         <div id="aboutContent" class="tabcontent">
+          <p>
+            Spinoff map by Azazel and Ztereo!
+            <a href="https://azazelsden.xyz">Back to Azazel's Den</a>
+          </p>
           <p>
             <a href="https://github.com/Azgaar/Fantasy-Map-Generator" target="_blank">Fantasy Map Generator</a> is an
             <a href="https://github.com/Azgaar/Fantasy-Map-Generator/blob/master/LICENSE" target="_blank"
@@ -6100,6 +6104,7 @@
           >
             URL
           </button>
+          <button onclick="loadMapFromServer()" data-tip="Load map from browser storage (if saved before)">server</button>
           <button onclick="quickLoad()" data-tip="Load map from browser storage (if saved before)">storage</button>
         </div>
 
@@ -8159,7 +8164,7 @@
     <script defer src="libs/rgbquant.min.js"></script>
     <script defer src="libs/jquery.ui.touch-punch.min.js"></script>
     <script defer src="modules/io/save.js?v=1.107.4"></script>
-    <script defer src="modules/io/load.js?v=1.108.0"></script>
+    <script defer src="modules/io/load.js?v=1.108.6"></script>
     <script defer src="modules/io/cloud.js?v=1.106.0"></script>
     <script defer src="modules/io/export.js?v=1.100.00"></script>
 

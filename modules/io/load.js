@@ -59,15 +59,30 @@ function loadMapPrompt(blob) {
       }
     }
   });
+}
 
-  function loadLastSavedMap() {
-    WARN && console.warn("Load last saved map");
-    try {
-      uploadMap(blob);
-    } catch (error) {
-      ERROR && console.error(error);
-      tip("Cannot load last saved map", true, "error", 2000);
-    }
+function loadLastSavedMap() {
+  WARN && console.warn("Load last saved map");
+  try {
+    uploadMap(blob);
+  } catch (error) {
+    ERROR && console.error(error);
+    tip("Cannot load last saved map", true, "error", 2000);
+  }
+}
+
+function loadMapFromServer() {
+  const mapserverfile = "https://map.azazelsden.xyz/saves/loaded.map";
+  try {
+  fetch(mapserverfile, {method: "GET", mode: "cors"})
+  .then(response => {
+    if (response.ok) return response.blob();
+    throw new Error("Cannot load map from URL");
+  })
+  .then(blob => uploadMap(blob))
+  } catch (error) {
+    ERROR && console.error(error);
+    tip("Cannot load server saved map", true, "error", 2000);
   }
 }
 
@@ -472,7 +487,7 @@ async function parseLoadedData(data, mapVersion) {
 
     {
       // dynamically import and run auto-update script
-      const {resolveVersionConflicts} = await import("../dynamic/auto-update.js?v=1.108.0");
+      const {resolveVersionConflicts} = await import("../dynamic/auto-update.js?v=1.108.6");
       resolveVersionConflicts(mapVersion);
     }
 
