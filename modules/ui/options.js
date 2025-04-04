@@ -39,15 +39,15 @@ function toggleOptions(event) {
   else hideOptions(event);
 }
 
-// Toggle "New Map!" pane on hover
-optionsTrigger.addEventListener("mouseenter", function () {
-  if (optionsTrigger.classList.contains("glow")) return;
-  if (byId("options").style.display === "none") azazelsden.style.display = "block";
-});
+// // Toggle "New Map!" pane on hover
+// optionsTrigger.addEventListener("mouseenter", function () {
+//   if (optionsTrigger.classList.contains("glow")) return;
+//   if (byId("options").style.display === "none") azazelsden.style.display = "block";
+// });
 
-collapsible.addEventListener("mouseleave", function () {
-  azazelsden.style.display = "none";
-});
+// collapsible.addEventListener("mouseleave", function () {
+//   azazelsden.style.display = "none";
+// });
 
 // Activate options tab on click
 document
