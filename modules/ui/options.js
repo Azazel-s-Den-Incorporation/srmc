@@ -19,7 +19,7 @@ function showOptions(event) {
     optionsTrigger.classList.remove("glow");
   }
 
-  regenerate.style.display = "none";
+  azazelsden.style.display = "none";
   byId("options").style.display = "block";
   optionsTrigger.style.display = "none";
 
