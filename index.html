@@ -2049,6 +2049,9 @@
             <button id="regeneratePopulation" data-tip="Click to recalculate rural and urban population">
               Population
             </button>
+            <button id="regenerateWealth" data-tip="Click to recalculate Wealth">
+              Wealth
+            </button>
             <button
               id="regenerateProvinces"
               data-tip="Click to regenerate non-locked provinces. States will remain as they are"
@@ -3275,6 +3278,11 @@
               <div data-tip="Set burg population">
                 <div class="label">Population:</div>
                 <input id="burgPopulation" type="number" min="0" step="1" style="width: 9em" />
+              </div>
+
+              <div data-tip="Set burg wealth">
+                <div class="label">Wealth:</div>
+                <input id="burgWealth" type="number" min="0" step="1" style="width: 9em" />
               </div>
 
               <div data-tip="Burg average yearly temperature" style="display: flex; justify-content: space-between">
@@ -5180,7 +5188,7 @@
       </div>
 
       <div id="burgsOverview" class="dialog stable" style="display: none">
-        <div id="burgsHeader" class="header" style="grid-template-columns: 8em 6em 6em 6em 8em 6em">
+        <div id="burgsHeader" class="header" style="grid-template-columns: 8em 6em 6em 6em 8em 6em 6em">
           <div data-tip="Click to sort by burg name" class="sortable alphabetically" data-sortby="name">Burg</div>
           <div data-tip="Click to sort by province name" class="sortable alphabetically" data-sortby="province">
             Province
@@ -5195,6 +5203,13 @@
             data-sortby="population"
           >
             Population
+          </div>
+          <div
+            data-tip="Click to sort by burg wealth"
+            class="sortable icon-sort-number-down"
+            data-sortby="wealth"
+          >
+            Wealth
           </div>
           <div data-tip="Click to sort by burg features" class="sortable alphabetically" data-sortby="features">
             Features&nbsp;
@@ -5632,6 +5647,7 @@
         <p><b>Precipitation:</b> <span id="infoPrec">0</span></p>
         <p><b>River:</b> <span id="infoRiver">no</span></p>
         <p><b>Population:</b> <span id="infoPopulation">0</span></p>
+        <p><b>Wealth:</b> <span id="infoWealth">0</span></p>
         <p><b>Elevation:</b> <span id="infoElevation">0</span></p>
         <p><b>Depth:</b> <span id="infoDepth">0</span></p>
         <p><b>Temperature:</b> <span id="infoTemp">0</span></p>

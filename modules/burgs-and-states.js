@@ -84,6 +84,7 @@ window.BurgsAndStates = (() => {
         b.name = Names.getCultureShort(b.culture);
         b.feature = cells.f[b.cell];
         b.capital = 1;
+        b.wealth = b.population * 12;
 
         // states data
         const expansionism = rn(Math.random() * byId("sizeVariety").value + 1, 1);

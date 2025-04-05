@@ -75,6 +75,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     for (const b of filtered) {
       const population = b.population * populationRate * urbanization;
       totalPopulation += population;
+      const wealth = b.population * populationRate * urbanization * 12;
       const features = b.capital && b.port ? "a-capital-port" : b.capital ? "c-capital" : b.port ? "p-port" : "z-burg";
       const state = pack.states[b.state].name;
       const prov = pack.cells.province[b.cell];
@@ -89,6 +90,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
         data-province="${province}"
         data-culture="${culture}"
         data-population=${population}
+        data-wealth=${wealth}
         data-features="${features}"
       >
         <span data-tip="Click to zoom into view" class="icon-dot-circled pointer"></span>
@@ -138,6 +140,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     body
       .querySelectorAll("div > span.icon-star-empty")
       .forEach(el => el.addEventListener("click", toggleCapitalStatus));
+    body.querySelectorAll("div > select.stateWealth").forEach(el => el.addEventListener("change", changeBurgWealth));
     body.querySelectorAll("div > span.icon-anchor").forEach(el => el.addEventListener("click", togglePortStatus));
     body.querySelectorAll("div > span.locks").forEach(el => el.addEventListener("click", toggleBurgLockStatus));
     body.querySelectorAll("div > span.icon-pencil").forEach(el => el.addEventListener("click", openBurgEditor));
@@ -202,6 +205,22 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     const population = [];
     body.querySelectorAll(":scope > div").forEach(el => population.push(+getInteger(el.dataset.population)));
     burgsFooterPopulation.innerHTML = si(d3.mean(population));
+  }
+
+  function changeBurgWealth() {
+    const burg = +this.parentNode.dataset.id;
+    if (this.value == "" || isNaN(+this.value)) {
+      tip("Please provide an integer number (like 10000, not 10K)", false, "error");
+      this.value = si(pack.burgs[burg].wealth* populationRate * urbanization * 12);
+      return;
+    }
+    pack.burgs[burg].wealth = this.value / populationRate / urbanization / 12;
+    this.parentNode.dataset.wealth = this.value;
+    this.value = si(this.value);
+
+    const wealth = [];
+    body.querySelectorAll(":scope > div").forEach(el => wealth.push(+getInteger(el.dataset.wealth)));
+    burgsFooterWealth.innerHTML = si(d3.mean(wealth));
   }
 
   function toggleCapitalStatus() {
@@ -315,6 +334,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
       .map(b => {
         const id = b.i + states.length - 1;
         const population = b.population;
+        const wealth = b.wealth;
         const capital = b.capital;
         const province = pack.cells.province[b.cell];
         const parent = province ? province + states.length - 1 : b.state;
@@ -327,6 +347,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
           parent,
           name: b.name,
           population,
+          wealth,
           capital,
           x: b.x,
           y: b.y
@@ -481,7 +502,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
   }
 
   function downloadBurgsData() {
-    let data = `Id,Burg,Province,Province Full Name,State,State Full Name,Culture,Religion,Population,X,Y,Latitude,Longitude,Elevation (${heightUnit.value}),Temperature,Temperature likeness,Capital,Port,Citadel,Walls,Plaza,Temple,Shanty Town,Emblem,City Generator Link\n`; // headers
+    let data = `Id,Burg,Province,Province Full Name,State,State Full Name,Culture,Religion,Population,Wealth,X,Y,Latitude,Longitude,Elevation (${heightUnit.value}),Temperature,Temperature likeness,Capital,Port,Citadel,Walls,Plaza,Temple,Shanty Town,Emblem,City Generator Link\n`; // headers
     const valid = pack.burgs.filter(b => b.i && !b.removed); // all valid burgs
 
     valid.forEach(b => {
@@ -495,6 +516,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
       data += pack.cultures[b.culture].name + ",";
       data += pack.religions[pack.cells.religion[b.cell]].name + ",";
       data += rn(b.population * populationRate * urbanization) + ",";
+      data += rn(b.population * populationRate * urbanization * 12) + ",";
 
       // add geography data
       data += b.x + ",";

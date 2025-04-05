@@ -261,7 +261,7 @@ function hideLoading() {
 
 function showLoading() {
   d3.select("#loading").transition().duration(200).style("opacity", 1);
-  d3.select("#optionsContainer").transition().duration(100).style("opacity", 0);
+  d3.select("#optionsContainer").transition().duration(300).style("opacity", 0);
   d3.select("#tooltip").transition().duration(200).style("opacity", 0);
 }
 

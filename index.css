@@ -1346,7 +1346,7 @@ div.slider .ui-slider-handle {
 
 .table {
   max-height: 75vh;
-  max-width: 75vw;
+  max-width: 100vw;
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;

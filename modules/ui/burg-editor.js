@@ -34,6 +34,7 @@ function editBurg(id) {
   byId("burgCulture").addEventListener("input", changeCulture);
   byId("burgNameReCulture").addEventListener("click", generateNameCulture);
   byId("burgPopulation").addEventListener("change", changePopulation);
+  byId("burgWealth").addEventListener("change", changeWealth);
   burgBody.querySelectorAll(".burgFeature").forEach(el => el.addEventListener("click", toggleFeature));
   byId("burgLinkOpen").addEventListener("click", openBurgLink);
   byId("burgLinkEdit").addEventListener("click", changeBurgLink);
@@ -65,6 +66,7 @@ function editBurg(id) {
     byId("burgName").value = b.name;
     byId("burgType").value = b.type || "Generic";
     byId("burgPopulation").value = rn(b.population * populationRate * urbanization);
+    byId("burgWealth").value = rn(b.population * populationRate * urbanization * 12);
     byId("burgEditAnchorStyle").style.display = +b.port ? "inline-block" : "none";
 
     // update list and select culture
@@ -289,6 +291,14 @@ function editBurg(id) {
     const burg = pack.burgs[id];
 
     pack.burgs[id].population = rn(burgPopulation.value / populationRate / urbanization, 4);
+    updateBurgPreview(burg);
+  }
+  
+  function changeWealth() {
+    const id = +elSelected.attr("data-id");
+    const burg = pack.burgs[id];
+
+    pack.burgs[id].wealth = rn(burgPopulation.value / populationRate / urbanization / 12, 4);
     updateBurgPreview(burg);
   }
 
