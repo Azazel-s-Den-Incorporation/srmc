@@ -1809,7 +1809,7 @@
                   min="0"
                   max="60"
                   step="1"
-                  value="15"
+                  value="0"
                 />
               </td>
               <td>
@@ -1820,7 +1820,7 @@
                   min="0"
                   max="60"
                   step="1"
-                  value="15"
+                  value="0"
                 />
               </td>
             </tr>
@@ -1951,7 +1951,7 @@
                   min=".2"
                   step=".1"
                   max="20"
-                  value="1"
+                  value=".9"
                 />
                 <span data-tip="Maximal possible zoom level (should be > 1)">max</span>
                 <input
@@ -5948,6 +5948,9 @@
       <div id="saveMapData" style="display: none" class="dialog">
         <div style="margin-top: 0.3em">
           <strong>Save map to</strong>
+          <button onclick="saveMap('server')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + Alt + S">
+            server
+          </button>
           <button onclick="saveMap('machine')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + S">
             machine
           </button>

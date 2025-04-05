@@ -10,6 +10,7 @@ async function saveMap(method) {
     const filename = getFileName() + ".map";
 
     saveToStorage(mapData, method === "storage"); // any method saves to indexedDB
+    if (method === "server") saveToServer(mapData);
     if (method === "machine") saveToMachine(mapData, filename);
     if (method === "dropbox") saveToDropbox(mapData, filename);
   } catch (error) {
@@ -165,6 +166,20 @@ async function saveToStorage(mapData, showTip = false) {
   const blob = new Blob([mapData], {type: "text/plain"});
   await ldb.set("lastMap", blob);
   showTip && tip("Map is saved to the browser storage", false, "success");
+}
+
+// save map to server
+function saveToServer(mapData){
+  const blob = new Blob([mapData], {type: "text/plain"});
+  const oldfilename = "/saves/loaded.map";
+  const newfilename = ("/saves/loaded-old" + getDate + ".map");
+  fsPromises.rename(oldfilename, newfilename, controller);
+  controller.abort();
+  promise;
+  fsPromises.writeFile(old, blob);
+  promise;
+  controller.abort();
+  showTip && tip("Map is saved to the server storage", false, "success");
 }
 
 // download map file
