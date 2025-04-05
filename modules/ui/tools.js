@@ -86,6 +86,7 @@ function processFeatureRegeneration(event, button) {
     if (!layerIsOn("toggleRoutes")) toggleRoutes();
   } else if (button === "regenerateRivers") regenerateRivers();
   else if (button === "regeneratePopulation") recalculatePopulation();
+  else if (button === "regenerateWealth") recalculateWealth();
   else if (button === "regenerateStates") regenerateStates();
   else if (button === "regenerateProvinces") regenerateProvinces();
   else if (button === "regenerateBurgs") regenerateBurgs();
@@ -147,6 +148,17 @@ function recalculatePopulation() {
   });
 
   layerIsOn("togglePopulation") ? drawPopulation() : togglePopulation();
+}
+
+function recalculateWealth() {
+  rankCells();
+
+  pack.burgs.forEach(b => {
+    if (!b.i || b.removed || b.lock) return;
+    const i = b.cell;
+
+    b.wealth = b.population * 12;
+  });
 }
 
 function regenerateStates() {

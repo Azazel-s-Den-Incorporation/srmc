@@ -298,7 +298,7 @@ function editBurg(id) {
     const id = +elSelected.attr("data-id");
     const burg = pack.burgs[id];
 
-    pack.burgs[id].wealth = rn(burgPopulation.value / populationRate / urbanization / 12, 4);
+    pack.burgs[id].wealth = rn(burgPopulation.value / populationRate / urbanization / 12);
     updateBurgPreview(burg);
   }
 

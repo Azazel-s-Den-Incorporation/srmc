@@ -75,7 +75,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     for (const b of filtered) {
       const population = b.population * populationRate * urbanization;
       totalPopulation += population;
-      const wealth = b.population * populationRate * urbanization * 12;
+      const wealth = b.population * 12;
       const features = b.capital && b.port ? "a-capital-port" : b.capital ? "c-capital" : b.port ? "p-port" : "z-burg";
       const state = pack.states[b.state].name;
       const prov = pack.cells.province[b.cell];
@@ -105,6 +105,9 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
         <span data-tip="Burg population" class="icon-male"></span>
         <input data-tip="Burg population. Type to change" value=${si(
           population
+        )} class="burgPopulation" style="width: 5em" />
+        <input data-tip="Burg wealth. Type to change" value=${si(
+          b.wealth
         )} class="burgPopulation" style="width: 5em" />
         <div style="width: 3em">
           <span
@@ -140,7 +143,10 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     body
       .querySelectorAll("div > span.icon-star-empty")
       .forEach(el => el.addEventListener("click", toggleCapitalStatus));
-    body.querySelectorAll("div > select.stateWealth").forEach(el => el.addEventListener("change", changeBurgWealth));
+      body
+        .querySelectorAll("div > input.burgWealth")
+        .forEach(el => el.addEventListener("change", changeBurgWealth));
+      body
     body.querySelectorAll("div > span.icon-anchor").forEach(el => el.addEventListener("click", togglePortStatus));
     body.querySelectorAll("div > span.locks").forEach(el => el.addEventListener("click", toggleBurgLockStatus));
     body.querySelectorAll("div > span.icon-pencil").forEach(el => el.addEventListener("click", openBurgEditor));
@@ -211,7 +217,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     const burg = +this.parentNode.dataset.id;
     if (this.value == "" || isNaN(+this.value)) {
       tip("Please provide an integer number (like 10000, not 10K)", false, "error");
-      this.value = si(pack.burgs[burg].wealth* populationRate * urbanization * 12);
+      this.value = si(pack.burgs[burg].population* populationRate * urbanization * 12);
       return;
     }
     pack.burgs[burg].wealth = this.value / populationRate / urbanization / 12;

@@ -413,6 +413,7 @@ async function parseLoadedData(data, mapVersion) {
       pack.cells.culture = Uint16Array.from(data[19].split(","));
       pack.cells.fl = Uint16Array.from(data[20].split(","));
       pack.cells.pop = Float32Array.from(data[21].split(","));
+      pack.cells.wealth = Float32Array.from(data[21].split(","));
       pack.cells.r = Uint16Array.from(data[22].split(","));
       // data[23] had deprecated cells.road
       pack.cells.s = Uint16Array.from(data[24].split(","));
