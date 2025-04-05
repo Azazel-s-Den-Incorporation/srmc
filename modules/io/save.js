@@ -172,13 +172,15 @@ async function saveToStorage(mapData, showTip = false) {
 function saveToServer(mapData){
   const blob = new Blob([mapData], {type: "text/plain"});
   const oldfilename = "/saves/loaded.map";
-  const newfilename = ("/saves/loaded-old" + getDate + ".map");
-  fsPromises.rename(oldfilename, newfilename, controller);
-  controller.abort();
-  promise;
-  fsPromises.writeFile(old, blob);
-  promise;
-  controller.abort();
+  const newfilename = ("/saves/loaded-old" + Date.now() + ".map");
+  FileSystem.rename(oldfilename, newfilename, (err) => {
+    if (err) throw err;
+    console.log('Rename complete!');
+  });
+  FileSystem.writeFile(old, blob, (err) => {
+    if (err) throw err;
+    console.log('Rename complete!');
+  });
   showTip && tip("Map is saved to the server storage", false, "success");
 }
 
