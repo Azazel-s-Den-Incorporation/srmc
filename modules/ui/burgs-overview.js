@@ -71,11 +71,13 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     body.innerHTML = "";
     let lines = "";
     let totalPopulation = 0;
+    let totalWealth = 0;
 
     for (const b of filtered) {
       const population = b.population * populationRate * urbanization;
       totalPopulation += population;
-      const wealth = b.population * 12;
+      const wealth = b.population * populationRate * urbanization * 12;
+      totalWealth += wealth;
       const features = b.capital && b.port ? "a-capital-port" : b.capital ? "c-capital" : b.port ? "p-port" : "z-burg";
       const state = pack.states[b.state].name;
       const prov = pack.cells.province[b.cell];
@@ -107,7 +109,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
           population
         )} class="burgPopulation" style="width: 5em" />
         <input data-tip="Burg wealth. Type to change" value=${si(
-          b.wealth
+          wealth
         )} class="burgPopulation" style="width: 5em" />
         <div style="width: 3em">
           <span
@@ -130,6 +132,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     // update footer
     burgsFooterBurgs.innerHTML = filtered.length;
     burgsFooterPopulation.innerHTML = filtered.length ? si(totalPopulation / filtered.length) : 0;
+    burgsFooterWealth.innerHTML = si(totalWealth * filtered.length);
 
     // add listeners
     body.querySelectorAll("div.states").forEach(el => el.addEventListener("mouseenter", ev => burgHighlightOn(ev)));
@@ -204,8 +207,8 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
       this.value = si(pack.burgs[burg].population * populationRate * urbanization);
       return;
     }
-    pack.burgs[burg].population = this.value / populationRate / urbanization;
-    this.parentNode.dataset.population = this.value;
+    pack.burgs[burg].population = +this.value / populationRate / urbanization;
+    this.parentNode.dataset.population = +this.value;
     this.value = si(this.value);
 
     const population = [];
@@ -217,16 +220,15 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     const burg = +this.parentNode.dataset.id;
     if (this.value == "" || isNaN(+this.value)) {
       tip("Please provide an integer number (like 10000, not 10K)", false, "error");
-      this.value = si(pack.burgs[burg].population* populationRate * urbanization * 12);
+      this.value = si(pack.burgs[burg].wealth);
       return;
     }
-    pack.burgs[burg].wealth = this.value / populationRate / urbanization / 12;
-    this.parentNode.dataset.wealth = this.value;
+    pack.burgs[burg].wealth = +this.value;
+    this.parentNode.dataset.wealth = +this.value;
     this.value = si(this.value);
-
     const wealth = [];
     body.querySelectorAll(":scope > div").forEach(el => wealth.push(+getInteger(el.dataset.wealth)));
-    burgsFooterWealth.innerHTML = si(d3.mean(wealth));
+    burgsFooterWealth.innerHTML = si(d3.sum(wealth));
   }
 
   function toggleCapitalStatus() {

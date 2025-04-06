@@ -286,6 +286,7 @@ function updateCellInfo(point, i, g) {
     ? `${pack.religions[cells.religion[i]].name} (${cells.religion[i]})`
     : "no";
   infoPopulation.innerHTML = getFriendlyPopulation(i);
+  infoWealth.innerHTML = getWealth(i);
   infoBurg.innerHTML = cells.burg[i] ? pack.burgs[cells.burg[i]].name + " (" + cells.burg[i] + ")" : "no";
   infoFeature.innerHTML = f ? pack.features[f].group + " (" + f + ")" : "n/a";
   infoBiome.innerHTML = biomesData.name[cells.biome[i]];
@@ -381,6 +382,11 @@ function getCellPopulation(i) {
 function getFriendlyPopulation(i) {
   const [rural, urban] = getCellPopulation(i);
   return `${si(rural + urban)} (${si(rural)} rural, urban ${si(urban)})`;
+}
+
+function getWealth(i) {
+  const wealth = pack.cells.burg[i] ? pack.burgs[pack.cells.burg[i]].wealth * wages: 0;
+  return `Wealth: ${si(wealth)}`;
 }
 
 function getPopulationTip(i) {

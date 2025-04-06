@@ -3282,7 +3282,7 @@
 
               <div data-tip="Set burg wealth">
                 <div class="label">Wealth:</div>
-                <input id="burgWealth" type="number" min="0" step="1" style="width: 9em" />
+                <input id="burgWealth" type="number" min="0" step="0.01" style="width: 9em" />
               </div>
 
               <div data-tip="Burg average yearly temperature" style="display: flex; justify-content: space-between">
@@ -5206,7 +5206,7 @@
           </div>
           <div
             data-tip="Click to sort by burg wealth"
-            class="sortable icon-sort-number-down"
+            class="sortable"
             data-sortby="wealth"
           >
             Wealth
@@ -5233,6 +5233,10 @@
 
           <div data-tip="Average population" style="margin-left: 14px">
             Average population:&nbsp;<span id="burgsFooterPopulation">0</span>
+          </div>
+
+          <div data-tip="Average population" style="margin-left: 14px">
+            Total Wealth:&nbsp;<span id="burgsFooterWealth">0</span>
           </div>
         </div>
 

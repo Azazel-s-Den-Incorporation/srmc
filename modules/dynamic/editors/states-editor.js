@@ -21,7 +21,7 @@ export function open() {
 
 function insertEditorHtml() {
   const editorHtml = /* html */ `<div id="statesEditor" class="dialog stable">
-    <div id="statesHeader" class="header" style="grid-template-columns: 11em 8em 7em 7em 6em 6em 8em 6em 7em 6em">
+    <div id="statesHeader" class="header" style="grid-template-columns: 11em 8em 7em 7em 6em 6em 8em 6em 6em 3em 7em 6em">
       <div data-tip="Click to sort by state name" class="sortable alphabetically" data-sortby="name">State&nbsp;</div>
       <div data-tip="Click to sort by state form name" class="sortable alphabetically" data-sortby="form">Form&nbsp;</div>
       <div data-tip="Click to sort by capital name" class="sortable alphabetically" data-sortby="capital">Capital&nbsp;</div>
@@ -29,6 +29,8 @@ function insertEditorHtml() {
       <div data-tip="Click to sort by state burgs count" class="sortable hide" data-sortby="burgs">Burgs&nbsp;</div>
       <div data-tip="Click to sort by state area" class="sortable hide icon-sort-number-down" data-sortby="area">Area&nbsp;</div>
       <div data-tip="Click to sort by state population" class="sortable hide" data-sortby="population">Population&nbsp;</div>
+      <div data-tip="Click to sort by state wealth" class="sortable hide" data-sortby="wealth">Wealth&nbsp;</div>
+      <div data-tip="Click to sort by state wages" class="sortable hide" data-sortby="wages">Wages&nbsp;</div>
       <div data-tip="Click to sort by state type" class="sortable alphabetically hidden show hide" data-sortby="type">Type&nbsp;</div>
       <div data-tip="Click to sort by state expansion value" class="sortable hidden show hide" data-sortby="expansionism">Expansion&nbsp;</div>
       <div data-tip="Click to sort by state cells count" class="sortable hidden show hide" data-sortby="cells">Cells&nbsp;</div>
@@ -118,6 +120,8 @@ function addListeners() {
     else if (classList.contains("icon-star-empty")) stateCapitalZoomIn(stateId);
     else if (classList.contains("icon-dot-circled")) overviewBurgs({stateId});
     else if (classList.contains("statePopulation")) changePopulation(stateId);
+    else if (classList.contains("stateWealth")) changeWealth(stateId);
+    else if (classList.contains("stateWages")) changeWages(stateId);
     else if (classList.contains("icon-pin")) toggleFog(stateId, classList);
     else if (classList.contains("icon-trash-empty")) stateRemovePrompt(stateId);
     else if (classList.contains("icon-lock") || classList.contains("icon-lock-open"))
@@ -156,6 +160,8 @@ function statesEditorAddLines() {
   let totalArea = 0;
   let totalPopulation = 0;
   let totalBurgs = 0;
+  let totalWealth = 0;
+  let wages = 12;
 
   for (const s of pack.states) {
     if (s.removed) continue;
@@ -163,6 +169,7 @@ function statesEditorAddLines() {
     const rural = s.rural * populationRate;
     const urban = s.urban * populationRate * urbanization;
     const population = rn(rural + urban);
+    const wealth = rn(population * wages);
     const populationTip = `Total population: ${si(population)}; Rural population: ${si(rural)}; Urban population: ${si(
       urban
     )}. Click to change`;
@@ -180,6 +187,8 @@ function statesEditorAddLines() {
         data-cells=${s.cells}
         data-area=${area}
         data-population=${population}
+        data-wealth=${wealth}
+        data-wages=${wages}
         data-burgs=${s.burgs}
         data-color=""
         data-form=""
@@ -203,6 +212,8 @@ function statesEditorAddLines() {
         <div data-tip="Neutral lands area" class="stateArea hide" style="width: 6em">${si(area)} ${unit}</div>
         <span data-tip="${populationTip}" class="icon-male hide"></span>
         <div data-tip="${populationTip}" class="statePopulation pointer hide" style="width: 5em">${si(population)}</div>
+        <div data-tip="${wealth}" class="stateWealth pointer hide" style="width: 6em">${si(wealth)}</div>
+        <div data-tip="${wages}" class="stateWages pointer hide" style="width: 3em">${si(wages)}</div>
         <select class="cultureType ${hidden} placeholder show hide">${getTypeOptions(0)}</select>
         <span class="icon-resize-full ${hidden} placeholder show hide"></span>
         <input class="statePower ${hidden} placeholder show hide" type="number" value="0" />
@@ -224,6 +235,8 @@ function statesEditorAddLines() {
       data-cells=${s.cells}
       data-area=${area}
       data-population=${population}
+      data-wealth=${wealth}
+      data-wages=${wages}
       data-burgs=${s.burgs}
       data-culture=${pack.cultures[s.culture].name}
       data-type=${s.type}
@@ -248,6 +261,8 @@ function statesEditorAddLines() {
       <div data-tip="State area" class="stateArea hide" style="width: 6em">${si(area)} ${unit}</div>
       <span data-tip="${populationTip}" class="icon-male hide"></span>
       <div data-tip="${populationTip}" class="statePopulation pointer hide" style="width: 5em">${si(population)}</div>
+      <div data-tip="${wealth}" class="stateWealth pointer hide" style="width: 6em">${si(wealth)}</div>
+      <div data-tip="${wages}" class="stateWages pointer hide" style="width: 3em">${si(wages)}</div>
       <select data-tip="State type. Defines growth model. Click to change" class="cultureType ${hidden} show hide">${getTypeOptions(
       s.type
     )}</select>
@@ -544,6 +559,110 @@ function changePopulation(stateId) {
     }
 
     if (layerIsOn("togglePopulation")) drawPopulation();
+    refreshStatesEditor();
+  }
+}
+
+function changeWealth(stateId) {
+  const state = pack.states[stateId];
+  if (!state.cells) return tip("State does not have any cells, cannot change population", false, "error");
+
+  const stateWealth = "";
+  const total = rural + urban;
+  const format = n => Number(n).toLocaleString();
+
+  alertMessage.innerHTML = /* html */ `<div>
+    <i>Change wealth of all cells assigned to the state</i>
+    <div style="margin: 0.5em 0">
+      Wealth: <input type="number" min="0" step="1" id="ruralPop" value=${stateWealth} style="width:6em" />
+    </div>
+    <div>Total Wealth: ${format(total)} ⇒ <span id="totalWealth">${format(total)}</span></div>
+  </div>`;
+
+  const update = function () {
+    const totalNew = stateWealth.valueAsNumber;
+    if (isNaN(totalNew)) return;
+    totalPop.innerHTML = format(totalNew);
+    totalPopPerc.innerHTML = rn((totalNew / total) * 100);
+  };
+
+  totalWealth.oninput = () => update();
+
+  $("#alert").dialog({
+    resizable: false,
+    title: "Change state wealth",
+    width: "24em",
+    buttons: {
+      Apply: function () {
+        applyWealthChange();
+        $(this).dialog("close");
+      },
+      Cancel: function () {
+        $(this).dialog("close");
+      }
+    },
+    position: {my: "center", at: "center", of: "svg"}
+  });
+
+  function applyWealthChange() {
+    const wealthChange = stateWealth.value;
+    if (isFinite(wealthChange) && wealthChange !== 1) {
+      const burgs = pack.burgs.filter(b => !b.removed && b.state === stateId);
+      burgs.forEach(b => (b.wealth = rn(b.wealth * wealthChange, 4)));
+    }
+    if (!isFinite(wealthChange) && +wealth.value > 0) {
+      const points = wealth.value / population / wages;
+      const burgs = pack.burgs.filter(b => !b.removed && b.state === stateId);
+      const population = rn(points / burgs.length, 4);
+      burgs.forEach(b => (b.wealth = wealth));
+    }
+    refreshStatesEditor();
+  }
+}
+
+function changeWages(stateId) {
+  const state = pack.states[stateId];
+  if (!state.cells) return tip("State does not have any cells, cannot change wages", false, "error");
+
+  const wageRate = "";
+  const total = rural + urban;
+  const format = n => Number(n).toLocaleString();
+
+  alertMessage.innerHTML = /* html */ `<div>
+    <i>Change wage rate of all cells assigned to the state</i>
+    <div style="margin: 0.5em 0">
+      Wage Rate: <input type="number" min="0" step="1" id="ruralPop" value=${wageRate} style="width:6em" />
+    </div>
+    <div>Wage Rate: ${format(total)} ⇒ <span id="wageRate">${format(total)}</span></div>
+  </div>`;
+
+  const update = function () {
+    const totalNew = wageRate.valueAsNumber;
+    if (isNaN(totalNew)) return;
+    totalPop.innerHTML = format(totalNew);
+    totalPopPerc.innerHTML = rn((totalNew / total) * 100);
+  };
+
+  wageRate.oninput = () => update();
+
+  $("#alert").dialog({
+    resizable: false,
+    title: "Change state wages",
+    width: "24em",
+    buttons: {
+      Apply: function () {
+        applyWagesChange();
+        $(this).dialog("close");
+      },
+      Cancel: function () {
+        $(this).dialog("close");
+      }
+    },
+    position: {my: "center", at: "center", of: "svg"}
+  });
+
+  function applyWagesChange() {
+    const wages = wages.value;
     refreshStatesEditor();
   }
 }

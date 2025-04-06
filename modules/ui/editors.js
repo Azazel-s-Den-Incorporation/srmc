@@ -142,6 +142,7 @@ function addBurg(point) {
 
   const population = Math.max(cells.s[cellId] / 3 + i / 1000 + (cellId % 100) / 1000, 0.1);
   const type = BurgsAndStates.getType(cellId, false);
+  const wealth = (population * 12);
 
   // generate emblem
   const coa = COA.generate(states[state].coa, 0.25, null, type);
@@ -162,7 +163,8 @@ function addBurg(point) {
     temple: 0,
     population,
     coa,
-    type
+    type,
+    wealth
   };
   pack.burgs.push(burg);
   cells.burg[cellId] = i;

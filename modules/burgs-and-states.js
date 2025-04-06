@@ -269,6 +269,7 @@ window.BurgsAndStates = (() => {
       .filter(b => (burg ? b.i == burg.i : b.i && !b.removed && !b.lock))
       .forEach(b => {
         const pop = b.population;
+        const wealth = b.wealth;
         b.citadel = Number(b.capital || (pop > 50 && P(0.75)) || (pop > 15 && P(0.5)) || P(0.1));
         b.plaza = Number(pop > 20 || (pop > 10 && P(0.8)) || (pop > 4 && P(0.7)) || P(0.6));
         b.walls = Number(b.capital || pop > 30 || (pop > 20 && P(0.75)) || (pop > 10 && P(0.5)) || P(0.1));

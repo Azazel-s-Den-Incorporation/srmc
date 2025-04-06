@@ -140,7 +140,6 @@ function prepareMapData() {
     pack.cells.culture,
     pack.cells.fl,
     pop,
-    pack.cells.wealth,
     pack.cells.r,
     [], // deprecated pack.cells.road
     pack.cells.s,
@@ -157,7 +156,8 @@ function prepareMapData() {
     markers,
     cellRoutes,
     routes,
-    zones
+    zones,
+    pack.cells.wealth
   ].join("\r\n");
   return mapData;
 }

@@ -1456,6 +1456,14 @@ div.states > .statePopulation {
   width: 3em;
 }
 
+div.states > .stateWealth {
+  width: 6em;
+}
+
+div.states > .stateWages {
+  width: 3em;
+}
+
 div.states:hover > .hiddenIcon {
   visibility: visible !important;
 }
