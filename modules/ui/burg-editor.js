@@ -58,6 +58,7 @@ function editBurg(id) {
   function updateBurgValues() {
     const id = +elSelected.attr("data-id");
     const b = pack.burgs[id];
+    const s = pack.states[id];
     const province = pack.cells.province[b.cell];
     const provinceName = province ? pack.provinces[province].fullName + ", " : "";
     const stateName = pack.states[b.state].fullName || pack.states[b.state].name;
@@ -66,7 +67,7 @@ function editBurg(id) {
     byId("burgName").value = b.name;
     byId("burgType").value = b.type || "Generic";
     byId("burgPopulation").value = rn(b.population * populationRate * urbanization);
-    byId("burgWealth").value = rn(b.population * populationRate * urbanization * 12);
+    byId("burgWealth").value = cv(b.population * s.wages);
     byId("burgEditAnchorStyle").style.display = +b.port ? "inline-block" : "none";
 
     // update list and select culture
@@ -290,7 +291,7 @@ function editBurg(id) {
     const id = +elSelected.attr("data-id");
     const burg = pack.burgs[id];
 
-    pack.burgs[id].population = +this.value;
+    pack.burgs[id].population = this.value;
     updateBurgPreview(burg);
   }
   
@@ -298,7 +299,7 @@ function editBurg(id) {
     const id = +elSelected.attr("data-id");
     const burg = pack.burgs[id];
 
-    pack.burgs[id].wealth = +this.value;
+    pack.burgs[id].wealth = this.value;
     updateBurgPreview(burg);
   }
 

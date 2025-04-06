@@ -160,8 +160,8 @@ function statesEditorAddLines() {
   let totalArea = 0;
   let totalPopulation = 0;
   let totalBurgs = 0;
-  let totalWealth = 0;
-  let wages = 12;
+  let gdp = 0;
+  let wages = 0;
 
   for (const s of pack.states) {
     if (s.removed) continue;
@@ -169,10 +169,9 @@ function statesEditorAddLines() {
     const rural = s.rural * populationRate;
     const urban = s.urban * populationRate * urbanization;
     const population = rn(rural + urban);
-    const wealth = rn(population * wages);
-    const populationTip = `Total population: ${si(population)}; Rural population: ${si(rural)}; Urban population: ${si(
-      urban
-    )}. Click to change`;
+    const wages = s.wages
+    const gdp = rn(population * wages);
+    const populationTip = `Total population: ${si(population)}; Rural population: ${si(rural)}; Urban population: ${si(urban)}. Click to change`;
     totalArea += area;
     totalPopulation += population;
     totalBurgs += s.burgs;
@@ -187,7 +186,7 @@ function statesEditorAddLines() {
         data-cells=${s.cells}
         data-area=${area}
         data-population=${population}
-        data-wealth=${wealth}
+        data-wealth=${gdp}
         data-wages=${wages}
         data-burgs=${s.burgs}
         data-color=""
@@ -212,8 +211,8 @@ function statesEditorAddLines() {
         <div data-tip="Neutral lands area" class="stateArea hide" style="width: 6em">${si(area)} ${unit}</div>
         <span data-tip="${populationTip}" class="icon-male hide"></span>
         <div data-tip="${populationTip}" class="statePopulation pointer hide" style="width: 5em">${si(population)}</div>
-        <div data-tip="${wealth}" class="stateWealth pointer hide" style="width: 6em">${si(wealth)}</div>
-        <div data-tip="${wages}" class="stateWages pointer hide" style="width: 3em">${si(wages)}</div>
+        <div data-tip="${gdp}" class="stateWealth pointer hide" style="width: 6em">${cv(gdp)}</div>
+        <div data-tip="${wages}" class="stateWages pointer hide" style="width: 3em">${cv(wages)}</div>
         <select class="cultureType ${hidden} placeholder show hide">${getTypeOptions(0)}</select>
         <span class="icon-resize-full ${hidden} placeholder show hide"></span>
         <input class="statePower ${hidden} placeholder show hide" type="number" value="0" />
@@ -235,7 +234,7 @@ function statesEditorAddLines() {
       data-cells=${s.cells}
       data-area=${area}
       data-population=${population}
-      data-wealth=${wealth}
+      data-wealth=${gdp}
       data-wages=${wages}
       data-burgs=${s.burgs}
       data-culture=${pack.cultures[s.culture].name}
@@ -261,8 +260,8 @@ function statesEditorAddLines() {
       <div data-tip="State area" class="stateArea hide" style="width: 6em">${si(area)} ${unit}</div>
       <span data-tip="${populationTip}" class="icon-male hide"></span>
       <div data-tip="${populationTip}" class="statePopulation pointer hide" style="width: 5em">${si(population)}</div>
-      <div data-tip="${wealth}" class="stateWealth pointer hide" style="width: 6em">${si(wealth)}</div>
-      <div data-tip="${wages}" class="stateWages pointer hide" style="width: 3em">${si(wages)}</div>
+      <div data-tip="${gdp}" class="stateWealth pointer hide" style="width: 6em">${cv(gdp)}</div>
+      <div data-tip="${wages}" class="stateWages pointer hide" style="width: 3em">${cv(wages)}</div>
       <select data-tip="State type. Defines growth model. Click to change" class="cultureType ${hidden} show hide">${getTypeOptions(
       s.type
     )}</select>
@@ -567,26 +566,24 @@ function changeWealth(stateId) {
   const state = pack.states[stateId];
   if (!state.cells) return tip("State does not have any cells, cannot change population", false, "error");
 
-  const stateWealth = "";
-  const total = rural + urban;
+  const wealth = state.wealth;
   const format = n => Number(n).toLocaleString();
 
   alertMessage.innerHTML = /* html */ `<div>
     <i>Change wealth of all cells assigned to the state</i>
     <div style="margin: 0.5em 0">
-      Wealth: <input type="number" min="0" step="1" id="ruralPop" value=${stateWealth} style="width:6em" />
+      Wealth: <input type="number" min="0" step="1" id="wealth" value=${wealth} style="width:6em" />
     </div>
-    <div>Total Wealth: ${format(total)} ⇒ <span id="totalWealth">${format(total)}</span></div>
+    <div>Total Wealth: ${format(wealth)} ⇒ <span id="wealthNew">${format(wealth)}</span></div>
   </div>`;
 
   const update = function () {
-    const totalNew = stateWealth.valueAsNumber;
-    if (isNaN(totalNew)) return;
-    totalPop.innerHTML = format(totalNew);
-    totalPopPerc.innerHTML = rn((totalNew / total) * 100);
+    const wealthNew = wealth.valueAsNumber;
+    if (isNaN(wealthNew)) return;
+    wealthNew.innerHTML = format(wealthNew);
   };
 
-  totalWealth.oninput = () => update();
+  wealth.oninput = () => update();
 
   $("#alert").dialog({
     resizable: false,
@@ -605,13 +602,13 @@ function changeWealth(stateId) {
   });
 
   function applyWealthChange() {
-    const wealthChange = stateWealth.value;
+    const wealthChange = wealth / state.wages;
     if (isFinite(wealthChange) && wealthChange !== 1) {
       const burgs = pack.burgs.filter(b => !b.removed && b.state === stateId);
       burgs.forEach(b => (b.wealth = rn(b.wealth * wealthChange, 4)));
     }
     if (!isFinite(wealthChange) && +wealth.value > 0) {
-      const points = wealth.value / population / wages;
+      const points = wealth.value / population / s.wages;
       const burgs = pack.burgs.filter(b => !b.removed && b.state === stateId);
       const population = rn(points / burgs.length, 4);
       burgs.forEach(b => (b.wealth = wealth));
@@ -622,28 +619,24 @@ function changeWealth(stateId) {
 
 function changeWages(stateId) {
   const state = pack.states[stateId];
-  if (!state.cells) return tip("State does not have any cells, cannot change wages", false, "error");
-
-  const wageRate = "";
-  const total = rural + urban;
+  const wages = (state.wealth / state.wages);
   const format = n => Number(n).toLocaleString();
 
   alertMessage.innerHTML = /* html */ `<div>
     <i>Change wage rate of all cells assigned to the state</i>
     <div style="margin: 0.5em 0">
-      Wage Rate: <input type="number" min="0" step="1" id="ruralPop" value=${wageRate} style="width:6em" />
+      Wage Rate: <input type="number" min="0" step="1" id="wageinput" value=${wages} style="width:6em" />
     </div>
-    <div>Wage Rate: ${format(total)} ⇒ <span id="wageRate">${format(total)}</span></div>
+    <div>Wage Rate: ${format(wages)} ⇒ <span id="wageRate">${format(wages)}</span></div>
   </div>`;
 
   const update = function () {
-    const totalNew = wageRate.valueAsNumber;
-    if (isNaN(totalNew)) return;
-    totalPop.innerHTML = format(totalNew);
-    totalPopPerc.innerHTML = rn((totalNew / total) * 100);
+    const wageRate = wageinput.valueAsNumber;
+    if (isNaN(wageRate)) return;
+    wageRate.innerHTML = format(wageRate);
   };
 
-  wageRate.oninput = () => update();
+  wageinput.oninput = () => update();
 
   $("#alert").dialog({
     resizable: false,
@@ -662,7 +655,10 @@ function changeWages(stateId) {
   });
 
   function applyWagesChange() {
-    const wages = wages.value;
+    const wageRate = wageinput.value;
+    if (isFinite(wageRate) && wageRate !== 1) {
+      pack.states[stateId].wages = wageinput.value;
+    }
     refreshStatesEditor();
   }
 }

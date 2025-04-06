@@ -88,6 +88,7 @@ function processFeatureRegeneration(event, button) {
   else if (button === "regeneratePopulation") recalculatePopulation();
   else if (button === "regenerateWealth") recalculateWealth();
   else if (button === "regenerateStates") regenerateStates();
+  else if (button === "regenerateWages") regenerateWages();
   else if (button === "regenerateProvinces") regenerateProvinces();
   else if (button === "regenerateBurgs") regenerateBurgs();
   else if (button === "regenerateEmblems") regenerateEmblems();
@@ -157,7 +158,18 @@ function recalculateWealth() {
     if (!b.i || b.removed || b.lock) return;
     const i = b.cell;
 
-    b.wealth = b.population * 12;
+    b.wealth = b.population * pack.burgs[stateId].wages;
+  });
+}
+
+function regenerateWages() {
+  rankCells();
+
+  pack.states.forEach(s => {
+    if (!s.i || s.removed || s.lock) return;
+    const i = s.cell;
+
+    wages = random() * 10;
   });
 }
 
