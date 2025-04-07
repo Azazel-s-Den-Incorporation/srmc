@@ -84,7 +84,6 @@ window.BurgsAndStates = (() => {
         b.name = Names.getCultureShort(b.culture);
         b.feature = cells.f[b.cell];
         b.capital = 1;
-        b.wealth = b.population * s.wages;
 
         // states data
         const expansionism = rn(Math.random() * byId("sizeVariety").value + 1, 1);
@@ -279,11 +278,6 @@ window.BurgsAndStates = (() => {
         const theocracy = pack.states[b.state].form === "Theocracy";
         b.temple 
           = Number((religion && theocracy && P(0.5)) || pop > 50 || (pop > 35 && P(0.75)) || (pop > 20 && P(0.5)))
-        ;
-        b.wealth
-          = Number(pop > 20 || (pop > 10 && P(0.8)) || (pop > 4 && P(0.7)) || P(0.6))
-          * Number(pack.state[wages])
-          * Number(b.plaza > 1 && P(2)|| (b.plaza > 0.8 && P(1.6)) || (b.plaza > 0.7 && P(1.3)) || P(1.0))
         ;
       });
   };

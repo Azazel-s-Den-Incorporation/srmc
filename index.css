@@ -871,8 +871,8 @@ fieldset {
 }
 
 .matrix-table {
-  max-height: 80vh;
-  max-width: 85vw;
+  max-height: 180vh;
+  max-width: 185vw;
   scrollbar-width: thin;
   overflow: auto;
 }
@@ -1383,11 +1383,13 @@ div.slider .ui-slider-handle {
 }
 
 .dialog {
-  max-width: 93vw;
+  max-width: 120vw;
+  max-height: 120vw;
 }
 
 .dialog > div {
   width: max-content;
+  height: max-content;
 }
 
 div.header {
@@ -2110,8 +2112,8 @@ svg.button {
 
 #alertMessage {
   user-select: text;
-  max-height: 70vh;
-  max-width: 75vw;
+  max-height: 250vh;
+  max-width: 150vw;
   overflow: auto;
 }
 

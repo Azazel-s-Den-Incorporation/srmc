@@ -34,7 +34,6 @@ function editBurg(id) {
   byId("burgCulture").addEventListener("input", changeCulture);
   byId("burgNameReCulture").addEventListener("click", generateNameCulture);
   byId("burgPopulation").addEventListener("change", changePopulation);
-  byId("burgWealth").addEventListener("change", changeWealth);
   burgBody.querySelectorAll(".burgFeature").forEach(el => el.addEventListener("click", toggleFeature));
   byId("burgLinkOpen").addEventListener("click", openBurgLink);
   byId("burgLinkEdit").addEventListener("click", changeBurgLink);
@@ -58,16 +57,16 @@ function editBurg(id) {
   function updateBurgValues() {
     const id = +elSelected.attr("data-id");
     const b = pack.burgs[id];
-    const s = pack.states[id];
     const province = pack.cells.province[b.cell];
     const provinceName = province ? pack.provinces[province].fullName + ", " : "";
     const stateName = pack.states[b.state].fullName || pack.states[b.state].name;
+    const wage = pack.states[b.state].wages;
     byId("burgProvinceAndState").innerHTML = provinceName + stateName;
 
     byId("burgName").value = b.name;
     byId("burgType").value = b.type || "Generic";
-    byId("burgPopulation").value = rn(b.population * populationRate * urbanization);
-    byId("burgWealth").value = cv(b.population * s.wages);
+    byId("burgPopulation").value = rn(b.population * populationRate * urbanization, 4);
+    byId("burgWealth").value = rn(b.population * populationRate * urbanization, 4) * wage;
     byId("burgEditAnchorStyle").style.display = +b.port ? "inline-block" : "none";
 
     // update list and select culture
@@ -291,15 +290,7 @@ function editBurg(id) {
     const id = +elSelected.attr("data-id");
     const burg = pack.burgs[id];
 
-    pack.burgs[id].population = this.value;
-    updateBurgPreview(burg);
-  }
-  
-  function changeWealth() {
-    const id = +elSelected.attr("data-id");
-    const burg = pack.burgs[id];
-
-    pack.burgs[id].wealth = this.value;
+    pack.burgs[id].population = rn(burgPopulation.value / populationRate / urbanization, 4);
     updateBurgPreview(burg);
   }
 

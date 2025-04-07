@@ -78,7 +78,8 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
       totalPopulation += population;
       const features = b.capital && b.port ? "a-capital-port" : b.capital ? "c-capital" : b.port ? "p-port" : "z-burg";
       const state = pack.states[b.state].name;
-      const wages = state.wages
+      const wages = pack.states[b.state].wages;
+      const wealth = population * wages;
       worldWealth += population * wages;
       const prov = pack.cells.province[b.cell];
       const province = prov ? pack.provinces[prov].name : "";
@@ -92,7 +93,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
         data-province="${province}"
         data-culture="${culture}"
         data-population=${population}
-        data-wealth=${b.wealth}
+        data-wealth=${wealth}
         data-features="${features}"
       >
         <span data-tip="Click to zoom into view" class="icon-dot-circled pointer"></span>
@@ -108,9 +109,9 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
         <input data-tip="Burg population. Type to change" value=${si(
           population
         )} class="burgPopulation" style="width: 5em" />
-        <input data-tip="Burg wealth. Type to change" value=${cv(
-          b.wealth
-        )} class="burgPopulation" style="width: 5em" />
+        <input data-tip="Burg wealth. ${wealth}" value=${cv(
+          wealth
+        )} style="width: 4em" disabled />
         <div style="width: 3em">
           <span
             data-tip="${b.capital ? " This burg is a state capital" : "Click to assign a capital status"}"
@@ -146,9 +147,6 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     body
       .querySelectorAll("div > span.icon-star-empty")
       .forEach(el => el.addEventListener("click", toggleCapitalStatus));
-    body
-      .querySelectorAll("div > input.burgWealth")
-      .forEach(el => el.addEventListener("change", changeBurgWealth));
     body.querySelectorAll("div > span.icon-anchor").forEach(el => el.addEventListener("click", togglePortStatus));
     body.querySelectorAll("div > span.locks").forEach(el => el.addEventListener("click", toggleBurgLockStatus));
     body.querySelectorAll("div > span.icon-pencil").forEach(el => el.addEventListener("click", openBurgEditor));
@@ -213,21 +211,6 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     const population = [];
     body.querySelectorAll(":scope > div").forEach(el => population.push(+getInteger(el.dataset.population)));
     burgsFooterPopulation.innerHTML = si(d3.mean(population));
-  }
-
-  function changeBurgWealth() {
-    const burg = +this.parentNode.dataset.id;
-    if (this.value == "" || isNaN(+this.value)) {
-      tip("Please provide an integer number (like 10000, not 10K)", false, "error");
-      this.value = cv(pack.burgs[burg].wealth);
-      return;
-    }
-    pack.burgs[burg].wealth = this.value;
-    this.parentNode.dataset.wealth = this.value;
-    this.value = cv(this.value);
-    const wealth = [];
-    body.querySelectorAll(":scope > div").forEach(el => wealth.push(+getInteger(el.dataset.wealth)));
-    burgsFooterWealth.innerHTML = cv(d3.sum(wealth));
   }
 
   function toggleCapitalStatus() {
@@ -341,7 +324,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
       .map(b => {
         const id = b.i + states.length - 1;
         const population = b.population;
-        const wealth = b.wealth;
+        const wealth = population * pack.states[b.state].wages;
         const capital = b.capital;
         const province = pack.cells.province[b.cell];
         const parent = province ? province + states.length - 1 : b.state;

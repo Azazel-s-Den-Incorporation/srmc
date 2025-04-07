@@ -155,7 +155,7 @@ function recalculateWealth() {
   rankCells();
 
   pack.burgs.forEach(b => {
-    if (!b.i || b.removed || b.lock) return;
+    if (!b.i || b.removed ) return;
     const i = b.cell;
 
     b.wealth = b.population * pack.burgs[stateId].wages;
