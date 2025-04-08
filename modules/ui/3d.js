@@ -300,6 +300,8 @@ window.ThreeD = (function () {
     const states = viewbox.select("#labels #states");
     const cities = burgLabels.select("#cities");
     const towns = burgLabels.select("#towns");
+    const buildings = buildingLabels.select("#production");
+    const building_icons = buildingIcons.select("#production");
     const city_icons = burgIcons.select("#cities");
     const town_icons = burgIcons.select("#towns");
 
@@ -332,11 +334,24 @@ window.ThreeD = (function () {
       iconColor: "#666",
       line: 5 - towns.attr("data-size") / 2
     };
+    
+    const buildingOptions = {
+      font: buildings.attr("font-family"),
+      size: +buildings.attr("data-size"),
+      color: buildings.attr("fill"),
+      elevation: 5,
+      quality: 30,
+      iconSize: 0.5,
+      iconColor: "#666",
+      line: 5 - buildings.attr("data-size") / 2
+    };
 
     const city_icon_material = new THREE.MeshPhongMaterial({color: cityOptions.iconColor});
     city_icon_material.wireframe = options.wireframe;
     const town_icon_material = new THREE.MeshPhongMaterial({color: townOptions.iconColor});
     town_icon_material.wireframe = options.wireframe;
+    const building_icon_material = new THREE.MeshPhongMaterial({color: buildingOptions.iconColor});
+    building_icon_material.wireframe = options.wireframe;
     const city_icon_geometry = new THREE.CylinderGeometry(
       cityOptions.iconSize * 2,
       cityOptions.iconSize * 2,
@@ -348,6 +363,13 @@ window.ThreeD = (function () {
       townOptions.iconSize * 2,
       townOptions.iconSize * 2,
       townOptions.iconSize,
+      16,
+      1
+    );
+    const building_icon_geometry = new THREE.CylinderGeometry(
+      buildingOptions.iconSize * 2,
+      buildingOptions.iconSize * 2,
+      buildingOptions.iconSize,
       16,
       1
     );
@@ -374,6 +396,43 @@ window.ThreeD = (function () {
 
       // icons
       if (layerIsOn("toggleBurgIcons")) {
+        const geometry = isCity ? city_icon_geometry : town_icon_geometry;
+        const material = isCity ? city_icon_material : town_icon_material;
+        const iconMesh = new THREE.Mesh(geometry, material);
+        iconMesh.position.set(x, y, z);
+
+        icons.push(iconMesh);
+        scene.add(iconMesh);
+
+        const points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, y + options.line, z)];
+        const line_geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line(line_geometry, line_material);
+
+        lines.push(line);
+        scene.add(line);
+      }
+    }
+     // building labels
+     for (let i = 1; i < pack.buildings.length; i++) {
+      const building = pack.buildings[i];
+      if (building.removed) continue;
+
+      const isCity = building.capital;
+      const [x, y, z] = get3dCoords(building.x, building.y);
+      const options = isCity ? cityOptions : townOptions;
+
+      if (layerIsOn("toggleLabels")) {
+        const buildingSprite = await createTextLabel({text: building.name, ...options});
+
+        buildingSprite.position.set(x, y + options.elevation, z);
+        buildingSprite.size = options.size;
+
+        labels.push(buildingSprite);
+        scene.add(buildingSprite);
+      }
+
+      // icons
+      if (layerIsOn("toggleBuildingIcons")) {
         const geometry = isCity ? city_icon_geometry : town_icon_geometry;
         const material = isCity ? city_icon_material : town_icon_material;
         const iconMesh = new THREE.Mesh(geometry, material);

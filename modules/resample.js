@@ -81,6 +81,7 @@ window.Resample = (function () {
     pack.cells.burg = new Uint16Array(pack.cells.i.length);
     pack.cells.religion = new Uint16Array(pack.cells.i.length);
     pack.cells.province = new Uint16Array(pack.cells.i.length);
+    pack.cells.building = new Uint16Array(pack.cells.i.length);
 
     const parentPackCellGroups = groupCellsByType(parentMap.pack);
     const parentPackLandCellsQuadtree = d3.quadtree(parentPackCellGroups.land);
@@ -188,6 +189,39 @@ window.Resample = (function () {
     function getBurgCoordinates(burg, closestCell, cell, xp, yp) {
       const haven = pack.cells.haven[cell];
       if (burg.port && haven) return BurgsAndStates.getCloseToEdgePoint(cell, haven);
+
+      if (closestCell !== cell) return pack.cells.p[cell];
+      return [rn(xp, 2), rn(yp, 2)];
+    }
+  }
+
+  function restoreBuildings(parentMap, projection, scale) {
+    const packLandCellsQuadtree = d3.quadtree(groupCellsByType(pack).land);
+    const findLandCell = (x, y) => packLandCellsQuadtree.find(x, y, Infinity)?.[2];
+
+    pack.buildings = parentMap.pack.buildings.map(building => {
+      if (!building.i || building.removed) return building;
+      building.workers *= scale; // adjust for populationRate change
+
+      const [xp, yp] = projection(building.x, building.y);
+      if (!isInMap(xp, yp)) return {...building, removed: true, lock: false};
+
+      const closestCell = findCell(xp, yp);
+      const cell = isWater(pack, closestCell) ? findLandCell(xp, yp) : closestCell;
+
+      if (pack.cells.building[cell]) {
+        WARN && console.warn(`Cell ${cell} already has a building. Removing building ${building.name} (${building.i})`);
+        return {...building, removed: true, lock: false};
+      }
+
+      pack.cells.building[cell] = building.i;
+      const [x, y] = getBuildingCoordinates(building, closestCell, cell, xp, yp);
+      return {...building, cell, x, y};
+    });
+
+    function getBuildingCoordinates(building, closestCell, cell, xp, yp) {
+      const haven = pack.cells.haven[cell];
+      if (building.port && haven) return BuildingsAndStates.getCloseToEdgePoint(cell, haven);
 
       if (closestCell !== cell) return pack.cells.p[cell];
       return [rn(xp, 2), rn(yp, 2)];

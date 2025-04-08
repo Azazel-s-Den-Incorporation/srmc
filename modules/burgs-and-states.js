@@ -154,7 +154,7 @@ window.BurgsAndStates = (() => {
       }
 
       burgs[0] = {name: undefined}; // do not store burgsTree anymore
-      TIME && console.timeEnd("placeTowns");
+      TIME && console.timeEnd("");
     }
   };
 

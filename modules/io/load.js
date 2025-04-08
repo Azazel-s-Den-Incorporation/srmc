@@ -1,4 +1,43 @@
 "use strict";
+  // Data groups
+    // data[0] map version
+    // data[1] settings
+    // data[2] map coods
+    // data[3] biomes
+    // data[4] notes
+    // data[5] svg
+    // data[6] grid
+    // data[7] cells h
+    // data[8] cells prec
+    // data[9] cells f
+    // data[10] cells t
+    // data[11] cell temp
+    // data[16] cells biome
+    // data[17] cells burg
+    // data[18] cells conf
+    // data[19] cells culture
+    // data[20] cells fl
+    // data[21] cells pop
+    // data[22] cells r
+    // data[23] had deprecated cells.road
+    // data[24] cells s
+    // data[25] cells state
+    // data[26] cells religion
+    // data[27] cells province
+    // data[28] had deprecated cells.crossroad
+    // data[29] religions
+    // data[30] provinces
+    // data[31] names DL
+    // data[32] rivers
+    // data[33] rulers
+    // data[34] used fonts
+    // data[35] markers
+    // data[36] cells routes
+    // data[37] routes
+    // data[38] zones
+    // data[39] wealth
+    // data[40] buildings
+    // data[41] cells buildings
 
 // Functions to load and parse .map/.gz files
 async function quickLoad() {
@@ -363,6 +402,7 @@ async function parseLoadedData(data, mapVersion) {
       labels = viewbox.select("#labels");
       icons = viewbox.select("#icons");
       burgIcons = icons.select("#burgIcons");
+      buildingIcons = icons.select("#productionIcons");
       anchors = icons.select("#anchors");
       armies = viewbox.select("#armies");
       markers = viewbox.select("#markers");
@@ -370,6 +410,7 @@ async function parseLoadedData(data, mapVersion) {
       fogging = viewbox.select("#fogging");
       debug = viewbox.select("#debug");
       burgLabels = labels.select("#burgLabels");
+      buildingLabels = labels.select("#productionLabels");
 
       if (!texture.size()) {
         texture = viewbox
@@ -414,14 +455,14 @@ async function parseLoadedData(data, mapVersion) {
       pack.cells.fl = Uint16Array.from(data[20].split(","));
       pack.cells.pop = Float32Array.from(data[21].split(","));
       pack.cells.r = Uint16Array.from(data[22].split(","));
-      // data[23] had deprecated cells.road
       pack.cells.s = Uint16Array.from(data[24].split(","));
       pack.cells.state = Uint16Array.from(data[25].split(","));
       pack.cells.religion = data[26] ? Uint16Array.from(data[26].split(",")) : new Uint16Array(pack.cells.i.length);
       pack.cells.province = data[27] ? Uint16Array.from(data[27].split(",")) : new Uint16Array(pack.cells.i.length);
-      // data[28] had deprecated cells.crossroad
       pack.cells.routes = data[36] ? JSON.parse(data[36]) : {};
-      pack.cells.wealth = Float32Array.from(data[21].split(","));
+      pack.cells.wealth = Float64Array.from(data[39].split(","));
+      pack.buildings = data[40] ? JSON.parse(data[40]) : [{i: 0, name: "undefined"}];
+      pack.cells.building = Uint16Array.from(data[41].split(","));
 
       if (data[31]) {
         const namesDL = data[31].split("/");
@@ -433,6 +474,8 @@ async function parseLoadedData(data, mapVersion) {
         });
       }
     }
+
+
 
     {
       const isVisible = selection => selection.node() && selection.style("display") !== "none";
@@ -469,7 +512,7 @@ async function parseLoadedData(data, mapVersion) {
       if (hasChild(prec, "circle")) turnOn("togglePrecipitation");
       if (isVisible(emblems) && hasChild(emblems, "use")) turnOn("toggleEmblems");
       if (isVisible(labels)) turnOn("toggleLabels");
-      if (isVisible(icons)) turnOn("toggleBurgIcons");
+      if (isVisible(icons)) turnOn("toggleBurgIcons","toggleBuildingIcons");
       if (hasChildren(armies) && isVisible(armies)) turnOn("toggleMilitary");
       if (hasChildren(markers)) turnOn("toggleMarkers");
       if (isVisible(ruler)) turnOn("toggleRulers");
@@ -564,6 +607,15 @@ async function parseLoadedData(data, mapVersion) {
         const invalidCells = cells.i.filter(i => cells.burg[i] === burgId);
         invalidCells.forEach(i => (cells.burg[i] = 0));
         ERROR && console.error("[Data integrity] Invalid burg", burgId, "is assigned to cells", invalidCells);
+      });
+
+      const invalidBuildings = [...new Set(cells.building)].filter(
+        buildingId => buildingId && (!pack.buildings[buildingId] || pack.buildings[buildingId].removed)
+      );
+      invalidBuildings.forEach(buildingId => {
+        const invalidCells = cells.i.filter(i => cells.building[i] === buildingId);
+        invalidCells.forEach(i => (cells.building[i] = 0));
+        ERROR && console.error("[Data integrity] Invalid building", buildingId, "is assigned to cells", invalidCells);
       });
 
       const invalidRivers = [...new Set(cells.r)].filter(r => r && !pack.rivers.find(river => river.i === r));
@@ -733,6 +785,50 @@ async function parseLoadedData(data, mapVersion) {
         pack.markers.sort((a, b) => a.i - b.i);
       }
     }
+
+    pack.buildings.forEach(building => {
+      if (!building.i && building.lock) {
+        ERROR && console.error(`[Data integrity] Burg 0 is marked as locked, removing the status`);
+        delete building.lock;
+        return;
+      }
+
+      if (building.removed && building.lock) {
+        ERROR && console.error(`[Data integrity] Removed building ${building.i} is marked as locked. Unlocking the building`);
+        delete building.lock;
+        return;
+      }
+
+      if (!building.i || building.removed) return;
+
+      if (building.cell === undefined || building.x === undefined || building.y === undefined) {
+        ERROR &&
+          console.error(`[Data integrity] Burg ${building.i} is missing cell info or coordinates. Removing the building`);
+        building.removed = true;
+      }
+
+      if (building.cell >= cells.i.length) {
+        ERROR && console.error("[Data integrity] Burg", building.i, "is linked to invalid cell", building.cell);
+        building.cell = findCell(building.x, building.y);
+        cells.i.filter(i => cells.building[i] === building.i).forEach(i => (cells.building[i] = 0));
+        cells.building[building.cell] = building.i;
+      }
+
+      if (building.state && !pack.states[building.state]) {
+        ERROR && console.error("[Data integrity] Burg", building.i, "is linked to invalid state", building.state);
+        building.state = 0;
+      }
+
+      if (building.state && pack.states[building.state].removed) {
+        ERROR && console.error("[Data integrity] Burg", building.i, "is linked to removed state", building.state);
+        building.state = 0;
+      }
+
+      if (building.state === undefined) {
+        ERROR && console.error("[Data integrity] Burg", building.i, "has no state data");
+        building.state = 0;
+      }
+    });
 
     {
       // remove href from emblems, to trigger rendering on load

@@ -229,6 +229,9 @@ t,
 #burgIcons {
   cursor: pointer;
 }
+#buildingIcons {
+  cursor: pointer;
+}
 
 .strokes {
   stroke-width: 0.08px;
@@ -306,6 +309,10 @@ i.icon-lock {
 
 #provinceLabels,
 #burgLabels {
+  dominant-baseline: alphabetic;
+  text-anchor: middle;
+}
+#buildingLabels {
   dominant-baseline: alphabetic;
   text-anchor: middle;
 }
@@ -1597,6 +1604,27 @@ div.states > .riverType {
   padding: 0.1em;
 }
 
+#buildingsFooterPopulation {
+  border: 0;
+  width: 50px;
+  color: #666666;
+  font-style: italic;
+  line-height: 1.4em;
+}
+
+#buildingBody div.label {
+  display: inline-block;
+  width: 6em;
+}
+
+#buildingBody > div > div,
+
+#riverBody > div,
+#routeBody > div,
+#lakeBody > div {
+  padding: 0.1em;
+}
+
 #riverBody div.label,
 #riverBody input,
 #riverBody select,
@@ -1642,6 +1670,19 @@ div.states > .riverType {
 }
 
 .burgFeature.inactive:hover {
+  color: #abaaaa;
+}
+
+.buildinggFeature {
+  padding: 1px;
+  cursor: pointer;
+}
+
+.buildinggFeature.inactive {
+  color: #ddd;
+}
+
+.buildinggFeature.inactive:hover {
   color: #abaaaa;
 }
 

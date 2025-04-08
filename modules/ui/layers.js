@@ -207,6 +207,7 @@ function drawLayers() {
   if (layerIsOn("toggleEmblems")) drawEmblems();
   if (layerIsOn("toggleLabels")) drawLabels();
   if (layerIsOn("toggleBurgIcons")) drawBurgIcons();
+  if (layerIsOn("toggleBuildingIcons")) drawBuildingIcons();
   if (layerIsOn("toggleMilitary")) drawMilitary();
   if (layerIsOn("toggleMarkers")) drawMarkers();
   if (layerIsOn("toggleRulers")) rulers.draw();
@@ -901,6 +902,18 @@ function toggleBurgIcons(event) {
   }
 }
 
+function toggleBuildingIcons(event) {
+  if (!layerIsOn("toggleBuildingIcons")) {
+    turnButtonOn("toggleBuildingIcons");
+    drawBuildingIcons();
+    if (event && isCtrlClick(event)) editStyle("burgIcons");
+  } else {
+    if (event && isCtrlClick(event)) return editStyle("burgIcons");
+    turnButtonOff("toggleBuildingIcons");
+    icons.selectAll("circle, use").remove();
+  }
+}
+
 function toggleRulers(event) {
   if (!layerIsOn("toggleRulers")) {
     turnButtonOn("toggleRulers");
@@ -1036,6 +1049,7 @@ function getLayer(id) {
   if (id === "toggleEmblems") return $("#emblems");
   if (id === "toggleLabels") return $("#labels");
   if (id === "toggleBurgIcons") return $("#icons");
+  if (id === "toggleBuildingIcons") return $("#icons");
   if (id === "toggleMarkers") return $("#markers");
   if (id === "toggleRulers") return $("#ruler");
 }

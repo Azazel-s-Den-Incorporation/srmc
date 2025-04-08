@@ -18,6 +18,7 @@ const INT8_MAX = 127;
 const UINT8_MAX = 255;
 const UINT16_MAX = 65535;
 const UINT32_MAX = 4294967295;
+const UINT64_MAX = 18446744073709551615n;
 
 if (PRODUCTION && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -80,6 +81,7 @@ let emblems = viewbox.append("g").attr("id", "emblems").style("display", "none")
 let labels = viewbox.append("g").attr("id", "labels");
 let icons = viewbox.append("g").attr("id", "icons");
 let burgIcons = icons.append("g").attr("id", "burgIcons");
+let buildingIcons = icons.append("g").attr("id", "buildingIcons");
 let anchors = icons.append("g").attr("id", "anchors");
 let armies = viewbox.append("g").attr("id", "armies");
 let markers = viewbox.append("g").attr("id", "markers");
@@ -117,6 +119,12 @@ anchors.append("g").attr("id", "cities");
 burgIcons.append("g").attr("id", "towns");
 burgLabels.append("g").attr("id", "towns");
 anchors.append("g").attr("id", "towns");
+
+let buildingLabels = labels.append("g").attr("id", "buildingLabels");
+labels.append("g").attr("id", "buildings");
+
+buildingIcons.append("g").attr("id", "buildings");
+buildingLabels.append("g").attr("id", "buildings");
 
 // population groups
 population.append("g").attr("id", "rural");
@@ -348,8 +356,9 @@ function focusOn() {
   const scaleParam = params.get("scale");
   const cellParam = params.get("cell");
   const burgParam = params.get("burg");
+  const buildingParam = params.get("building");
 
-  if (scaleParam || cellParam || burgParam) {
+  if (scaleParam || cellParam || burgParam || buildingParam) {
     const scale = +scaleParam || 8;
 
     if (cellParam) {
@@ -364,6 +373,15 @@ function focusOn() {
       if (!burg) return;
 
       const {x, y} = burg;
+      zoomTo(x, y, scale, 1600);
+      return;
+    }
+
+    if (buildingParam) {
+      const building = isNaN(+buildingParam) ? pack.buildings.find(building => building.name === buildingParam) : pack.buildings[+buildingParam];
+      if (!building) return;
+
+      const {x, y} = building;
       zoomTo(x, y, scale, 1600);
       return;
     }
@@ -658,12 +676,14 @@ async function generate(options) {
     Cultures.generate();
     Cultures.expand();
     BurgsAndStates.generate();
+    Buildings.generate();
     Routes.generate();
     Religions.generate();
     BurgsAndStates.defineStateForms();
     Provinces.generate();
     Provinces.getPoles();
     BurgsAndStates.defineBurgFeatures();
+    Buildings.defineBuildingFeatures();
 
     Rivers.specify();
     Features.specify();
@@ -1231,6 +1251,7 @@ function showStatistics() {
     States: ${pack.states.length - 1}
     Provinces: ${pack.provinces.length - 1}
     Burgs: ${pack.burgs.length - 1}
+    Buildings: ${pack.buildings.length - 1}
     Religions: ${pack.religions.length - 1}
     Culture set: ${culturesSet.value}
     Cultures: ${pack.cultures.length - 1}`;

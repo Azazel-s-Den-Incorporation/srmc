@@ -26,6 +26,8 @@ function clicked() {
   else if (ancestor.id === "labels" && el.tagName === "tspan") editLabel();
   else if (grand.id === "burgLabels") editBurg();
   else if (grand.id === "burgIcons") editBurg();
+  else if (grand.id === "buildingLabels") editBuilding();
+  else if (grand.id === "buildingIcons") editBuilding();
   else if (parent.id === "ice") editIce();
   else if (parent.id === "terrain") editReliefIcon();
   else if (grand.id === "markers" || great.id === "markers") editMarker();
@@ -142,7 +144,7 @@ function addBurg(point) {
 
   const population = Math.max(cells.s[cellId] / 3 + i / 1000 + (cellId % 100) / 1000, 0.1);
   const type = BurgsAndStates.getType(cellId, false);
-  const wealth = (population * wages);
+  const wealth = (population * state.wages);
 
   // generate emblem
   const coa = COA.generate(states[state].coa, 0.25, null, type);
@@ -503,6 +505,140 @@ function drawLegend(name, data) {
     .attr("fill-opacity", opacity);
 
   fitLegendBox();
+}
+
+function addBuilding(point) {
+  const {cells, states} = pack;
+  const x = rn(point[0], 2);
+  const y = rn(point[1], 2);
+
+  const cellId = findCell(x, y);
+  const culture = cells.culture[cellId];
+  const i = pack.buildings.length;
+  const name = Names.getCulture(culture);
+  const state = cells.state[cellId];
+  const type = "Generic";
+
+  const workers = Math.max(cells.s[cellId] / 3 + i / 1000 + (cellId % 100) / 1000, 0.1);
+  const wealth = (workers * state.wages);
+
+  // generate emblem
+  // const coa = COA.generate(states[state].coa, 0.25, null, type);
+  // coa.shield = COA.getShield(culture, state);
+  // COArenderer.add("building", i, coa, x, y);
+  const coa = null;
+
+  const building = {
+    name,
+    cell: cellId,
+    x,
+    y,
+    state,
+    i,
+    workers,
+    coa,
+    type,
+    wealth
+  };
+  pack.buildings.push(building);
+  cells.building[cellId] = i;
+
+  const productionSize = buildingIcons.select("#production").attr("size") || 0.5;
+  buildingIcons
+    .select("#production")
+    .append("circle")
+    .attr("id", "building" + i)
+    .attr("data-id", i)
+    .attr("cx", x)
+    .attr("cy", y)
+    .attr("r", productionSize);
+  buildingLabels
+    .select("#production")
+    .append("text")
+    .attr("text-rendering", "optimizeSpeed")
+    .attr("id", "buildingLabel" + i)
+    .attr("data-id", i)
+    .attr("x", x)
+    .attr("y", y)
+    .attr("dy", `${productionSize * -1.5}px`)
+    .text(name);
+
+  const newRoute = Routes.connect(cellId);
+  if (newRoute && layerIsOn("toggleRoutes")) {
+    routes
+      .select("#" + newRoute.group)
+      .append("path")
+      .attr("d", Routes.getPath(newRoute))
+      .attr("id", "route" + newRoute.i);
+  }
+
+  return i;
+}
+
+function moveBuildingToGroup(id, g) {
+  const label = document.querySelector("#buildingLabels [data-id='" + id + "']");
+  const icon = document.querySelector("#buildingIcons [data-id='" + id + "']");
+  const anchor = document.querySelector("#anchors [data-id='" + id + "']");
+  if (!label || !icon) {
+    ERROR && console.error(`Cannot find label or icon elements for id ${id}`);
+    return;
+  }
+
+  document.querySelector("#buildingLabels > #" + g).appendChild(label);
+  document.querySelector("#buildingIcons > #" + g).appendChild(icon);
+
+  const iconSize = icon.parentNode.getAttribute("size");
+  icon.setAttribute("r", iconSize);
+  label.setAttribute("dy", `${iconSize * -1.5}px`);
+
+  if (anchor) {
+    document.querySelector("#anchors > #" + g).appendChild(anchor);
+    const anchorSize = +anchor.parentNode.getAttribute("size");
+    anchor.setAttribute("width", anchorSize);
+    anchor.setAttribute("height", anchorSize);
+    anchor.setAttribute("x", rn(pack.buildings[id].x - anchorSize * 0.47, 2));
+    anchor.setAttribute("y", rn(pack.buildings[id].y - anchorSize * 0.47, 2));
+  }
+}
+
+function moveAllBuildingsToGroup(fromGroup, toGroup) {
+  const groupToMove = document.querySelector(`#buildingIcons #${fromGroup}`);
+  const buildingsToMove = Array.from(groupToMove.children).map(x => x.dataset.id);
+  addBuildingsGroup(toGroup);
+  buildingsToMove.forEach(x => moveBuildingToGroup(x, toGroup));
+}
+
+function addBuildingsGroup(group) {
+  if (document.querySelector(`#buildingLabels > #${group}`)) return;
+  const labelCopy = document.querySelector("#buildingLabels > #towns").cloneNode(false);
+  const iconCopy = document.querySelector("#buildingIcons > #towns").cloneNode(false);
+
+  // FIXME: using the same id is against the spec!
+  document.querySelector("#buildingLabels").appendChild(labelCopy).id = group;
+  document.querySelector("#buildingIcons").appendChild(iconCopy).id = group;
+  document.querySelector("#anchors").appendChild(anchorCopy).id = group;
+}
+
+function removeBuilding(id) {
+  document.querySelector("#buildingLabels [data-id='" + id + "']")?.remove();
+  document.querySelector("#buildingIcons [data-id='" + id + "']")?.remove();
+  document.querySelector("#anchors [data-id='" + id + "']")?.remove();
+
+  const cells = pack.cells;
+  const building = pack.buildings[id];
+
+  building.removed = true;
+  cells.building[building.cell] = 0;
+
+  const noteId = notes.findIndex(note => note.id === `building${id}`);
+  if (noteId !== -1) notes.splice(noteId, 1);
+
+  if (building.coa) {
+    const coaId = "buildingCOA" + id;
+    if (byId(coaId)) byId(coaId).remove();
+    emblems.select(`#buildingEmblems > use[data-i='${id}']`).remove();
+    delete building.coa; // remove to save data
+  }
 }
 
 // fit Legend box to canvas size

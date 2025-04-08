@@ -88,7 +88,7 @@ function selectStyleElement() {
   styleIsOff.style.display = isLayerOff ? "block" : "none";
 
   // active group element
-  if (["routes", "labels", "coastline", "lakes", "anchors", "burgIcons", "borders", "terrs"].includes(styleElement)) {
+  if (["routes", "labels", "coastline", "lakes", "anchors", "burgIcons", "buildingIcons", "borders", "terrs"].includes(styleElement)) {
     const group = styleGroupSelect.value;
     const defaultGroupSelector = styleElement === "terrs" ? "#landHeights" : "g";
     el = group && el.select("#" + group).size() ? el.select("#" + group) : el.select(defaultGroupSelector);
@@ -285,6 +285,20 @@ function selectStyleElement() {
     styleStrokeDash.style.display = "block";
     styleRadius.style.display = "block";
     styleFillInput.value = styleFillOutput.value = el.attr("fill") || "#ffffff";
+    styleStrokeInput.value = styleStrokeOutput.value = el.attr("stroke") || "#3e3e4b";
+    styleStrokeWidthInput.value = el.attr("stroke-width") || 0.24;
+    styleStrokeDasharrayInput.value = el.attr("stroke-dasharray") || "";
+    styleStrokeLinecapInput.value = el.attr("stroke-linecap") || "inherit";
+    styleRadiusInput.value = el.attr("size") || 1;
+  }
+
+  if (styleElement == "buildingIcons") {
+    styleFill.style.display = "block";
+    styleStroke.style.display = "block";
+    styleStrokeWidth.style.display = "block";
+    styleStrokeDash.style.display = "block";
+    styleRadius.style.display = "block";
+    styleFillInput.value = styleFillOutput.value = el.attr("fill") || "#9999aa";
     styleStrokeInput.value = styleStrokeOutput.value = el.attr("stroke") || "#3e3e4b";
     styleStrokeWidthInput.value = el.attr("stroke-width") || 0.24;
     styleStrokeDasharrayInput.value = el.attr("stroke-dasharray") || "";
@@ -881,6 +895,7 @@ styleRadiusMinus.on("click", function () {
 });
 
 function changeRadius(size, group) {
+  // Burgs
   const el = group ? burgIcons.select("#" + group) : getEl();
   const g = el.attr("id");
   el.attr("size", size);
@@ -894,6 +909,21 @@ function changeRadius(size, group) {
     .each(function () {
       this.setAttribute("dy", `${size * -1.5}px`);
     });
+  // Buildings
+  const el2 = group ? buildingIcons.select("#" + group) : getEl();
+  const g2 = el.attr("id");
+  el2.attr("size", size);
+  el2.selectAll("circle").each(function () {
+    this.setAttribute("r", size);
+  });
+  styleRadiusInput.value = size;
+  buildingLabels
+    .select("g#" + g2)
+    .selectAll("text")
+    .each(function () {
+      this.setAttribute("dy", `${size * -1.5}px`);
+    });
+
   changeIconSize(size * 2, g); // change also anchor icons
 }
 

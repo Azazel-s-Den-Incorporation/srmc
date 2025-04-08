@@ -1,4 +1,43 @@
 "use strict";
+// Data groups
+  // data[0] map version
+  // data[1] settings
+  // data[2] map coods
+  // data[3] biomes
+  // data[4] notes
+  // data[5] svg
+  // data[6] grid
+  // data[7] cells h
+  // data[8] cells prec
+  // data[9] cells f
+  // data[10] cells t
+  // data[11] cell temp
+  // data[16] cells biome
+  // data[17] cells burg
+  // data[18] cells conf
+  // data[19] cells culture
+  // data[20] cells fl
+  // data[21] cells pop
+  // data[22] cells r
+  // data[23] had deprecated cells.road
+  // data[24] cells s
+  // data[25] cells state
+  // data[26] cells religion
+  // data[27] cells province
+  // data[28] had deprecated cells.crossroad
+  // data[29] religions
+  // data[30] provinces
+  // data[31] names DL
+  // data[32] rivers
+  // data[33] rulers
+  // data[34] used fonts
+  // data[35] markers
+  // data[36] cells routes
+  // data[37] routes
+  // data[38] zones
+  // data[39] wealth
+  // data[40] buildings
+  // data[41] cells buildings
 
 // functions to save the project to a file
 async function saveMap(method) {
@@ -16,7 +55,7 @@ async function saveMap(method) {
   } catch (error) {
     ERROR && console.error(error);
     alertMessage.innerHTML = /* html */ `An error is occured on map saving. If the issue persists, please copy the message below and report it on ${link(
-      "https://github.com/Azgaar/Fantasy-Map-Generator/issues",
+      "https://github.com/AzazelMango/azmap/issues",
       "GitHub"
     )}. <p id="errorBox">${parseError(error)}</p>`;
 
@@ -41,7 +80,7 @@ async function saveMap(method) {
 function prepareMapData() {
   const date = new Date();
   const dateString = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-  const license = "File can be loaded in azgaar.github.io/Fantasy-Map-Generator";
+  const license = "File can be loaded in azazelmango.github.io/azmap";
   const params = [VERSION, license, dateString, seed, graphWidth, graphHeight, mapId].join("|");
   const settings = [
     distanceUnitInput.value,
@@ -103,6 +142,7 @@ function prepareMapData() {
   const cellRoutes = JSON.stringify(pack.cells.routes);
   const routes = JSON.stringify(pack.routes);
   const zones = JSON.stringify(pack.zones);
+  const buildings = JSON.stringify(pack.buildings);
 
   // store name array only if not the same as default
   const defaultNB = Names.getNameBases();
@@ -157,7 +197,9 @@ function prepareMapData() {
     cellRoutes,
     routes,
     zones,
-    pack.cells.wealth
+    pack.cells.wealth,
+    buildings,
+    pack.cells.building
   ].join("\r\n");
   return mapData;
 }

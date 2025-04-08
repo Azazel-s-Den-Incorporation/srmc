@@ -271,6 +271,63 @@ function addStylePreset() {
         "data-columns"
       ],
       "#legendBox": ["fill", "fill-opacity"],
+      "#buildingLabels > #production": [
+        "opacity",
+        "fill",
+        "text-shadow",
+        "letter-spacing",
+        "data-size",
+        "font-size",
+        "font-family"
+      ],
+      "#buildingIcons > #production": [
+        "opacity",
+        "fill",
+        "fill-opacity",
+        "size",
+        "stroke",
+        "stroke-width",
+        "stroke-dasharray",
+        "stroke-linecap"
+      ],
+      "#buildingLabels > #logistics": [
+        "opacity",
+        "fill",
+        "text-shadow",
+        "letter-spacing",
+        "data-size",
+        "font-size",
+        "font-family"
+      ],
+      "#buildingIcons > #logistics": [
+        "opacity",
+        "fill",
+        "fill-opacity",
+        "size",
+        "stroke",
+        "stroke-width",
+        "stroke-dasharray",
+        "stroke-linecap"
+      ],
+      "#buildingLabels > #power": [
+        "opacity",
+        "fill",
+        "text-shadow",
+        "letter-spacing",
+        "data-size",
+        "font-size",
+        "font-family"
+      ],
+      "#buildingIcons > #power": [
+        "opacity",
+        "fill",
+        "fill-opacity",
+        "size",
+        "stroke",
+        "stroke-width",
+        "stroke-dasharray",
+        "stroke-linecap"
+      ],
       "#burgLabels > #cities": [
         "opacity",
         "fill",

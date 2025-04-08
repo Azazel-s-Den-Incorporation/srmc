@@ -211,6 +211,7 @@ function editHeightmap(options) {
     // remove data
     pack.cultures = [];
     pack.burgs = [];
+    pack.buildings = [];
     pack.states = [];
     pack.provinces = [];
     pack.religions = [];
@@ -407,6 +408,27 @@ function editHeightmap(options) {
       pack.cells.burg[b.cell] = b.i;
       if (!b.capital && pack.cells.h[b.cell] < 20) removeBurg(b.i);
       if (b.capital) pack.states[b.state].center = b.cell;
+    }
+
+    // find closest land cell to building
+    const findBuildingCell = function (x, y) {
+      let i = findCell(x, y);
+      if (pack.cells.h[i] >= 20) return i;
+      const dist = pack.cells.c[i].map(c =>
+        pack.cells.h[c] < 20 ? Infinity : (pack.cells.p[c][0] - x) ** 2 + (pack.cells.p[c][1] - y) ** 2
+      );
+      return pack.cells.c[i][d3.scan(dist)];
+    };
+    
+    // find best cell for buildings
+    for (const d of pack.buildings) {
+      if (!d.i || d.removed) continue;
+      d.cell = findBuildingCell(d.x, d.y);
+      d.feature = pack.cells.f[d.cell];
+
+      pack.cells.building[d.cell] = d.i;
+      if (!d.capital && pack.cells.h[d.cell] < 20) removeBuilding(d.i);
+      if (d.capital) pack.states[d.state].center = d.cell;
     }
 
     for (const p of pack.provinces) {
