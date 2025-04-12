@@ -543,24 +543,24 @@ function addBuilding(point) {
   pack.buildings.push(building);
   cells.building[cellId] = i;
 
-  const productionSize = buildingIcons.select("#production").attr("size") || 0.5;
+  const buildingSize = buildingIcons.select("#buildings").attr("size") || 1;
   buildingIcons
-    .select("#production")
+    .select("#buildings")
     .append("circle")
     .attr("id", "building" + i)
     .attr("data-id", i)
     .attr("cx", x)
     .attr("cy", y)
-    .attr("r", productionSize);
+    .attr("r", buildingSize);
   buildingLabels
-    .select("#production")
+    .select("#buildings")
     .append("text")
     .attr("text-rendering", "optimizeSpeed")
     .attr("id", "buildingLabel" + i)
     .attr("data-id", i)
     .attr("x", x)
     .attr("y", y)
-    .attr("dy", `${productionSize * -1.5}px`)
+    .attr("dy", `${buildingSize * -1.5}px`)
     .text(name);
 
   const newRoute = Routes.connect(cellId);
@@ -610,8 +610,8 @@ function moveAllBuildingsToGroup(fromGroup, toGroup) {
 
 function addBuildingsGroup(group) {
   if (document.querySelector(`#buildingLabels > #${group}`)) return;
-  const labelCopy = document.querySelector("#buildingLabels > #towns").cloneNode(false);
-  const iconCopy = document.querySelector("#buildingIcons > #towns").cloneNode(false);
+  const labelCopy = document.querySelector("#buildingLabels > #buildings").cloneNode(false);
+  const iconCopy = document.querySelector("#buildingIcons > #buildings").cloneNode(false);
 
   // FIXME: using the same id is against the spec!
   document.querySelector("#buildingLabels").appendChild(labelCopy).id = group;

@@ -288,6 +288,7 @@ function updateCellInfo(point, i, g) {
   infoPopulation.innerHTML = getFriendlyPopulation(i);
   infoWealth.innerHTML = getWealth(i);
   infoBurg.innerHTML = cells.burg[i] ? pack.burgs[cells.burg[i]].name + " (" + cells.burg[i] + ")" : "no";
+  infoBuilding.innerHTML = cells.building[i] ? pack.buildings[cells.building[i]].name + " (" + cells.building[i] + ")" : "no";
   infoFeature.innerHTML = f ? pack.features[f].group + " (" + f + ")" : "n/a";
   infoBiome.innerHTML = biomesData.name[cells.biome[i]];
 }

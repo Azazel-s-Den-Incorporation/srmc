@@ -402,7 +402,7 @@ async function parseLoadedData(data, mapVersion) {
       labels = viewbox.select("#labels");
       icons = viewbox.select("#icons");
       burgIcons = icons.select("#burgIcons");
-      buildingIcons = icons.select("#productionIcons");
+      buildingIcons = icons.select("#buildingIcons");
       anchors = icons.select("#anchors");
       armies = viewbox.select("#armies");
       markers = viewbox.select("#markers");
@@ -410,7 +410,7 @@ async function parseLoadedData(data, mapVersion) {
       fogging = viewbox.select("#fogging");
       debug = viewbox.select("#debug");
       burgLabels = labels.select("#burgLabels");
-      buildingLabels = labels.select("#productionLabels");
+      buildingLabels = labels.select("#buildingLabels");
 
       if (!texture.size()) {
         texture = viewbox

@@ -504,7 +504,6 @@ function regenerateBuildings() {
   const buildingsTree = d3.quadtree();
 
   cells.building = new Uint16Array(cells.i.length); // clear cells building data
-  states.filter(s => s.i).forEach(s => (s.capital = 0)); // clear state capitals
   provinces.filter(p => p.i).forEach(p => (p.building = 0)); // clear province capitals
 
   // readd locked buildings
@@ -555,25 +554,12 @@ function regenerateBuildings() {
 
   pack.buildings = newBuildings; // assign new buildings array
 
-  // add a capital at former place for states without added capitals
-  states
-    .filter(s => s.i && !s.removed && !s.capital)
-    .forEach(s => {
-      const [x, y] = cells.p[s.center];
-      const buildingId = addBuilding([x, y]);
-      s.capital = buildingId;
-      s.center = pack.buildings[buildingId].cell;
-      pack.buildings[buildingId].capital = 1;
-      pack.buildings[buildingId].state = s.i;
-      moveBuildingToGroup(buildingId, "cities");
-    });
-
   features.forEach(f => {
     if (f.port) f.port = 0; // reset features ports counter
   });
 
-  Buildings.specifyBuildings();
-  Buildings.defineBuildingFeatures();
+  BuildingsMain.specifyBuildings();
+  BuildingsMain.defineBuildingFeatures();
   regenerateRoutes();
 
   drawBuildingIcons();
@@ -734,7 +720,7 @@ function addLabelOnClick() {
 
   // use most recently selected label group
   const lastSelected = labelGroupSelect.value;
-  const groupId = ["", "states", "burgLabels"].includes(lastSelected) ? "#addedLabels" : "#" + lastSelected;
+  const groupId = ["", "states", "burgLabels", "buildingLabels"].includes(lastSelected) ? "#addedLabels" : "#" + lastSelected;
 
   let group = labels.select(groupId);
   if (!group.size())

@@ -1,8 +1,8 @@
 "use strict";
 // Data groups
-  // data[0] map version
+  // data[0] map params
   // data[1] settings
-  // data[2] map coods
+  // data[2] map coords
   // data[3] biomes
   // data[4] notes
   // data[5] svg
@@ -12,6 +12,10 @@
   // data[9] cells f
   // data[10] cells t
   // data[11] cell temp
+  // data[12] features
+  // data[13] cultures
+  // data[14] states
+  // data[15] burgs
   // data[16] cells biome
   // data[17] cells burg
   // data[18] cells conf

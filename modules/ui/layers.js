@@ -887,6 +887,7 @@ function toggleLabels(event) {
 function drawLabels() {
   drawStateLabels();
   drawBurgLabels();
+  drawBuildingLabels();
   invokeActiveZooming();
 }
 
@@ -904,12 +905,12 @@ function toggleBurgIcons(event) {
 
 function toggleBuildingIcons(event) {
   if (!layerIsOn("toggleBuildingIcons")) {
-    turnButtonOn("toggleBuildingIcons");
+    turnButtonOn("toggleBurgIcons");
     drawBuildingIcons();
-    if (event && isCtrlClick(event)) editStyle("burgIcons");
+    if (event && isCtrlClick(event)) editStyle("buildingIcons");
   } else {
-    if (event && isCtrlClick(event)) return editStyle("burgIcons");
-    turnButtonOff("toggleBuildingIcons");
+    if (event && isCtrlClick(event)) return editStyle("buildingIcons");
+    turnButtonOff("toggleBurgIcons");
     icons.selectAll("circle, use").remove();
   }
 }

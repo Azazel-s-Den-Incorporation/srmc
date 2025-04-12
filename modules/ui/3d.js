@@ -300,8 +300,8 @@ window.ThreeD = (function () {
     const states = viewbox.select("#labels #states");
     const cities = burgLabels.select("#cities");
     const towns = burgLabels.select("#towns");
-    const buildings = buildingLabels.select("#production");
-    const building_icons = buildingIcons.select("#production");
+    const buildings = buildingLabels.select("#buildings");
+    const building_icons = buildingIcons.select("#buildings");
     const city_icons = burgIcons.select("#cities");
     const town_icons = burgIcons.select("#towns");
 

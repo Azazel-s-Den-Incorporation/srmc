@@ -2,12 +2,12 @@
 function overviewBuildings(settings = {stateId: null, cultureId: null}) {
   if (customization) return;
   closeDialogs("#buildingsOverview, .stable");
-//   if (!layerIsOn("toggleBuildingIcons")) toggleBuildingIcons();
+  if (!layerIsOn("toggleBuildingIcons")) toggleBuildingIcons();
   if (!layerIsOn("toggleLabels")) toggleLabels();
 
   const body = byId("buildingsBody");
   updateFilter();
-//   updateLockAllIcon();
+  updateLockAllIcon();
   buildingsOverviewAddLines();
   $("#buildingsOverview").dialog();
 
@@ -46,45 +46,46 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
     stateFilter.options.length = 0; // remove all options
     stateFilter.options.add(new Option("all", -1, false, selectedState === -1));
     stateFilter.options.add(new Option(pack.states[0].name, 0, false, selectedState === 0));
-    const statesSorted = pack.states.filter(s => s.i && !s.removed).sort((a, d) => (a.name > d.name ? 1 : -1));
+    const statesSorted = pack.states.filter(s => s.i && !s.removed).sort((a, d) => (a.name > b.name ? 1 : -1));
     statesSorted.forEach(s => stateFilter.options.add(new Option(s.name, s.i, false, s.i == selectedState)));
   }
 
   // add line for each building
   function buildingsOverviewAddLines() {
     const selectedStateId = +byId("buildingsFilterState").value;
-    let filtered = pack.buildings.filter(d => d.i && !d.removed); // all valid buildings
-    if (selectedStateId !== -1) filtered = filtered.filter(d => d.state === selectedStateId); // filtered by state
+    let filtered = pack.buildings.filter(b => b.i && !b.removed); // all valid buildings
+    if (selectedStateId !== -1) filtered = filtered.filter(b => b.state === selectedStateId); // filtered by state
+
+    //TEMP VAR
+    const workersRate = 0.2;
 
     body.innerHTML = "";
     let lines = "";
     let totalWorkers = 0;
     let worldWorkerWealth = 0;
 
-    for (const d of filtered) {
-      const workers = d.workers * workersRate * urbanization;
+    for (const b of filtered) {
+      const workers = b.workers * workersRate;
       totalWorkers += workers;
-      const features = d.capital && d.port ? "a-capital-port" : d.capital ? "c-capital" : d.port ? "p-port" : "z-building";
-      const state = pack.states[d.state].name;
-      const wages = pack.states[d.state].wages;
+      const state = pack.states[b.state].name;
+      const wages = pack.states[b.state].wages;
       const wealth = workers * wages;
       worldWorkerWealth += workers * wages;
-      const prov = pack.cells.province[d.cell];
+      const prov = pack.cells.province[b.cell];
       const province = prov ? pack.provinces[prov].name : "";
 
       lines += /* html */ `<div
         class="states"
-        data-id=${d.i}
-        data-name="${d.name}"
+        data-id=${b.i}
+        data-name="${b.name}"
         data-state="${state}"
         data-province="${province}"
-        data-workers=${workers}
-        data-wealth=${wealth}
-        data-features="${features}"
+        data-workers="${workers}"
+        data-wealth="${wealth}"
       >
         <span data-tip="Click to zoom into view" class="icon-dot-circled pointer"></span>
         <input data-tip="building name. Click and type to change" class="buildingName" value="${
-          d.name
+          b.name
         }" autocorrect="off" spellcheck="false" />
         <input data-tip="building province" class="buildingState" value="${province}" disabled />
         <input data-tip="building state" class="buildingState" value="${state}" disabled />
@@ -97,7 +98,7 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
         )} style="width: 4em" disabled />
         <span data-tip="Edit building" class="icon-pencil"></span>
         <span class="locks pointer ${
-          d.lock ? "icon-lock" : "icon-lock-open inactive"
+          b.lock ? "icon-lock" : "icon-lock-open inactive"
         }" onmouseover="showElementLockTip(event)"></span>
         <span data-tip="Remove building" class="icon-trash-empty"></span>
       </div>`;
@@ -192,9 +193,6 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
 
   function triggerBuildingRemove() {
     const building = +this.parentNode.dataset.id;
-    if (pack.buildings[building].capital)
-      return tip("You cannot remove the capital. Please change the capital first", false, "error");
-
     confirmationDialog({
       title: "Remove building",
       message: "Are you sure you want to remove the building? <br>This action cannot be reverted",
@@ -219,7 +217,7 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
     const cell = findCell(...point);
 
     if (pack.cells.h[cell] < 20)
-      return tip("You cannot place state into the water. Please click on a land cell", false, "error");
+      return tip("You cannot place buildings into the water. Please click on a land cell", false, "error");
     if (pack.cells.building[cell])
       return tip("There is already a building in this cell. Please select a free cell", false, "error");
 
@@ -248,34 +246,34 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
     });
 
     const buildings = pack.buildings
-      .filter(d => d.i && !d.removed)
-      .map(d => {
-        const id = d.i + states.length - 1;
-        const workers = d.workers;
-        const wealth = workers * pack.states[d.state].wages;
-        const province = pack.cells.province[d.cell];
-        const parent = province ? province + states.length - 1 : d.state;
+      .filter(b => b.i && !b.removed)
+      .map(b => {
+        const id = b.i + states.length - 1;
+        const workers = b.workers;
+        const wealth = workers * pack.states[b.state].wages;
+        const province = pack.cells.province[b.cell];
+        const parent = province ? province + states.length - 1 : b.state;
         return {
           id,
-          i: d.i,
-          state: d.state,
+          i: b.i,
+          state: b.state,
           province,
           parent,
-          name: d.name,
+          name: b.name,
           workers,
           wealth,
-          x: d.x,
-          y: d.y
+          x: b.x,
+          y: b.y
         };
       });
     const data = states.concat(buildings);
-    if (data.length < 2) return tip("No buildings to show", false, "error");
+    if (bata.length < 2) return tip("No buildings to show", false, "error");
 
     const root = d3
       .stratify()
-      .parentId(d => d.state)(data)
-      .sum(d => d.workers)
-      .sort((a, d) => d.value - a.value);
+      .parentId(b => b.state)(bata)
+      .sum(b => b.workers)
+      .sort((a, d) => b.value - a.value);
 
     const width = 150 + 200 * uiSize.value;
     const height = 150 + 200 * uiSize.value;
@@ -307,20 +305,20 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
       .selectAll("circle")
       .data(root.leaves())
       .join("circle")
-      .attr("data-id", d => d.data.i)
-      .attr("r", d => d.r)
-      .attr("fill", d => d.parent.data.color)
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y)
-      .on("mouseenter", d => showInfo(event, d))
-      .on("mouseleave", d => hideInfo(event, d))
-      .on("click", d => zoomTo(d.data.x, d.data.y, 8, 2000));
+      .attr("data-id", b => b.data.i)
+      .attr("r", b => b.r)
+      .attr("fill", b => b.parent.data.color)
+      .attr("cx", b => b.x)
+      .attr("cy", b => b.y)
+      .on("mouseenter", b => showInfo(event, d))
+      .on("mouseleave", b => hideInfo(event, d))
+      .on("click", b => zoomTo(b.data.x, b.data.y, 8, 2000));
 
     function showInfo(ev, d) {
       d3.select(ev.target).transition().duration(1500).attr("stroke", "#c13119");
-      const name = d.data.name;
-      const parent = d.parent.data.name;
-      const workers = si(d.value * workersRate);
+      const name = b.data.name;
+      const parent = b.parent.data.name;
+      const workers = si(b.value * workersRate);
 
       buildingsInfo.innerHTML = /* html */ `${name}. ${parent}. Workers: ${workers}`;
       buildingHighlightOn(ev);
@@ -364,10 +362,10 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
           return {id: p.i ? p.i : 0, province: p.i ? 0 : null, color, name};
         });
 
-      const value = d => {
-        if (this.value === "states") return d.state;
-        if (this.value === "parent") return d.parent;
-        if (this.value === "provinces") return d.province;
+      const value = b => {
+        if (this.value === "states") return b.state;
+        if (this.value === "parent") return b.parent;
+        if (this.value === "provinces") return b.province;
       };
 
       const mapping = {
@@ -377,25 +375,25 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
       };
 
       const base = mapping[this.value]();
-      buildings.forEach(d => (d.id = d.i + base.length - 1));
+      buildings.forEach(b => (b.id = b.i + base.length - 1));
 
       const data = base.concat(buildings);
 
       const root = d3
         .stratify()
-        .parentId(d => value(d))(data)
-        .sum(d => d.workers)
-        .sort((a, d) => d.value - a.value);
+        .parentId(b => value(b))(bata)
+        .sum(b => b.workers)
+        .sort((a, d) => b.value - a.value);
 
       node
         .data(treeLayout(root).leaves())
         .transition()
         .duration(2000)
-        .attr("data-id", d => d.data.i)
-        .attr("fill", d => d.parent.data.color)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("r", d => d.r);
+        .attr("data-id", b => b.data.i)
+        .attr("fill", b => b.parent.data.color)
+        .attr("cx", b => b.x)
+        .attr("cy", b => b.y)
+        .attr("r", b => b.r);
     }
 
     $("#alert").dialog({
@@ -408,38 +406,37 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
   }
 
   function downloadBuildingsData() {
-    let data = `Id,building,Province,Province Full Name,State,State Full Name,Culture,Religion,Workers,Wealth,X,Y,Latitude,Longitude,Elevation (${heightUnit.value}),Temperature,Temperature likeness,Capital,Port,Citadel,Walls,Plaza,Temple,Shanty Town,Emblem,City Generator Link\n`; // headers
-    const valid = pack.buildings.filter(d => d.i && !d.removed); // all valid buildings
+    let data = `Id,building,Province,Province Full Name,State,State Full Name,Culture,Religion,Workers,Wealth,X,Y,Latitude,Longitude,Elevation (${heightUnit.value}),Temperature,Temperature likeness,Emblem,City Generator Link\n`; // headers
+    const valid = pack.buildings.filter(b => b.i && !b.removed); // all valid buildings
 
-    valid.forEach(b => {
-      data += d.i + ",";
-      data += d.name + ",";
-      const province = pack.cells.province[d.cell];
+    valib.forEach(b => {
+      data += b.i + ",";
+      data += b.name + ",";
+      const province = pack.cells.province[b.cell];
       data += province ? pack.provinces[province].name + "," : ",";
       data += province ? pack.provinces[province].fullName + "," : ",";
-      data += pack.states[d.state].name + ",";
-      data += pack.states[d.state].fullName + ",";
-      data += rn(d.workers * workersRate * urbanization) + ",";
-      data += rn(d.workers * workersRate * urbanization) * pack.states[d.state].wages + ",";
+      data += pack.states[b.state].name + ",";
+      data += pack.states[b.state].fullName + ",";
+      data += rn(b.workers * workersRate * urbanization) + ",";
+      data += rn(b.workers * workersRate * urbanization) * pack.states[b.state].wages + ",";
 
       // add geography data
-      data += d.x + ",";
-      data += d.y + ",";
-      data += getLatitude(d.y, 2) + ",";
-      data += getLongitude(d.x, 2) + ",";
-      data += parseInt(getHeight(pack.cells.h[d.cell])) + ",";
-      const temperature = grid.cells.temp[pack.cells.g[d.cell]];
+      data += b.x + ",";
+      data += b.y + ",";
+      data += getLatitude(b.y, 2) + ",";
+      data += getLongitude(b.x, 2) + ",";
+      data += parseInt(getHeight(pack.cells.h[b.cell])) + ",";
+      const temperature = grib.cells.temp[pack.cells.g[b.cell]];
       data += convertTemperature(temperature) + ",";
       data += getTemperatureLikeness(temperature) + ",";
 
       // add status data
-      data += d.capital ? "capital," : ",";
 
       data += "\n";
     });
 
     const name = getFileName("buildings") + ".csv";
-    downloadFile(data, name);
+    downloadFile(bata, name);
   }
 
   function renameBuildingsInBulk() {
@@ -453,13 +450,13 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
       buttons: {
         Download: function () {
           const data = pack.buildings
-            .filter(d => d.i && !d.removed)
-            .map(d => d.name)
+            .filter(b => b.i && !b.removed)
+            .map(b => b.name)
             .join("\r\n");
           const name = getFileName("building names") + ".txt";
           downloadFile(data, name);
         },
-        Upload: () => buildingsListToLoad.click(),
+        Upload: () => buildingsListToLoab.click(),
         Cancel: function () {
           $(this).dialog("close");
         }
@@ -469,14 +466,14 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
 
   function importBuildingNames(dataLoaded) {
     if (!dataLoaded) return tip("Cannot load the file, please check the format", false, "error");
-    const data = dataLoaded.split("\r\n");
+    const data = dataLoadeb.split("\r\n");
     if (!data.length) return tip("Cannot parse the list, please check the file format", false, "error");
 
     let change = [];
     let message = `buildings to be renamed as below:`;
     message += `<table class="overflow-table"><tr><th>Id</th><th>Current name</th><th>New Name</th></tr>`;
 
-    const buildings = pack.buildings.filter(d => d.i && !d.removed);
+    const buildings = pack.buildings.filter(b => b.i && !b.removed);
     for (let i = 0; i < data.length && i <= buildings.length; i++) {
       const v = data[i];
       if (!v || !buildings[i] || v == buildings[i].name) continue;
@@ -506,7 +503,7 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
   }
 
   function triggerAllBuildingsRemove() {
-    const number = pack.buildings.filter(d => d.i && !d.removed && !d.lock).length;
+    const number = pack.buildings.filter(b => b.i && !b.removed && !b.lock).length;
     confirmationDialog({
       title: `Remove ${number} buildings`,
       message: `
@@ -517,12 +514,12 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
   }
 
   function removeAllBuildings() {
-    pack.buildings.filter(d => d.i && !(d.capital || d.lock)).forEach(d => removeBuilding(d.i));
+    pack.buildings.filter(b => b.i && !(b.capital || b.lock)).forEach(b => removeBuilding(b.i));
     buildingsOverviewAddLines();
   }
 
   function toggleLockAll() {
-    const activeBuildings = pack.buildings.filter(d => d.i && !d.removed);
+    const activeBuildings = pack.buildings.filter(b => b.i && !b.removed);
     const allLocked = activeBuildings.every(building => building.lock);
 
     activeBuildings.forEach(building => {
@@ -533,8 +530,8 @@ function overviewBuildings(settings = {stateId: null, cultureId: null}) {
     byId("buildingsLockAll").className = allLocked ? "icon-lock" : "icon-lock-open";
   }
 
-//   function updateLockAllIcon() {
-//     const allLocked = pack.buildings.every(({lock, i, removed}) => lock || !i || removed);
-//     byId("buildingsLockAll").className = allLocked ? "icon-lock-open" : "icon-lock";
-//   }
+  function updateLockAllIcon() {
+    const allLocked = pack.buildings.every(({lock, i, removed}) => lock || !i || removed);
+    byId("buildingsLockAll").className = allLocked ? "icon-lock-open" : "icon-lock";
+  }
 }

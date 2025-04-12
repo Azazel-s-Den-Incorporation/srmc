@@ -82,7 +82,7 @@ function handleKeyup(event) {
   else if (code === "KeyA") togglePrecipitation();
   else if (code === "KeyY") toggleEmblems();
   else if (code === "KeyL") toggleLabels();
-  else if (code === "KeyI") toggleBurgIcons();
+  else if (code === "KeyI") toggleBurgIcons(), toggleBuildingIcons();
   else if (code === "KeyM") toggleMilitary();
   else if (code === "KeyK") toggleMarkers();
   else if (code === "Equal" && !customization) toggleRulers();

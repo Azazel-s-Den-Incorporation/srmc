@@ -375,12 +375,15 @@ function selectStyleElement() {
 
   // update group options
   styleGroupSelect.options.length = 0; // remove all options
-  if (["routes", "labels", "coastline", "lakes", "anchors", "burgIcons", "borders", "terrs"].includes(styleElement)) {
+  if (["routes", "labels", "coastline", "lakes", "anchors", "burgIcons", "buildingIcons", "borders", "terrs"].includes(styleElement)) {
     const groups = byId(styleElement).querySelectorAll("g");
     groups.forEach(el => {
       if (el.id === "burgLabels") return;
-      const option = new Option(`${el.id} (${el.childElementCount})`, el.id, false, false);
-      styleGroupSelect.options.add(option);
+      const optionA = new Option(`${el.id} (${el.childElementCount})`, el.id, false, false);
+      styleGroupSelect.options.add(optionA);
+      if (el.id === "buildingLabels") return;
+      const optionB = new Option(`${el.id} (${el.childElementCount})`, el.id, false, false);
+      styleGroupSelect.options.add(optionB);
     });
     styleGroupSelect.value = el.attr("id");
     styleGroup.style.display = "block";
@@ -1014,6 +1017,11 @@ emblemsBurgSizeInput.on("change", e => {
   drawEmblems();
 });
 
+emblemsBuildingSizeInput.on("change", e => {
+  emblems.select("#buildingEmblems").attr("data-size", e.target.value);
+  drawEmblems();
+});
+
 // request a URL to image to be used as a texture
 function textureProvideURL() {
   alertMessage.innerHTML = /* html */ `Provide a texture image URL:
@@ -1172,6 +1180,20 @@ function updateElements() {
         this.setAttribute("r", size);
       });
     burgLabels
+      .select("g#" + this.id)
+      .selectAll("text")
+      .each(function () {
+        this.setAttribute("dy", `${size * -1.5}px`);
+      });
+  })
+  buildingIcons.selectAll("g").each(function () {
+    const size = +this.getAttribute("size");
+    d3.select(this)
+      .selectAll("circle")
+      .each(function () {
+        this.setAttribute("r", size);
+      });
+    buildingLabels
       .select("g#" + this.id)
       .selectAll("text")
       .each(function () {

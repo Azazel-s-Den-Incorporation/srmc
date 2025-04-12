@@ -328,6 +328,82 @@
     "data-y": 93,
     "data-columns": 8
   },
+  "#buildingLabels > #buildings": {
+    "opacity": 1,
+    "fill": "#dddddd" ,
+    "text-shadow": "black 1px 1px 0px",
+    "letter-spacing": 0,
+    "data-size": 8,
+    "font-size": 8,
+    "font-family": "Stint Ultra Condensed" 
+  },
+  "#buildingIcons > #buildings": {
+    "opacity": 1,
+    "fill": "#dddddd",
+    "fill-opacity": 1,
+    "size": 1,
+    "stroke": "#ffffff",
+    "stroke-width": 0.2,
+    "stroke-dasharray": "",
+    "stroke-linecap": "round"
+  },
+  "#buildingLabels > #production": {
+    "opacity": 1,
+    "fill": "#dddddd" ,
+    "text-shadow": "black 1px 1px 0px",
+    "letter-spacing": 0,
+    "data-size": 8,
+    "font-size": 8,
+    "font-family": "Stint Ultra Condensed" 
+  },
+  "#buildingIcons > #production": {
+    "opacity": 1,
+    "fill": "#dddddd",
+    "fill-opacity": 1,
+    "size": 1,
+    "stroke": "#ffffff",
+    "stroke-width": 0.2,
+    "stroke-dasharray": "",
+    "stroke-linecap": "round"
+  },
+  "#buildingLabels > #logistics": {
+    "opacity": 1,
+    "fill": "#dddddd",
+    "text-shadow": "black 1px 1px 0px",
+    "letter-spacing": 0,
+    "data-size": 8,
+    "font-size": 8,
+    "font-family": "Stint Ultra Condensed" 
+  },
+  "#buildingIcons > #logistics": {
+    "opacity": 1,
+    "fill": "#dddddd",
+    "fill-opacity": 1,
+    "size": 1,
+    "stroke": "#ffffff",
+    "stroke-width": 0.2,
+    "stroke-dasharray": "",
+    "stroke-linecap": "round"
+  },
+  "#buildingLabels > #power": {
+    "opacity": 1,
+    "fill": "#dddddd",
+    "text-shadow": "black 1px 1px 0px",
+    "letter-spacing": 0,
+    "data-size": 8,
+    "font-size": 8,
+    "font-family": "Stint Ultra Condensed" 
+  },
+  "#buildingIcons > #power": {
+    "opacity": 1,
+    "fill": "#dddddd",
+    "fill-opacity": 1,
+    "size": 1,
+    "stroke": "#ffffff",
+    "stroke-width": 0.2,
+    "stroke-dasharray": "",
+    "stroke-linecap": "round"
+  },
   "#burgLabels > #cities": {
     "opacity": 1,
     "fill": "#ffffff",

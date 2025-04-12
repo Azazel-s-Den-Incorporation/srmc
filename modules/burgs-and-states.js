@@ -90,7 +90,7 @@ window.BurgsAndStates = (() => {
         const basename = b.name.length < 9 && each5th(b.cell) ? b.name : Names.getCultureShort(b.culture);
         const name = Names.getState(basename, b.culture);
         const type = cultures[b.culture].type;
-        const wages = Math.random() * 10;
+        const wages = rn(Math.random() * 10, 1);
 
         const coa = COA.generate(null, null, null, type);
         coa.shield = COA.getShield(b.culture, null);

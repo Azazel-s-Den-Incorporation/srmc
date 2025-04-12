@@ -34,6 +34,7 @@ window.Resample = (function () {
     restoreRivers(riversData, projection, scale);
     restoreCultures(parentMap, projection);
     restoreBurgs(parentMap, projection, scale);
+    restoreBuildings(parentMap, projection, scale);
     restoreStates(parentMap, projection);
     restoreRoutes(parentMap, projection);
     restoreReligions(parentMap, projection);

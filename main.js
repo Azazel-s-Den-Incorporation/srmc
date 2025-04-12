@@ -132,6 +132,7 @@ population.append("g").attr("id", "urban");
 
 // emblem groups
 emblems.append("g").attr("id", "burgEmblems");
+emblems.append("g").attr("id", "buildingEmblems");
 emblems.append("g").attr("id", "provinceEmblems");
 emblems.append("g").attr("id", "stateEmblems");
 
@@ -676,14 +677,14 @@ async function generate(options) {
     Cultures.generate();
     Cultures.expand();
     BurgsAndStates.generate();
-    Buildings.generate();
+    BuildingsMain.generate();
     Routes.generate();
     Religions.generate();
     BurgsAndStates.defineStateForms();
     Provinces.generate();
     Provinces.getPoles();
     BurgsAndStates.defineBurgFeatures();
-    Buildings.defineBuildingFeatures();
+    BuildingsMain.defineBuildingFeatures();
 
     Rivers.specify();
     Features.specify();

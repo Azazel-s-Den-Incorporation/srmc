@@ -53,27 +53,23 @@ function editBuilding(id) {
 
   function updateBuildingValues() {
     const id = +elSelected.attr("data-id");
-    const d = pack.buildings[id];
-    const province = pack.cells.province[d.cell];
+    const b = pack.buildings[id];
+    const province = pack.cells.province[b.cell];
     const provinceName = province ? pack.provinces[province].fullName + ", " : "";
-    const stateName = pack.states[d.state].fullName || pack.states[d.state].name;
-    const wage = pack.states[d.state].wages;
+    const stateName = pack.states[b.state].fullName || pack.states[b.state].name;
+    const wage = pack.states[b.state].wages;
     byId("buildingProvinceAndState").innerHTML = provinceName + stateName;
 
-    byId("buildingName").value = d.name;
-    byId("buildingType").value = d.type || "Warehouse";
-    byId("buildingWorkers").value = rn(d.workers * workersRate * urbanization, 4);
-    byId("buildingWealth").value = rn(d.workers * workersRate * urbanization, 4) * wage;
+    byId("buildingName").value = b.name;
+    byId("buildingType").value = b.type || "buildings";
+    byId("buildingWorkers").value = rn(b.workers * workersRate * urbanization, 4);
+    byId("buildingWealth").value = rn(b.workers * workersRate * urbanization, 4) * wage;
 
-    const temperature = grid.cells.temp[pack.cells.g[d.cell]];
+    const temperature = grid.cells.temp[pack.cells.g[b.cell]];
     byId("buildingTemperature").innerHTML = convertTemperature(temperature);
     byId("buildingTemperatureLikeIn").dataset.tip =
       "Average yearly temperature is like in " + getTemperatureLikeness(temperature);
-    byId("buildingElevation").innerHTML = getHeight(pack.cells.h[d.cell]);
-
-    // toggle features
-    if (d.capital) byId("buildingCapital").classList.remove("inactive");
-    else byId("buildingCapital").classList.add("inactive");
+    byId("buildingElevation").innerHTML = getHeight(pack.cells.h[b.cell]);
 
     //toggle lock
     updateBuildingLockIcon();
@@ -89,7 +85,7 @@ function editBuilding(id) {
 
     // set emlem image
     const coaID = "buildingCOA" + id;
-    COArenderer.trigger(coaID, d.coa);
+    COArenderer.trigger(coaID, b.coa);
     byId("buildingEmblem").setAttribute("href", "#" + coaID);
 
     if (options.showBuildingPreview) {
@@ -205,7 +201,7 @@ function editBuilding(id) {
     for (let i = 0; i < group.children.length; i++) {
       buildingsInGroup.push(+group.children[i].dataset.id);
     }
-    const buildingsToRemove = buildingsInGroup.filter(b => !(pack.buildings[b].capital || pack.buildings[b].lock));
+    const buildingsToRemove = buildingsInGroup.filter(b => !(pack.buildings[d].lock));
     const capital = buildingsToRemove.length < buildingsInGroup.length;
 
     confirmationDialog({

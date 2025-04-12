@@ -91,6 +91,15 @@ const quantizationMap = {
     stackable: true,
     landOnly: true
   },
+  buildings_number: {
+    label: "Number of burgs",
+    quantize: cellId => (pack.cells.building[cellId] ? 1 : 0),
+    aggregate: values => d3.sum(values),
+    formatTicks: value => value,
+    stringify: value => value.toLocaleString(),
+    stackable: true,
+    landOnly: true
+  },
   average_elevation: {
     label: "Average elevation",
     quantize: cellId => pack.cells.h[cellId],
