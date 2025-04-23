@@ -160,8 +160,6 @@ function showMapTooltip(point, e, i, g) {
     }
   }
 
-  if (group === "terrain") return tip("Click to edit the Relief Icon");
-
   if (subgroup === "burgLabels" || subgroup === "burgIcons") {
     const burgId = +path[path.length - 10].dataset.id;
     if (burgId) {

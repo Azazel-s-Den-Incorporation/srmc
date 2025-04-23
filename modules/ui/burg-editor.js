@@ -292,7 +292,7 @@ function editBurg(id) {
 
     pack.burgs[id].population = rn(burgPopulation.value / populationRate / urbanization, 4);
     updateBurgPreview(burg);
-  }
+  } 
 
   function toggleFeature() {
     const id = +elSelected.attr("data-id");

@@ -93,7 +93,7 @@ function insertEditorHtml() {
 function addListeners() {
   applySortingByHeader("statesHeader");
 
-  byId("statesEditorRefresh").on("click", refreshStatesEditor);
+  byId("statesEditorRefresh").on("click", refreshStatesEditor, refreshStateEditor);
   byId("statesEditStyle").on("click", () => editStyle("regions"));
   byId("statesLegend").on("click", toggleLegend);
   byId("statesPercentage").on("click", togglePercentageMode);
@@ -109,6 +109,7 @@ function addListeners() {
   byId("statesAdd").on("click", enterAddStateMode);
   byId("statesMerge").on("click", openStateMergeDialog);
   byId("statesExport").on("click", downloadStatesCsv);
+  // byId("editState").on("click", openState);
 
   $body.on("click", event => {
     const $element = event.target;
@@ -126,6 +127,7 @@ function addListeners() {
     else if (classList.contains("icon-trash-empty")) stateRemovePrompt(stateId);
     else if (classList.contains("icon-lock") || classList.contains("icon-lock-open"))
       updateLockStatus(stateId, classList);
+    else if (byId("editState")) openState(stateId);
   });
 
   $body.on("input", function (ev) {
@@ -146,9 +148,238 @@ function addListeners() {
     else if (classList.contains("statePower")) stateChangeExpansionism(state, line, $element.value);
   });
 }
+export function openState() {
+  $("#stateEditor").dialog({
+    title: "Edit State",
+    resizable: false,
+    close: closeStateEditor,
+    position: {my: "left top", at: "left+10 top+10", of: "svg", collision: "fit"}
+  });
+}
+
+function insertStateEditorHtml() {
+  const s = pack.states;
+  const unit = getAreaUnit();
+  // const cells = pack.cells; 
+  const ruralpop = s.rural * populationRate;
+  const urbanpop = s.urban * populationRate * urbanization;
+  const population = rn(rural + urban);
+  const wealth = rn(population * s.wages);
+  const populationTip = `Total population: ${si(population)}; Rural population: ${si(ruralpop)}; Urban population: ${si(urbanpop)}. Click to change`;
+  const focused = defs.select("#fog #focusState" + s.i).size();
+  const editorStateHtml = /* html */
+    `<div
+          class="states"
+          data-id=${s.i}
+          data-name="${s.name}"
+          data-form="${s.formName}"
+          data-capital="${s.capital}"
+          data-color="${s.color}"
+          data-cells=${s.cells}
+          data-area=${s.area}
+          data-population=${population}
+          data-wealth=${wealth}
+          data-wages=${s.wages}
+          data-burgs=${s.burgs}
+          data-culture=${s.culture}
+          data-type=${s.type}
+          data-expansionism=${s.expansionism}
+        ><div id="stateEditor" class="dialog" style="display: none">
+            <div id="stateBody" style="padding-bottom: 0.3em">
+              <div style="display: flex; align-items: center">
+                <svg data-tip="State emblem. Click to edit" class="pointer" viewBox="0 0 200 200" width="13em" height="13em">
+                  <use id="stateEmblem"></use>
+                </svg>
+                <div style="display: grid; grid-auto-rows: minmax(1.6em, auto)">
+          <svg data-tip="Click to show and edit state emblem" class="coaIcon pointer" viewBox="0 0 200 200"><use href="#stateCOA${s.i}"></use></svg>
+          
+          
+          
+          <div data-tip="${populationTip}" class="statePopulation pointer hide" style="width: 5em"><span data-tip="${populationTip}" class="icon-male hide"></span>${si(population)}</div>
+          
+          
+          <span data-tip="State expansionism" class="icon-resize-full show hide"></span>
+          <input data-tip="Expansionism (defines competitive size). Change to re-calculate states based on new value"
+            class="statePower show hide" type="number" min="0" max="99" step=".1" value=${s.expansionism} />
+          <span data-tip="Cells count" class="icon-check-empty show hide"></span>
+          <div data-tip="Cells count" class="stateCells show hide">${s.cells}</div>
+          <span data-tip="Toggle state focus" class="icon-pin ${focused ? "" : " inactive"} hide"></span>
+          <span data-tip="Lock the state to protect it from re-generation" class="icon-lock${
+            s.lock ? "" : "-open"
+          } hide"></span>
+          <span data-tip="Remove the state" class="icon-trash-empty hide"></span>
+          <div>
+            <div class="label">Name:</div>
+            <input
+              id="stateName"
+              data-tip="Type to rename the state"
+              autocorrect="off"
+              spellcheck="false"
+              style="width: 9em"
+              value="${s.name}"
+              readonly
+            />
+            <input 
+              data-tip="State form name. Click to change"
+              class="stateForm name pointer"
+              value="${s.formName}"
+              readonly
+            />
+            <span data-tip="Speak the name. You can change voice and language in options" class="speaker">🔊</span>
+            <span
+              id="stateNameReRandom"
+              data-tip="Generate random name for the state"
+              class="icon-globe pointer"
+            ></span>
+          </div>
+          <div data-tip="Burgs count" class="stateBurgs hide"><span data-tip="Click to overview state burgs" style="padding-right: 1px" class="icon-dot-circled pointer hide"></span>${s.burgs}</div>
+
+          <div data-tip="Select state type. Type slightly affects emblem generation">
+            <div class="label">Type:</div>
+            <select data-tip="State type. Defines growth model. Click to change" class="cultureType show hide">${getTypeOptions(s.type)}</select>
+          </div>
+
+          <div data-tip="Select dominant culture">
+            <div class="label">Culture:</div>
+              <select data-tip="Dominant culture. Click to change" class="stateCulture hide">${getCultureOptions(s.culture)}</select>
+            <span
+              id="stateNameReCulture"
+              data-tip="Generate culture-specific name for the state"
+              class="icon-book pointer"
+            ></span>
+          </div>
+
+          <div data-tip="">
+            <div class="label"></div>
+            <span data-tip="State capital. Click to zoom into view" class="icon-star-empty pointer"></span>
+            <input data-tip="Capital name. Click and type to rename" class="stateCapital" value="${s.capital}" autocorrect="off" spellcheck="false" />
+          </div>
+
+          <div data-tip="">
+            <div class="label"></div>
+            <input id="" type="number" min="0" step="1" style="width: 9em"/>
+          </div>
+
+          <div data-tip="State population">
+            <div class="label">Population:</div>
+            <input id="statePopulation" type="number" min="0" step="1" style="width: 9em"/>
+          </div>
+
+          <div data-tip="State Economy">
+            <div class="label">Wealth:</div>
+            <input data-tip class="stateWealth pointer hide" id="stateWealth" type="number" min="0" step="0.01" style="width: 9em" value="${wealth}"/>Ð
+            <input data-tip class="stateWages pointer hide" id="stateWageRate" type="number" min="0" step="0.01" style="width: 9em" value="${s.wages}"/>Ð
+          </div>
+          
+          <div data-tip="Wage Rate">
+            <div class="label"></div>
+            <input id="stateWageRate" type="number" min="0" step="1" style="width: 9em"/>
+          </div>
+          <div data-tip="State area" class="stateArea hide" style="width: 6em">
+            <span data-tip="State area" style="padding-right: 4px" class="icon-map-o hide"></span>
+            ${si(s.area)} ${unit}
+          </div>
+
+          <div>
+            <div class="label">Features:</div>
+            <span
+              id="stateCapital"
+              data-tip="A"
+              data-feature="A"
+              class="statesFeature icon-star"
+            ></span>
+            <span
+              id="statePort"
+              data-tip="B"
+              data-feature="B"
+              class="statesFeature icon-anchor"
+            ></span>
+            <span
+              id="stateCitadel"
+              data-tip="C"
+              data-feature="C"
+              class="statesFeature icon-chess-rook"
+              style="font-size: 1.1em"
+            ></span>
+            <span
+              id="stateWalls"
+              data-tip="D"
+              data-feature="D"
+              class="stateFeature icon-fort-awesome"
+            ></span>
+            <span
+              id="statePlaza"
+              data-tip="E"
+              data-feature="E"
+              class="statesFeature icon-store"
+              style="font-size: 1em"
+            ></span>
+            <span
+              id="stateTemple"
+              data-tip="F"
+              data-feature="F"
+              class="statesFeature icon-chess-bishop"
+              style="font-size: 1.1em; margin-left: 3px"
+            ></span>
+            <span
+              id="stateShanty"
+              data-tip="G"
+              data-feature="G"
+              class="statesFeature icon-campground"
+              style="font-size: 1em"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+    <div id="stateBottom">
+      <button id="stateStyleShow" data-tip="Show style edit section" class="icon-brush"></button>
+      <div id="stateStyleSection" style="display: none">
+        <button id="stateStyleHide" data-tip="Hide style edit section" class="icon-brush"></button>
+        <button
+          id="stateEditLabelStyle"
+          data-tip="Edit label style for state group in Style Editor"
+          class="icon-font"
+        ></button>
+      </div>
+
+      <button id="stateEditEmblem" data-tip="Edit emblem" class="icon-shield-alt"></button>
+      <button id="stateTogglePreview" data-tip="Toggle preview" class="icon-map"></button>
+      <button id="stateLocate" data-tip="Zoom map and center view in the state" class="icon-target"></button>
+      <button
+        id="stateRelocate"
+        data-tip="Relocate state. Click on map to move the state"
+        class="icon-map-pin"
+      ></button>
+      <button id="statelLegend" data-tip="Edit free text notes (legend) for this state" class="icon-edit"></button>
+      <button id="stateLock" class="icon-lock-open" onmouseover="showElementLockTip(event)"></button>
+      <button
+        id="stateRemove"
+        data-tip="Remove state"
+        class="icon-trash fastDelete"
+      ></button>
+    </div>
+  </div>`;
+  
+  byId("dialogs").insertAdjacentHTML("beforeend", editorStateHtml);
+  return byId("stateEditor");
+}
+
+function closeStateEditor() {
+  byId("stateRelocate").classList.remove("pressed");
+  stateLabels.selectAll("text").call(d3.drag().on("drag", null)).classed("draggable", false);
+  unselect();
+}
+
+function refreshStateEditor() {
+  BurgsAndStates.collectStatistics();
+  insertStateEditorHtml();
+  statesEditorAddLines();
+}
 
 function refreshStatesEditor() {
   BurgsAndStates.collectStatistics();
+  insertStateEditorHtml();
   statesEditorAddLines();
 }
 
@@ -197,6 +428,7 @@ function statesEditorAddLines() {
         data-expansionism=""
       >
         <svg width="1em" height="1em" class="placeholder"></svg>
+        <svg width="1em" height="1em" class="placeholder"></svg>
         <input data-tip="Neutral lands name. Click to change" class="stateName name pointer italic" value="${
           s.name
         }" readonly />
@@ -242,6 +474,8 @@ function statesEditorAddLines() {
       data-expansionism=${s.expansionism}
     >
       <fill-box fill="${s.color}"></fill-box>
+      
+      <button id="editState" data-tip="Click to configure the State." class="icon-star" style="padding: 1px;" value="${s.i}"></button>
       <input data-tip="State name. Click to change" class="stateName name pointer" value="${s.name}" readonly />
       <svg data-tip="Click to show and edit state emblem" class="coaIcon pointer" viewBox="0 0 200 200"><use href="#stateCOA${
         s.i
@@ -475,6 +709,7 @@ function editStateName(state) {
     s.fullName = fullNameInput.value;
     if (changed && stateNameEditorUpdateLabel.checked) drawStateLabels([s.i]);
     refreshStatesEditor();
+refreshStateEditor();
   }
 }
 
@@ -563,6 +798,7 @@ function changePopulation(stateId) {
 
     if (layerIsOn("togglePopulation")) drawPopulation();
     refreshStatesEditor();
+refreshStateEditor();
   }
 }
 
@@ -652,6 +888,7 @@ function changeWealth(stateId) {
       burgs.forEach(b => (b.wealth = burgwealth));
     }
     refreshStatesEditor();
+refreshStateEditor();
   }
 }
 
@@ -698,6 +935,7 @@ function changeWealth(stateId) {
 //       pack.states[stateId].wages = wageinput.value;
 //     }
 //     refreshStatesEditor();
+refreshStateEditor();
 //   }
 // }
 
@@ -802,6 +1040,7 @@ function stateRemove(stateId) {
   if (layerIsOn("toggleProvinces")) drawProvinces();
 
   refreshStatesEditor();
+refreshStateEditor();
 }
 
 function toggleLegend() {
@@ -1004,6 +1243,7 @@ function recalculateStates(must) {
   if (adjustLabels.checked) drawStateLabels();
 
   refreshStatesEditor();
+refreshStateEditor();
 }
 
 function randomizeStatesExpansion() {
@@ -1138,6 +1378,7 @@ function applyStatesManualAssignent() {
 
   if (affectedStates.length) {
     refreshStatesEditor();
+refreshStateEditor();
     BurgsAndStates.getPoles();
     layerIsOn("toggleStates") ? drawStates() : toggleStates();
     if (adjustLabels.checked) drawStateLabels([...new Set(affectedStates)]);
@@ -1562,6 +1803,7 @@ function openStateMergeDialog() {
     drawStateLabels([rulingStateId]);
 
     refreshStatesEditor();
+refreshStateEditor();
   }
 }
 

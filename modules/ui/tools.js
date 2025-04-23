@@ -28,6 +28,7 @@ toolsContent.addEventListener("click", function (event) {
   else if (button === "overviewMilitaryButton") overviewMilitary();
   else if (button === "overviewMarkersButton") overviewMarkers();
   else if (button === "overviewCellsButton") viewCellDetails();
+  else if (button === "editState") stateEditorDialog();
 
   // click on Regenerate buttons
   if (event.target.parentNode.id === "regenerateFeature") {
@@ -486,92 +487,92 @@ function regenerateBurgs() {
   if (byId("statesEditorRefresh")?.offsetParent) statesEditorRefresh.click();
 }
 
-function regenerateBuildings() {
-  const {cells, features, buildings, states, provinces} = pack;
+// function regenerateBuildings() {
+//   const {cells, features, buildings, states, provinces} = pack;
 
-  rankCells();
+//   rankCells();
 
-  // remove notes for unlocked buildings
-  notes = notes.filter(note => {
-    if (note.id.startsWith("building")) {
-      const buildingId = +note.id.slice(4);
-      return buildings[buildingId]?.lock;
-    }
-    return true;
-  });
+//   // remove notes for unlocked buildings
+//   notes = notes.filter(note => {
+//     if (note.id.startsWith("building")) {
+//       const buildingId = +note.id.slice(4);
+//       return buildings[buildingId]?.lock;
+//     }
+//     return true;
+//   });
 
-  const newBuildings = [0]; // new buildings array
-  const buildingsTree = d3.quadtree();
+//   const newBuildings = [0]; // new buildings array
+//   const buildingsTree = d3.quadtree();
 
-  cells.building = new Uint16Array(cells.i.length); // clear cells building data
-  provinces.filter(p => p.i).forEach(p => (p.building = 0)); // clear province capitals
+//   cells.building = new Uint16Array(cells.i.length); // clear cells building data
+//   provinces.filter(p => p.i).forEach(p => (p.building = 0)); // clear province capitals
 
-  // readd locked buildings
-  const lockedbuildings = buildings.filter(building => building.i && !building.removed && building.lock);
-  for (let j = 0; j < lockedbuildings.length; j++) {
-    const lockedBuilding = lockedbuildings[j];
-    const newId = newBuildings.length;
+//   // readd locked buildings
+//   const lockedbuildings = buildings.filter(building => building.i && !building.removed && building.lock);
+//   for (let j = 0; j < lockedbuildings.length; j++) {
+//     const lockedBuilding = lockedbuildings[j];
+//     const newId = newBuildings.length;
 
-    const noteIndex = notes.findIndex(note => note.id === `building${lockedBuilding.i}`);
-    if (noteIndex !== -1) notes[noteIndex].id = `building${newId}`;
+//     const noteIndex = notes.findIndex(note => note.id === `building${lockedBuilding.i}`);
+//     if (noteIndex !== -1) notes[noteIndex].id = `building${newId}`;
 
-    lockedBuilding.i = newId;
-    newBuildings.push(lockedBuilding);
+//     lockedBuilding.i = newId;
+//     newBuildings.push(lockedBuilding);
 
-    buildingsTree.add([lockedBuilding.x, lockedBuilding.y]);
-    cells.building[lockedBuilding.cell] = newId;
-  }
+//     buildingsTree.add([lockedBuilding.x, lockedBuilding.y]);
+//     cells.building[lockedBuilding.cell] = newId;
+//   }
 
-  const score = new Int16Array(cells.s.map(s => s * Math.random())); // cell score for capitals placement
-  const sorted = cells.i.filter(i => score[i] > 0 && cells.culture[i]).sort((a, b) => score[b] - score[a]); // filtered and sorted array of indexes
-  const existingStatesCount = states.filter(s => s.i && !s.removed).length;
-  const buildingsCount =
-    (manorsInput.value === "1000" ? rn(sorted.length / 5 / (grid.points.length / 10000) ** 0.8) : +manorsInput.value) +
-    existingStatesCount;
-  const spacing = (graphWidth + graphHeight) / 150 / (buildingsCount ** 0.7 / 66); // base min distance between towns
+//   const score = new Int16Array(cells.s.map(s => s * Math.random())); // cell score for capitals placement
+//   const sorted = cells.i.filter(i => score[i] > 0 && cells.culture[i]).sort((a, b) => score[b] - score[a]); // filtered and sorted array of indexes
+//   const existingStatesCount = states.filter(s => s.i && !s.removed).length;
+//   const buildingsCount =
+//     (manorsInput.value === "1000" ? rn(sorted.length / 5 / (grid.points.length / 10000) ** 0.8) : +manorsInput.value) +
+//     existingStatesCount;
+//   const spacing = (graphWidth + graphHeight) / 150 / (buildingsCount ** 0.7 / 66); // base min distance between towns
 
-  for (let i = 0; i < sorted.length && newBuildings.length < buildingsCount; i++) {
-    const id = newBuildings.length;
-    const cell = sorted[i];
-    const [x, y] = cells.p[cell];
+//   for (let i = 0; i < sorted.length && newBuildings.length < buildingsCount; i++) {
+//     const id = newBuildings.length;
+//     const cell = sorted[i];
+//     const [x, y] = cells.p[cell];
 
-    const s = spacing * gauss(1, 0.3, 0.2, 2, 2); // randomize to make the placement not uniform
-    if (buildingsTree.find(x, y, s) !== undefined) continue; // to close to existing building
+//     const s = spacing * gauss(1, 0.3, 0.2, 2, 2); // randomize to make the placement not uniform
+//     if (buildingsTree.find(x, y, s) !== undefined) continue; // to close to existing building
 
-    const stateId = cells.state[cell];
-    const capital = stateId && !states[stateId].capital; // if state doesn't have capital, make this building a capital, no capital for neutral lands
-    if (capital) {
-      states[stateId].capital = id;
-      states[stateId].center = cell;
-    }
+//     const stateId = cells.state[cell];
+//     const capital = stateId && !states[stateId].capital; // if state doesn't have capital, make this building a capital, no capital for neutral lands
+//     if (capital) {
+//       states[stateId].capital = id;
+//       states[stateId].center = cell;
+//     }
 
-    const culture = cells.culture[cell];
-    const name = Names.getCulture(culture);
-    newBuildings.push({cell, x, y, state: stateId, i: id, name, feature: cells.f[cell]});
-    buildingsTree.add([x, y]);
-    cells.building[cell] = id;
-  }
+//     const culture = cells.culture[cell];
+//     const name = Names.getCulture(culture);
+//     newBuildings.push({cell, x, y, state: stateId, i: id, name, feature: cells.f[cell]});
+//     buildingsTree.add([x, y]);
+//     cells.building[cell] = id;
+//   }
 
-  pack.buildings = newBuildings; // assign new buildings array
+//   pack.buildings = newBuildings; // assign new buildings array
 
-  features.forEach(f => {
-    if (f.port) f.port = 0; // reset features ports counter
-  });
+//   features.forEach(f => {
+//     if (f.port) f.port = 0; // reset features ports counter
+//   });
 
-  BuildingsMain.specifyBuildings();
-  BuildingsMain.defineBuildingFeatures();
-  regenerateRoutes();
+//   BuildingsMain.specifyBuildings();
+//   BuildingsMain.defineBuildingFeatures();
+//   regenerateRoutes();
 
-  drawBuildingIcons();
-  drawBuildingLabels();
+//   drawBuildingIcons();
+//   drawBuildingLabels();
 
-  // remove emblems
-  document.querySelectorAll("[id^=buildingCOA]").forEach(el => el.remove());
-  emblems.selectAll("use").remove();
-  if (layerIsOn("toggleEmblems")) drawEmblems();
+//   // remove emblems
+//   document.querySelectorAll("[id^=buildingCOA]").forEach(el => el.remove());
+//   emblems.selectAll("use").remove();
+//   if (layerIsOn("toggleEmblems")) drawEmblems();
 
-  if (byId("buildingsOverviewRefresh")?.offsetParent) buildingsOverviewRefresh.click();
-}
+//   if (byId("buildingsOverviewRefresh")?.offsetParent) buildingsOverviewRefresh.click();
+// }
 
 function regenerateEmblems() {
   // remove old emblems

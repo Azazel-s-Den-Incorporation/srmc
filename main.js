@@ -207,6 +207,8 @@ let options = {
 };
 
 let mapCoordinates = {}; // map coordinates on globe
+
+// Global Variables
 let populationRate = +byId("populationRateInput").value;
 let distanceScale = +byId("distanceScaleInput").value;
 let urbanization = +byId("urbanizationInput").value;
@@ -357,9 +359,9 @@ function focusOn() {
   const scaleParam = params.get("scale");
   const cellParam = params.get("cell");
   const burgParam = params.get("burg");
-  const buildingParam = params.get("building");
+  // const buildingParam = params.get("building");
 
-  if (scaleParam || cellParam || burgParam || buildingParam) {
+  if (scaleParam || cellParam || burgParam ) {
     const scale = +scaleParam || 8;
 
     if (cellParam) {
@@ -378,14 +380,14 @@ function focusOn() {
       return;
     }
 
-    if (buildingParam) {
-      const building = isNaN(+buildingParam) ? pack.buildings.find(building => building.name === buildingParam) : pack.buildings[+buildingParam];
-      if (!building) return;
+    // if (buildingParam) {
+    //   const building = isNaN(+buildingParam) ? pack.buildings.find(building => building.name === buildingParam) : pack.buildings[+buildingParam];
+    //   if (!building) return;
 
-      const {x, y} = building;
-      zoomTo(x, y, scale, 1600);
-      return;
-    }
+    //   const {x, y} = building;
+    //   zoomTo(x, y, scale, 1600);
+    //   return;
+    // }
 
     const x = +params.get("x") || graphWidth / 2;
     const y = +params.get("y") || graphHeight / 2;
@@ -677,14 +679,14 @@ async function generate(options) {
     Cultures.generate();
     Cultures.expand();
     BurgsAndStates.generate();
-    BuildingsMain.generate();
+    // BuildingsMain.generate();
     Routes.generate();
     Religions.generate();
     BurgsAndStates.defineStateForms();
     Provinces.generate();
     Provinces.getPoles();
     BurgsAndStates.defineBurgFeatures();
-    BuildingsMain.defineBuildingFeatures();
+    // BuildingsMain.defineBuildingFeatures();
 
     Rivers.specify();
     Features.specify();

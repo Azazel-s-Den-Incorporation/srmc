@@ -104,7 +104,8 @@ window.BurgsAndStates = (() => {
           center: b.cell,
           culture: b.culture,
           coa,
-          wages
+          wages,
+          
         });
         cells.burg[b.cell] = i;
       });
