@@ -66,6 +66,18 @@ iframe {
   width: 100%;
 }
 
+audio {
+  display: flex;
+  width: 420px;
+  height: 20px;
+  margin: 9px;
+  position: absolute;
+}
+
+#menu-screen audio {
+  display: none;
+}
+
 #map {
   background-color: #000000;
   mask-mode: alpha;

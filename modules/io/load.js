@@ -72,7 +72,7 @@ function loadLastSavedMap() {
 }
 
 function loadMapFromServer() {
-  const mapserverfile = "https://map.azazelsden.xyz/saves/loaded.map";
+  const mapserverfile = "saves/loaded.map";
   try {
   fetch(mapserverfile, {method: "GET", mode: "cors"})
   .then(response => {

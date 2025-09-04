@@ -9,6 +9,7 @@ $("#mapLayers").disableSelection();
 if (stored("disable_click_arrow_tooltip")) {
   clearMainTip();
   optionsTrigger.classList.remove("glow");
+  azazelsden.classList.remove("glow");
 }
 
 // Show options pane on trigger click
@@ -16,13 +17,12 @@ function showOptions(event) {
   if (!stored("disable_click_arrow_tooltip")) {
     clearMainTip();
     localStorage.setItem("disable_click_arrow_tooltip", true);
+    azazelsden.classList.remove("glow");
     optionsTrigger.classList.remove("glow");
   }
-
-  // azazelsden.style.display = "none";
   byId("options").style.display = "block";
   optionsTrigger.style.display = "none";
-
+  azazelsden.style.display = "none";
   if (event) event.stopPropagation();
 }
 
@@ -30,6 +30,7 @@ function showOptions(event) {
 function hideOptions(event) {
   byId("options").style.display = "none";
   optionsTrigger.style.display = "block";
+  azazelsden.style.display = "block";
   if (event) event.stopPropagation();
 }
 
@@ -40,14 +41,17 @@ function toggleOptions(event) {
 }
 
 // Toggle "New Map!" pane on hover
-// optionsTrigger.addEventListener("mouseenter", function () {
-//   if (optionsTrigger.classList.contains("glow")) return;
-//   if (byId("options").style.display === "none") azazelsden.style.display = "block";
-// });
+optionsTrigger.addEventListener("mouseenter", function () {
+    if (optionsTrigger.classList.contains("glow")) return;
+    if (byId("options").style.display === "none")
+      regenerate.style.display = "block";
+  }
+);
 
-// collapsible.addEventListener("mouseleave", function () {
-//   azazelsden.style.display = "none";
-// });
+collapsible.addEventListener("mouseleave", function () {
+    azazelsden.classList.remove("glow");
+    optionsTrigger.classList.remove("glow");
+});
 
 // Activate options tab on click
 document

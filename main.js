@@ -37,6 +37,8 @@ if (PRODUCTION && "serviceWorker" in navigator) {
   );
 }
 
+
+
 // append svg layers (in default order)
 let svg = d3.select("#map");
 let defs = svg.select("#deftemp");
@@ -266,26 +268,30 @@ function showLoading() {
 }
 
 // decide which map should be loaded or generated on page load
-async function checkLoadParameters() {
+  let loadFunction = "new";
+  
+  async function checkLoadParameters() {
   const url = new URL(window.location.href);
   const params = url.searchParams;
-
   // of there is a valid maplink, try to load .map/.gz file from URL
-  if (params.get("maplink")) {
-    WARN && console.warn("Load map from URL");
-    const maplink = params.get("maplink");
-    const pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    const valid = pattern.test(maplink);
-    if (valid) {
-      setTimeout(() => {
-        loadMapFromURL(maplink, 1);
-      }, 1000);
-      return;
-    } else showUploadErrorMessage("Map link is not a valid URL", maplink);
+
+  if (loadFunction === "link") {
+    if (params.get("maplink")) {
+      WARN && console.warn("Load map from URL");
+      const maplink = params.get("maplink");
+      const pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+      const valid = pattern.test(maplink);
+      if (valid) {
+        setTimeout(() => {
+          loadMapFromURL(maplink, 1);
+        }, 1000);
+        return;
+      } else showUploadErrorMessage("Map link is not a valid URL", maplink);
+    }
   }
 
   // loading from the server
-  if (byId("onloadBehavior").value === "server") {
+  if (loadFunction === "server") {
     WARN && console.warn("Load map from Server");
     loadMapFromServer();
     return;
@@ -299,7 +305,7 @@ async function checkLoadParameters() {
   }
 
   // check if there is a map saved to indexedDB
-  if (byId("onloadBehavior").value === "lastSaved") {
+  if (loadFunction === "lastSaved") {
     try {
       const blob = await ldb.get("lastMap");
       if (blob) {
@@ -313,8 +319,14 @@ async function checkLoadParameters() {
   }
 
   // else generate random map
-  WARN && console.warn("Generate random map");
-  generateMapOnLoad();
+  if (loadFunction === "new") {
+    try {
+      WARN && console.warn("Generate random map");
+      generateMapOnLoad();
+    } catch (error) {
+      ERROR && console.error(error);
+    }
+  }
 }
 
 async function generateMapOnLoad() {

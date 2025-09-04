@@ -75,7 +75,12 @@ async function cleanupData() {
   localStorage.clear();
   localStorage.setItem("version", VERSION);
   localStorage.setItem("disable_click_arrow_tooltip", "true");
-  location.reload();
+  if (location == "index.html") {
+    location.reload();
+    optionsButton();
+  } else if (location == "gamesession.html") {
+    location.reload();
+  }
 }
 
 async function clearCache() {
