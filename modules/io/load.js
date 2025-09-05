@@ -121,7 +121,10 @@ function showUploadErrorMessage(error, URL, random) {
 
 function uploadMap(file, callback) {
   uploadMap.timeStart = performance.now();
-
+  document.getElementById("menu-screen").style.display = "none";
+  document.getElementById("collapsible").style.display = "grid";
+  document.getElementById("saveMapButton").style.display = "flex";
+  document.getElementById("hideMenuButton").style.display = "flex";
   const fileReader = new FileReader();
   fileReader.onloadend = async function (fileLoadedEvent) {
     if (callback) callback();

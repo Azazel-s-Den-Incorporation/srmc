@@ -9,7 +9,7 @@ window.addEventListener("resize", function (e) {
 });
 
 if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
-  window.onbeforeunload = () => "Are you sure you want to navigate away?";
+  window.onbeforeunload = () => "Are you sure you want to navigate away? All unsaved work will be lost!";
 }
 
 // Tooltips
@@ -17,6 +17,8 @@ const tooltip = document.getElementById("tooltip");
 
 // show tip for non-svg elemets with data-tip
 document.getElementById("dialogs").addEventListener("mousemove", showDataTip);
+document.getElementById("dashbar").addEventListener("mousemove", showDataTip);
+document.getElementById("menu-screen").addEventListener("mousemove", showDataTip);
 document.getElementById("optionsContainer").addEventListener("mousemove", showDataTip);
 document.getElementById("exitCustomization").addEventListener("mousemove", showDataTip);
 

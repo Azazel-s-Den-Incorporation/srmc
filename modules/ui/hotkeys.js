@@ -27,7 +27,10 @@ function handleKeyup(event) {
   else if (code === "F6") saveMap("storage");
   else if (code === "F9") quickLoad();
   else if (code === "Tab") toggleOptions(event);
-  else if (code === "Escape") closeAllDialogs();
+  else if (code === "Escape" && document.getElementById("main-menu").style.display == "none" && document.getElementById("menu-screen").style.display == "flex") mainMenuButton();
+  // else if (code === "Escape" && document.getElementById("saveMapButton").style.display == "flex" && document.getElementsById("alert").style.display !== "none" && document.getElementById("menu-screen").style.display == "none") ;
+  else if (code === "Escape" && document.getElementById("saveMapButton").style.display == "flex" && document.getElementById("menu-screen").style.display == "none") closeAllDialogs(), menuScreen();
+  else if (code === "Escape" && document.getElementById("saveMapButton").style.display == "flex" && document.getElementById("menu-screen").style.display == "flex") menuScreen();
   else if (code === "Delete") removeElementOnKey();
   else if (code === "KeyO" && byId("canvas3d")) toggle3dOptions();
   else if (ctrl && code === "KeyQ") toggleSaveReminder();

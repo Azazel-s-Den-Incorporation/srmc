@@ -21,7 +21,7 @@ function setMusicVolume() {
         music.muted = false;
     }
     music.volume = musicVolume;
-    document.getElementById("musicVol").innerHTML = musicVolume*100;
+    document.getElementById("musicVol").innerHTML = rn(musicVolume*100, 1);
 }
 
 function muteMusicToggle() {
@@ -39,5 +39,5 @@ function setSFXVolume() {
         sfx.muted = false;
     }
     sfx.volume = sfxVolume;
-    document.getElementById("sfxVol").innerHTML = sfxVolume*100;
+    document.getElementById("sfxVol").innerHTML = rn(sfxVolume*100, 1);
 }

@@ -1,26 +1,29 @@
 function editWorld() {
   if (customization) return;
 
-  $("#worldConfigurator").dialog({
-    title: "Configure World",
-    resizable: false,
-    width: "minmax(40em, 85vw)",
-    buttons: {"Update world": updateWorld},
-    open: function () {
-      const checkbox = /* html */ `<div class="dontAsk" data-tip="Automatically update world on input changes and button clicks">
-        <input id="wcAutoChange" class="checkbox" type="checkbox" checked />
-        <label for="wcAutoChange" class="checkbox-label"><i>auto-apply changes</i></label>
-      </div>`;
-      const pane = this.parentElement.querySelector(".ui-dialog-buttonpane");
-      pane.insertAdjacentHTML("afterbegin", checkbox);
+  clearMenu()
+  document.getElementById("worldConfigurator").style.display = "flex";
 
-      const button = this.parentElement.querySelector(".ui-dialog-buttonset > button");
-      button.on("mousemove", () => tip("Apply current settings to the map"));
-    },
-    close: function () {
-      $(this).dialog("destroy");
-    }
-  });
+  // $("#worldConfigurator").dialog({
+  //   title: "Configure World",
+  //   resizable: false,
+  //   width: "minmax(40em, 85vw)",
+  //   buttons: {"Update world": updateWorld},
+  //   open: function () {
+  //     const checkbox = /* html */ `<div class="dontAsk" data-tip="Automatically update world on input changes and button clicks">
+  //       <input id="wcAutoChange" class="checkbox" type="checkbox" checked />
+  //       <label for="wcAutoChange" class="checkbox-label"><i>auto-apply changes</i></label>
+  //     </div>`;
+  //     const pane = this.parentElement.querySelector(".ui-dialog-buttonpane");
+  //     pane.insertAdjacentHTML("afterbegin", checkbox);
+
+  //     const button = this.parentElement.querySelector(".ui-dialog-buttonset > button");
+  //     button.on("mousemove", () => tip("Apply current settings to the map"));
+  //   },
+  //   close: function () {
+  //     $(this).dialog("destroy");
+  //   }
+  // });
 
   const globe = d3.select("#globe");
   const projection = d3.geoOrthographic().translate([100, 100]).scale(100);

@@ -19,6 +19,69 @@ font {
   pointer-events: none;
 }
 
+#dashbar {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  z-index: 666;
+  float: right;
+  background-color: #393939;
+}
+
+#layersContent {
+  display: flex;
+  flex-flow: column;
+  align-self: flex-start;
+  justify-content: center;
+  width: 95px;
+  height: 100%;
+  position: absolute;
+  z-index: 666;
+  background-color: #1e1e1e8e;
+}
+
+#savePresetButton,
+#removePresetButton {
+  width: 10%;
+  font-size: 1dvh;
+  padding: 0;
+}
+
+#layersPreset {
+  width: 70%;
+  font-size: 1.2dvh;
+  padding: 0;
+}
+
+#layersContent * li {
+  list-style-type: none;
+  background-color: var(--bg-main);
+  cursor: pointer;
+  padding: 0.35em;
+  margin: 0.2em 0.3em;
+  float: left;
+  width: 80px;
+  text-align: center;
+  text-transform: capitalize;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#layersContent * li.buttonoff {
+  background-color: var(--bg-disabled);
+  color: #444444aa;
+}
+
+#layersContent * li:hover {
+  box-shadow: 0 0 2px 2px var(--dark-solid) 17;
+}
+
+.tabcontent button:hover {
+  background-color: var(--header);
+}
+
 input,
 select,
 button {
@@ -76,14 +139,6 @@ audio {
 
 #menu-screen audio {
   display: none;
-}
-
-#map {
-  background-color: #000000;
-  mask-mode: alpha;
-  mask-clip: no-clip;
-  fill-rule: evenodd;
-  user-select: none;
 }
 
 #canvas {
@@ -403,7 +458,7 @@ button.ui-button:disabled:hover {
   margin: 11px;
   border: 0;
   position: absolute;
-  z-index: 2;
+  z-index: 400;
   display: grid;
   grid-template-columns: 2fr 7fr;
 }
@@ -766,34 +821,6 @@ fieldset {
   border: 1px solid var(--dark-solid);
 }
 
-.tabcontent li {
-  list-style-type: none;
-  background-color: var(--bg-main);
-  cursor: pointer;
-  padding: 0.35em;
-  margin: 0.2em 0.3em;
-  float: left;
-  width: 45%;
-  text-align: center;
-  text-transform: capitalize;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.tabcontent li.buttonoff {
-  background-color: var(--bg-disabled);
-  color: #444444aa;
-}
-
-.tabcontent li:hover {
-  box-shadow: 0 0 2px 2px var(--dark-solid) 17;
-}
-
-.tabcontent button:hover {
-  background-color: var(--header);
-}
 
 #optionsContainer span {
   cursor: default;
@@ -814,7 +841,7 @@ fieldset {
   color: #ffffff;
   font-size: calc(12px + 0.5vw);
   white-space: pre-line;
-  z-index: 99999;
+  z-index: 100000;
   background: linear-gradient(0.1turn, #ffffff00, #c71d1d66, #ffffff00);
 }
 
@@ -911,7 +938,7 @@ fieldset {
 .matrix-table > table td:hover {
   outline: 2px solid var(--dark-solid);
   outline-offset: -1px;
-  z-index: 1;
+  z-index: 2;
   cursor: pointer;
 }
 
@@ -2156,8 +2183,14 @@ svg.button {
   color: blue;
 }
 
+#worldConfigurator {
+  width: 100%;
+  height: 100%;
+  font-size: 2dvh;
+}
+
 #worldControls {
-  width: 16em;
+  width: 50%;
   display: inline-block;
   vertical-align: top;
 }
@@ -2177,7 +2210,7 @@ svg.button {
 #worldControls i.icon-lock-open,
 #worldControls i.icon-lock {
   color: #626573;
-  font-size: 0.8em;
+  font-size: 2dvh;
   cursor: pointer;
 }
 

@@ -29,6 +29,7 @@ function showOptions(event) {
 // Hide options pane on trigger click
 function hideOptions(event) {
   byId("options").style.display = "none";
+  optionsContainer.style.display = "block";
   optionsTrigger.style.display = "block";
   azazelsden.style.display = "block";
   if (event) event.stopPropagation();
@@ -130,7 +131,7 @@ function updateOutputToFollowInput(ev) {
 }
 
 // Option listeners
-const optionsContent = byId("optionsContent");
+const optionsContent = byId("menu");
 
 optionsContent.addEventListener("input", event => {
   const {id, value} = event.target;
@@ -154,7 +155,6 @@ optionsContent.addEventListener("change", event => {
   else if (id === "yearInput") changeYear();
   else if (id === "eraInput") changeEra();
   else if (id === "stateLabelsModeInput") options.stateLabelsMode = value;
-  else if (id === "azgaarAssistant") toggleAssistant();
 });
 
 optionsContent.addEventListener("click", event => {
@@ -411,6 +411,7 @@ function changeUiSize(value) {
   uiSize.value = value;
   document.getElementsByTagName("body")[0].style.fontSize = rn(value * 10, 2) + "px";
   byId("options").style.width = value * 300 + "px";
+  byId("main-menu-container").style.width = value * 500 + "px";
 }
 
 function getUImaxSize() {
@@ -520,9 +521,9 @@ function changeZoomExtent(value) {
 }
 
 function restoreDefaultZoomExtent() {
-  zoomExtentMin.value = 1;
+  zoomExtentMin.value = 0.5;
   zoomExtentMax.value = 20;
-  zoom.scaleExtent([1, 20]).scaleTo(svg, 1);
+  zoom.scaleExtent([0.5, 20]).scaleTo(svg, 1);
 }
 
 // restore options stored in localStorage

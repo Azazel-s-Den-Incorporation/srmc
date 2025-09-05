@@ -185,7 +185,7 @@ const onZoom = debounce(function () {
 
   handleZoom(isScaleChanged, isPositionChanged);
 }, 50);
-const zoom = d3.zoom().scaleExtent([1, 20]).on("zoom", onZoom);
+const zoom = d3.zoom().scaleExtent([0.8, 30]).on("zoom", onZoom);
 
 // default options, based on Earth data
 let options = {
@@ -214,6 +214,10 @@ let graphHeight = +mapHeightInput.value;
 // svg canvas resolution, can be changed
 let svgWidth = graphWidth;
 let svgHeight = graphHeight;
+
+// main menu
+async function mainMenuInit() {
+}
 
 landmass.append("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
 oceanPattern
@@ -248,8 +252,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   } else {
-    hideLoading();
-    await checkLoadParameters();
+      try {
+      WARN && console.warn("generating placeholder map");
+        handleLayersPresetChange("blank");
+        generateMapOnLoad();
+      WARN && console.warn("generated playceholder map");
+      WARN && console.warn("Main menu");
+        document.getElementById("menu-screen").style.display = "flex";
+      WARN && console.warn(VERSION);
+        document.getElementById("versionText").innerHTML = 'v'+VERSION;
+        document.getElementById("saveMapButton").style.display = "none";
+        document.getElementById("hideMenuButton").style.display = "none";
+      WARN && console.warn("Main menu loaded");
+    } catch (error) {
+      ERROR && console.error(error);
+    }
+    try {
+        handleLayersPresetChange("physical");
+        await hideLoading();
+      WARN && console.warn("Loading Main Menu Complete");
+    } catch (error) {
+      ERROR && console.error(error);
+    }
   }
   restoreDefaultEvents(); // apply default viewbox events
   initiateAutosave();
@@ -257,18 +281,100 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function hideLoading() {
   d3.select("#loading").transition().duration(3000).style("opacity", 0);
-  d3.select("#optionsContainer").transition().duration(2000).style("opacity", 1);
+  d3.select("#menu-screen").transition().duration(3000).style("opacity", 1);
   d3.select("#tooltip").transition().duration(3000).style("opacity", 1);
 }
 
 function showLoading() {
   d3.select("#loading").transition().duration(200).style("opacity", 1);
-  d3.select("#optionsContainer").transition().duration(300).style("opacity", 0);
+  d3.select("#menu-screen").transition().duration(200).style("opacity", 0);
   d3.select("#tooltip").transition().duration(200).style("opacity", 0);
 }
+document.getElementById("menu-screen").style.display = "flex";
+
+function menuScreen() {
+  const mainmenu = document.getElementById("menu-screen")
+  const optionsContainer = document.getElementById("collapsible")
+  if (mainmenu.style.display == "flex"){
+    mainmenu.style.display = "none";
+    optionsContainer.style.display = "grid";
+  } else  if (mainmenu.style.display == "none"){
+    mainmenu.style.display = "flex";
+    optionsContainer.style.display = "none";
+  }
+}
+
+if (document.getElementById("menu-screen").style.display == "none") {
+  mainMenuButton();
+}
+
+function clearMenu() {
+  document.getElementById("main-menu").style.display = "none";
+  document.getElementById("new-map-menu").style.display = "none";
+  document.getElementById("save-menu").style.display = "none";
+  document.getElementById("load-menu").style.display = "none";
+  document.getElementById("worldConfigurator").style.display = "none";
+  document.getElementById("options-menu").style.display = "none";
+  document.getElementById("settings-menu").style.display = "none";
+  document.getElementById("dropbox-menu").style.display = "none";
+}
+
+function mainMenuButton() {
+  clearMenu();
+  document.getElementById("main-menu").style.display = "flex";
+} 
+
+function newMapButton() {
+  clearMenu();
+  document.getElementById("new-map-menu").style.display = "flex";
+} 
+
+function genNewMapButton() {
+  showLoading();
+  handleLayersPresetChange("blank");
+  mainMenuButton();
+  document.getElementById("menu-screen").style.display = "none";
+  generate(options);
+  handleLayersPresetChange("political");
+  hideLoading();
+  byId("optionsContainer").style.display = "block";
+  byId("optionsTrigger").style.display = "block";
+  document.getElementById("saveMapButton").style.display = "flex";
+  document.getElementById("hideMenuButton").style.display = "flex";
+} 
+
+function saveMapButton() {
+  clearMenu();
+  document.getElementById("save-menu").style.display = "flex";
+} 
+
+function loadMapButton() {
+  clearMenu();
+  document.getElementById("load-menu").style.display = "flex";
+} 
+
+function optionsButton() {
+  clearMenu();
+  document.getElementById("options-menu").style.display = "flex";
+} 
+
+function settingsButton() {
+  clearMenu();
+  document.getElementById("settings-menu").style.display = "flex";
+} 
+
+function dropboxButton() {
+  clearMenu();
+  document.getElementById("dropbox-menu").style.display = "flex";
+}
+
+function exitButton() {
+  window.location.href = "https://azazelsden.xyz";
+}
+
 
 // decide which map should be loaded or generated on page load
-  let loadFunction = "new";
+  let loadFunction = "menu";
   
   async function checkLoadParameters() {
   const url = new URL(window.location.href);
@@ -318,16 +424,19 @@ function showLoading() {
     }
   }
 
-  // else generate random map
+  // generate random map
   if (loadFunction === "new") {
     try {
       WARN && console.warn("Generate random map");
+      document.getElementById("map").style.display = "normal";
       generateMapOnLoad();
     } catch (error) {
       ERROR && console.error(error);
     }
   }
+
 }
+
 
 async function generateMapOnLoad() {
   await applyStyleOnLoad(); // apply previously selected default or custom style
@@ -336,7 +445,6 @@ async function generateMapOnLoad() {
   drawLayers();
   fitMapToScreen();
   focusOn(); // based on searchParams focus on point, cell or burg from MFCG
-  toggleAssistant();
 }
 
 // focus on coordinates, cell or burg provided in searchParams
@@ -386,30 +494,6 @@ function focusOn() {
   }
 }
 
-let isAssistantLoaded = false;
-function toggleAssistant() {
-  const assistantContainer = byId("chat-widget-container");
-  const showAssistant = byId("azgaarAssistant").value === "show";
-
-  if (showAssistant) {
-    if (isAssistantLoaded) {
-      assistantContainer.style.display = "block";
-    } else {
-      import("./libs/openwidget.min.js").then(() => {
-        isAssistantLoaded = true;
-        setTimeout(() => {
-          const bubble = byId("chat-widget-minimized");
-          if (bubble) {
-            bubble.dataset.tip = "Click to open the Assistant";
-            bubble.on("mouseover", showDataTip);
-          }
-        }, 5000);
-      });
-    }
-  } else if (isAssistantLoaded) {
-    assistantContainer.style.display = "none";
-  }
-}
 
 // find burg for MFCG and focus on it
 function findBurgForMFCG(params) {
@@ -703,6 +787,10 @@ async function generate(options) {
       width: "32em",
       buttons: {
         "Clear cache": () => cleanupData(),
+        "Main Menu": function() {
+          hideLoading();
+          menuScreen();
+        },
         Regenerate: function () {
           regenerateMap("generation error");
           $(this).dialog("close");
