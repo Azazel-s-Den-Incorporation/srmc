@@ -252,7 +252,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   } else {
-      try {
+    // Loading Sequence  
+    try {
       WARN && console.warn("generating placeholder map");
         handleLayersPresetChange("blank");
         generateMapOnLoad();
@@ -331,16 +332,16 @@ function newMapButton() {
 
 function genNewMapButton() {
   showLoading();
-  handleLayersPresetChange("blank");
   mainMenuButton();
+  handleLayersPresetChange("blank");
   document.getElementById("menu-screen").style.display = "none";
-  generate(options);
-  handleLayersPresetChange("political");
-  hideLoading();
-  byId("optionsContainer").style.display = "block";
-  byId("optionsTrigger").style.display = "block";
   document.getElementById("saveMapButton").style.display = "flex";
   document.getElementById("hideMenuButton").style.display = "flex";
+  regenerateMap(options);
+  handleLayersPresetChange("political");
+  byId("optionsContainer").style.display = "block";
+  byId("optionsTrigger").style.display = "block";
+  hideLoading();
 } 
 
 function saveMapButton() {
@@ -1342,11 +1343,18 @@ function showStatistics() {
 
 const regenerateMap = debounce(async function (options) {
   WARN && console.warn("Generate new random map");
+  await showLoading();
 
-  const cellsDesired = +byId("pointsInput").dataset.cells;
-  const shouldShowLoading = cellsDesired > 10000;
-  shouldShowLoading && showLoading();
+  // const cellsDesired = +byId("pointsInput").dataset.cells;
+  // const shouldShowLoading = cellsDesired > 10000;
+  // shouldShowLoading && showLoading();
 
+  menuScreen();
+  mainMenuButton();
+  handleLayersPresetChange("blank");
+  document.getElementById("menu-screen").style.display = "none";
+  document.getElementById("saveMapButton").style.display = "flex";
+  document.getElementById("hideMenuButton").style.display = "flex";
   closeDialogs("#worldConfigurator, #options3d");
   customization = 0;
   resetZoom(1000);
@@ -1357,8 +1365,12 @@ const regenerateMap = debounce(async function (options) {
   if ($("#worldConfigurator").is(":visible")) editWorld();
 
   fitMapToScreen();
-  shouldShowLoading && hideLoading();
+  handleLayersPresetChange("political");
+  byId("optionsContainer").style.display = "block";
+  byId("optionsTrigger").style.display = "block";
+  // shouldShowLoading && 
   clearMainTip();
+  hideLoading();
 }, 250);
 
 // clear the map

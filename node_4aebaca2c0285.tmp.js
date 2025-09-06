@@ -30,27 +30,287 @@
     <link rel="manifest" href="manifest.webmanifest" />
     
     <!-- inline css for loading screen -->
-    <style type="text/css">
-      body {
+    <style type="text/css">body {
         margin: 0;
         top: 0 !important;
         font-size: 10px;
         overflow: hidden;
-        position: absolute !important;
-        width: 100% !important;
-        height: 100% !important;
       }
       #map {
         display: flex;
         position: absolute;
         z-index: 1;
         background-color: #000000;
+        -webkit-mask-mode: alpha;
         mask-mode: alpha;
         -webkit-mask-clip: no-clip;
         mask-clip: no-clip;
         fill-rule: evenodd;
         -webkit-user-select: none;
         user-select: none;
+      }
+      #menu-screen {
+        display: flex;
+        position: absolute;
+        z-index: 99999;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        background-color: #1e1e1edd;
+        display: flex;
+        justify-content: center;
+
+      }
+      #menu-screen img{
+        display: flex;
+        position: absolute;
+        z-index: 500;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+      }
+      #map-box{
+        display: flex;
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        background-color: #1e1e1edd;
+        display: flex;
+        justify-content: center;
+      }
+      #main-menu-container {
+        display: flex;
+        flex-flow: column;
+        position: absolute;
+        z-index: 1000;
+        width: 60%;
+        height: fit-content;
+        min-height: 50%;
+        max-height: 80%;
+        background-color: #8e8e8edd;
+        padding: 1dvi;
+        align-self: center;
+        justify-content: space-evenly;
+        border-radius: 15px;
+        color: black;
+        font-size: 2dvi;
+      }
+      #menu > * {
+        align-self: flex-start;
+        justify-content: center;
+        display: none;
+        flex-flow: column;
+        width: 100%;
+        height: 100%;
+      }
+      #menu{
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        height: fit-content;
+        overflow-y: auto;
+      }
+      #settings-menu p {
+        line-height: 0;
+      }
+      #dropbox-menu {
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        height: 100%;
+      }
+      #main-menu-container * button {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        background-color: #1e1e1e;
+        width: 60%;
+        color: #e2d2c2;
+        font-weight: bold;
+        font-size: 1.5dvi;
+        border: 0;
+        margin: 2px;
+        border-radius: 5px;
+        padding: 4px;
+      }
+      #main-menu-container * button:hover {
+        background-color: #0da6ff;
+        color: white;
+      }
+      #menu * span {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: fit-content;
+      }
+      #menu * span.menuspan {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: fit-content;
+      }
+      #menu * select {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        background-color: #1e1e1e;
+        width: 100%;
+        color: #e2d2c2;
+        font-weight: bold;
+        font-size: 1.5dvi;
+        border: 0;
+        margin: 2px;
+        border-radius: 5px;
+        padding: 4px;
+      }
+      #menu * select:hover {
+        background-color: #0da6ff;
+        color: white;
+      }
+      #menu * table {
+        border-spacing: 0;
+      }
+      #menu * table td:nth-of-type(1) {
+        width: 3%;
+      }
+      #menu * table td:nth-of-type(2) {
+        width: 40%;
+      }
+      #menu * table td:nth-of-type(4) {
+        text-align: right;
+        width: 6%;
+      }
+      #menu * td {
+        height: fit-content;
+      }
+      #menu * input[type="color"] {
+        width: 4.5em;
+        height: 1em;
+        border: 0;
+      }
+      #menu * input[type="text"] {
+        border: 0px;
+        width: 62%;
+        font-size: smaller;
+      }
+      #menu * output {
+        text-align: right;
+        font-size: smaller;
+      }
+      #menu * input[type="number"] {
+        font-size: 0.8em;
+        border: 0;
+        text-align: right;
+        background-color: transparent;
+        width: 3.3em;
+      }
+      #menu * input[type="number"]::-webkit-inner-spin-button,
+      #menu * input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      #menu * input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
+      #menu * input[type="number"]:hover {
+        outline: 1px solid black;
+      }
+      #menu * input.paired {
+        text-align: center;
+        background-color: white;
+      }
+      #menu * input.long {
+        width: 100%;
+        background-color: white;
+        text-align: left;
+      }
+      #menu * input[type="range"] {
+        display: flex;
+        align-self: center;
+        width: 100%;
+        height: 1dvi;
+        background: 0;
+        appearance: auto;
+        margin-left: 0;
+        border: 0;
+        padding: 0;
+        line-height: 0;
+      }
+      #menu * input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border-radius: 15%;
+        width: 1.3dvi;
+        height: 1.3dvi;
+        background: #1e1e1e;
+        border: 1px solid black;
+        cursor: pointer;
+        margin-top: -0.4em;
+        box-shadow: 0.5px 0.5px 0px black;
+      }
+      #menu * input[type="range"]::-moz-range-thumb {
+        -moz-appearance: none;
+        border-radius: 15%;
+        width: 1.3dvi;
+        height: 1.3dvi;
+        background: #1e1e1e;
+        border: 1px solid black;
+        cursor: pointer;
+        box-shadow: 0.5px 0.5px 0px black;
+      }
+      #menu * input[type="range"]::-webkit-slider-runnable-track {
+        height: 1dvi;
+        background: #666666;
+      }
+
+      #menu * input[type="range"]::-moz-range-track {
+        -moz-appearance: none;
+        background-color: #ffffff;
+        height: 1dvi;
+      }
+      #settings-menu * input[type="range"] {
+        width: 85%;
+        height: 1dvi;
+        background: 0;
+        appearance: auto;
+        margin-left: 0;
+        border: 0;
+        padding: 0;
+      }
+      #settings-menu * input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border-radius: 15%;
+        width: 1.3dvi;
+        height: 1.3dvi;
+        background: #1e1e1e;
+        border: 1px solid black;
+        cursor: pointer;
+        margin-top: -0.4em;
+        box-shadow: 0.5px 0.5px 0px black;
+      }
+      #settings-menu * input[type="range"]::-moz-range-thumb {
+        -moz-appearance: none;
+        border-radius: 15%;
+        width: 1.3dvi;
+        height: 1.3dvi;
+        background: #1e1e1e;
+        border: 1px solid black;
+        cursor: pointer;
+        box-shadow: 0.5px 0.5px 0px black;
+      }
+      #settings-menu * input[type="range"]::-webkit-slider-runnable-track {
+        height: 1dvi;
+        background: #666666;
+      }
+
+      #settings-menu * input[type="range"]::-moz-range-track {
+        -moz-appearance: none;
+        background-color: #ffffff;
+        height: 1dvi;
       }
       #loading {
         position: absolute;
@@ -152,13 +412,9 @@
     />
   </head>
   <body>
-  <div id="main-ui">
-    <div id="music-box">
-      <audio id="menu-music" name="menu-music" autoplay loop src="/audio/music/azmaptheme.mp3" style="display: none;"></audio>
-      <audio id="music" name="ambient-theme-1" autoplay loop src="/audio/music/azmaptheme.mp3" style="display: none;"></audio>
-      <audio id="sfx" name="click" src="/audio/sfx/click.mp3" style="display: none;"></audio>
-    </div>
-
+    <audio id="menu-music" name="menu-music" autoplay loop src="/audio/music/azmaptheme.mp3" style="display: none;"></audio>
+    <audio id="music" name="ambient-theme-1" autoplay loop src="/audio/music/azmaptheme.mp3" style="display: none;"></audio>
+    <audio id="sfx" name="click" src="/audio/sfx/click.mp3" style="display: none;"></audio>
     <div id="map-box">
       <svg
         id="map"
@@ -390,7 +646,6 @@
         </g>
       </svg>
     </div>
-    
     <div id="loading">
       <svg width="100%" height="100%">
         <rect x="-1%" y="-1%" width="102%" height="102%" fill="#a02020" />
@@ -5105,6 +5360,11 @@
       <div id="notesBody"></div>
     </div>
 
+    <div
+      id="tooltip"
+      style="opacity: 0"
+      data-main="Сlick the arrow button for options. Zoom in to see the map in details"
+    ></div>
 
     <div id="mapOverlay" style="display: none">Drop a map file to open</div>
 
@@ -5868,11 +6128,10 @@
             <button onclick="saveMap('machine')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + S">machine</button>
             <button onclick="saveMap('dropbox')" data-tip="Save map file to your Dropbox" data-shortcut="Ctrl + C">dropbox</button>
             <button onclick="saveMap('storage')" data-tip="Save the project to browser storage only" data-shortcut="F6"> browser</button>
-            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>  
           </div>
 
           <div id="load-menu" style="display: none;">
-              <button id="loadLocalButton" onclick="mapToLoad.click()" data-tip="Load map file (.map or .gz) from your local disk">Local File</button>
+              <button id="loadLocalButton" data-tip="Load map file (.map or .gz) from your local disk">Local File</button>
               <button onclick="loadMapFromServer()" data-tip="Load map from browser storage (if saved before)">Server</button>
               <button onclick="quickLoad()" data-tip="Load map from browser storage (if saved before)">Storage</button>
               <button onclick="dropboxButton()" data-tip="Load map from Dropbox (if saved before)">Dropbox</button>
@@ -5896,47 +6155,46 @@
     </div>
     
     <div id="layersContent" style="display: block">
-      <span>
-        <select
-          data-tip="Select a map layers preset"
-          id="layersPreset"
-          onchange="handleLayersPresetChange(this.value)"
-          style="width: 80%"
-        >
-          <option value="political">Political map</option>
-          <option value="cultural">Cultural map</option>
-          <option value="religions">Religions map</option>
-          <option value="provinces">Provinces map</option>
-          <option value="biomes">Biomes map</option>
-          <option value="heightmap">Heightmap</option>
-          <option value="physical">Physical map</option>
-          <option value="poi">Places of interest</option>
-          <option value="military">Military map</option>
-          <option value="emblems">Emblems</option>
-          <option value="landmass">Pure landmass</option>
-          <option value="blank">Blank</option>
-          <option hidden value="custom" selected>Custom (not saved)</option>
-        </select>
-        <button
-          id="savePresetButton"
-          data-tip="Click to save displayed layers as a new preset"
-          class="icon-plus sideButton"
-          style="display: none"
-          onclick="savePreset()"
-        ></button>
-        <button
-          id="removePresetButton"
-          data-tip="Click to remove current custom preset"
-          class="icon-minus sideButton"
-          style="display: none"
-          onclick="removePreset()"
-        ></button>
-      </span>
+      
+      <select
+        data-tip="Select a map layers preset"
+        id="layersPreset"
+        onchange="handleLayersPresetChange(this.value)"
+        style="width: 80%"
+      >
+        <option value="political">Political map</option>
+        <option value="cultural">Cultural map</option>
+        <option value="religions">Religions map</option>
+        <option value="provinces">Provinces map</option>
+        <option value="biomes">Biomes map</option>
+        <option value="heightmap">Heightmap</option>
+        <option value="physical">Physical map</option>
+        <option value="poi">Places of interest</option>
+        <option value="military">Military map</option>
+        <option value="emblems">Emblems</option>
+        <option value="landmass">Pure landmass</option>
+        <option value="blank">Blank</option>
+        <option hidden value="custom" selected>Custom (not saved)</option>
+      </select>
+      <button
+        id="savePresetButton"
+        data-tip="Click to save displayed layers as a new preset"
+        class="icon-plus sideButton"
+        style="display: none"
+        onclick="savePreset()"
+      ></button>
+      <button
+        id="removePresetButton"
+        data-tip="Click to remove current custom preset"
+        class="icon-minus sideButton"
+        style="display: none"
+        onclick="removePreset()"
+      ></button>
+
       <ul
         data-tip="Click to toggle a layer, drag to raise or lower a layer. Ctrl + click to edit layer style"
         id="mapLayers"
       >
-        
         <li
           id="toggleTexture"
           data-tip="Texture overlay: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
@@ -5944,7 +6202,7 @@
           onclick="toggleTexture(event)"
           style="display: none;"
         >
-        <img loading="eager" src="/images/icons/textures.png">
+          Te<u>x</u>ture
         </li>
         <li
           id="toggleHeight"
@@ -5952,7 +6210,7 @@
           data-shortcut="H"
           onclick="toggleHeight(event)"
         >
-        <img loading="eager" src="/images/icons/heightmap.png">
+          <u>H</u>eightmap
         </li>
         <li
           id="toggleBiomes"
@@ -5960,7 +6218,7 @@
           data-shortcut="B"
           onclick="toggleBiomes(event)"
         >
-        <img loading="eager" src="/images/icons/biomes.png">
+          <u>B</u>iomes
         </li>
         <li
           id="toggleCells"
@@ -5968,7 +6226,7 @@
           data-shortcut="E"
           onclick="toggleCells(event)"
         >
-        <img loading="eager" src="/images/icons/cells.png">
+          C<u>e</u>lls
         </li>
         <li
           id="toggleGrid"
@@ -5976,7 +6234,7 @@
           data-shortcut="G"
           onclick="toggleGrid(event)"
         >
-        <img loading="eager" src="/images/icons/grid.png">
+          <u>G</u>rid
         </li>
         <li
           id="toggleCoordinates"
@@ -5984,7 +6242,7 @@
           data-shortcut="O"
           onclick="toggleCoordinates(event)"
         >
-        <img loading="eager" src="/images/icons/coords.png">
+          C<u>o</u>ordinates
         </li>
         <li
           id="toggleCompass"
@@ -5993,7 +6251,7 @@
           onclick="toggleCompass(event)"
           style="display: none;"
         >
-        <img loading="eager" src="/images/icons/windrose.png">
+          <u>W</u>ind Rose
         </li>
         <li
           id="toggleRivers"
@@ -6001,7 +6259,7 @@
           data-shortcut="V"
           onclick="toggleRivers(event)"
         >
-        <img loading="eager" src="/images/icons/rivers.png">
+          Ri<u>v</u>ers
         </li>
         <li
           id="toggleRelief"
@@ -6009,7 +6267,7 @@
           data-shortcut="F"
           onclick="toggleRelief(event)"
         >
-        <img loading="eager" src="/images/icons/relief.png">
+          Relie<u>f</u>
         </li>
         <li
           id="toggleReligions"
@@ -6017,7 +6275,7 @@
           data-shortcut="R"
           onclick="toggleReligions(event)"
         >
-        <img loading="eager" src="/images/icons/religion.png">
+          <u>R</u>eligions
         </li>
         <li
           id="toggleCultures"
@@ -6025,7 +6283,7 @@
           data-shortcut="C"
           onclick="toggleCultures(event)"
         >
-        <img loading="eager" src="/images/icons/cultures.png">
+          <u>C</u>ultures
         </li>
         <li
           id="toggleStates"
@@ -6033,7 +6291,7 @@
           data-shortcut="S"
           onclick="toggleStates(event)"
         >
-        <img loading="eager" src="/images/icons/states.png">
+          <u>S</u>tates
         </li>
         <li
           id="toggleProvinces"
@@ -6041,7 +6299,7 @@
           data-shortcut="P"
           onclick="toggleProvinces(event)"
         >
-        <img loading="eager" src="/images/icons/provinces.png">
+          <u>P</u>rovinces
         </li>
         <li
           id="toggleZones"
@@ -6049,7 +6307,7 @@
           data-shortcut="Z"
           onclick="toggleZones(event)"
         >
-        <img loading="eager" src="/images/icons/zones.png">
+          <u>Z</u>ones
         </li>
         <li
           id="toggleBorders"
@@ -6057,7 +6315,7 @@
           data-shortcut="D"
           onclick="toggleBorders(event)"
         >
-        <img loading="eager" src="/images/icons/borders.png">
+          Bor<u>d</u>ers
         </li>
         <li
           id="toggleRoutes"
@@ -6065,7 +6323,7 @@
           data-shortcut="U"
           onclick="toggleRoutes(event)"
         >
-        <img loading="eager" src="/images/icons/routes.png">
+          Ro<u>u</u>tes
         </li>
         <li
           id="toggleTemperature"
@@ -6073,7 +6331,7 @@
           data-shortcut="T"
           onclick="toggleTemperature(event)"
         >
-        <img loading="eager" src="/images/icons/temperature.png">
+          <u>T</u>emperature
         </li>
         <li
           id="togglePopulation"
@@ -6081,7 +6339,7 @@
           data-shortcut="N"
           onclick="togglePopulation(event)"
         >
-        <img loading="eager" src="/images/icons/population.png">
+          Populatio<u>n</u>
         </li>
         <li
           id="toggleIce"
@@ -6089,7 +6347,7 @@
           data-shortcut="J"
           onclick="toggleIce(event)"
         >
-        <img loading="eager" src="/images/icons/ice.png">
+          Ice
         </li>
         <li
           id="togglePrecipitation"
@@ -6097,7 +6355,7 @@
           data-shortcut="A"
           onclick="togglePrecipitation(event)"
         >
-        <img loading="eager" src="/images/icons/precipitation.png">
+          Precipit<u>a</u>tion
         </li>
         <li
           id="toggleEmblems"
@@ -6105,7 +6363,7 @@
           data-shortcut="Y"
           onclick="toggleEmblems(event)"
         >
-        <img loading="eager" src="/images/icons/emblems.png">
+          Emblems
         </li>
         <li
           id="toggleLabels"
@@ -6113,7 +6371,7 @@
           data-shortcut="L"
           onclick="toggleLabels(event)"
         >
-        <img loading="eager" src="/images/icons/labels.png">
+          <u>L</u>abels
         </li>
         <li
           id="toggleBurgIcons"
@@ -6121,7 +6379,7 @@
           data-shortcut="I"
           onclick="toggleBurgIcons(event)"
         >
-        <img loading="eager" src="/images/icons/icons.png">
+          <u>I</u>cons
         </li>
         <li
           id="toggleMilitary"
@@ -6129,7 +6387,7 @@
           data-shortcut="M"
           onclick="toggleMilitary(event)"
         >
-        <img loading="eager" src="/images/icons/military.png">
+          <u>M</u>ilitary
         </li>
         <li
           id="toggleMarkers"
@@ -6137,7 +6395,7 @@
           data-shortcut="K"
           onclick="toggleMarkers(event)"
         >
-        <img loading="eager" src="/images/icons/markers.png">
+          Mar<u>k</u>ers
         </li>
         <li
           id="toggleRulers"
@@ -6145,7 +6403,7 @@
           data-shortcut="= (equal sign)"
           onclick="toggleRulers(event)"
         >
-        <img loading="eager" src="/images/icons/rulers.png">
+          Rulers
         </li>
         <li
           id="toggleScaleBar"
@@ -6154,7 +6412,7 @@
           onclick="toggleScaleBar(event)"
           class="solid"
         >
-        <img loading="eager" src="/images/icons/scalebar.png">
+          Scale Bar
         </li>
         <li
           id="toggleVignette"
@@ -6164,18 +6422,13 @@
           class="solid"
           style="display: none;"
         >
-        <img loading="eager" src="/images/icons/vignette.png">
+          Vignette
         </li>
       </ul>
+      <div class="tip">Click to toggle, drag to raise or lower the layer</div>
+      <div class="tip">Ctrl + click to edit layer style</div>
     </div>
 
-    <div
-      id="tooltip"
-      style="opacity: 0"
-      data-main="Сlick the arrow button for options. Zoom in to see the map in details"
-    ></div>
-
-  </div>
     <!-- svg elements not required for map display -->
     <svg id="defElements" width="0" height="0" style="position: absolute">
       <defs>

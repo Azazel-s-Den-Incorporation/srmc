@@ -23,7 +23,7 @@ function handleKeyup(event) {
   const shift = shiftKey || key === "Shift";
 
   if (code === "F1") showInfo();
-  else if (code === "F2") regeneratePrompt();
+  else if (code === "F2") genNewMapButton();
   else if (code === "F6") saveMap("storage");
   else if (code === "F9") quickLoad();
   else if (code === "Tab") toggleOptions(event);

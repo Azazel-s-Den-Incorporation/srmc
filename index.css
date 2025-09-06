@@ -19,22 +19,331 @@ font {
   pointer-events: none;
 }
 
+#main-ui {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 0;
+}
+
+#menu-screen {
+  display: flex;
+  position: absolute;
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  background-color: #1e1e1edd;
+  display: flex;
+  justify-content: center;
+}
+
+#menu-screen img{
+  display: flex;
+  position: absolute;
+  z-index: 500;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+#map-box{
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  background-color: #1e1e1edd;
+  display: flex;
+  justify-content: center;
+}
+
+#main-menu-container {
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  z-index: 1000;
+  width: 60%;
+  height: fit-content;
+  min-height: 50%;
+  max-height: 80%;
+  background-color: #8e8e8edd;
+  padding: 1dvi;
+  align-self: center;
+  justify-content: space-evenly;
+  border-radius: 15px;
+  color: black;
+  font-size: 2dvi;
+}
+
+#menu > * {
+  align-self: flex-start;
+  justify-content: center;
+  display: none;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+}
+
+#menu{
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: fit-content;
+  overflow-y: auto;
+}
+
+#settings-menu p {
+  line-height: 0;
+}
+
+#dropbox-menu {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+}
+
+#main-menu-container * button {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  background-color: #1e1e1e;
+  width: 60%;
+  color: #e2d2c2;
+  font-weight: bold;
+  font-size: 1.5dvi;
+  border: 0;
+  margin: 2px;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+#main-menu-container * button:hover {
+  background-color: #0da6ff;
+  color: white;
+}
+
+#menu * span {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+}
+
+#menu * span.menuspan {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+}
+
+#menu * select {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  background-color: #1e1e1e;
+  width: 100%;
+  color: #e2d2c2;
+  font-weight: bold;
+  font-size: 1.5dvi;
+  border: 0;
+  margin: 2px;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+#menu * select:hover {
+  background-color: #0da6ff;
+  color: white;
+}
+
+#menu * table {
+  border-spacing: 0;
+}
+
+#menu * table td:nth-of-type(1) {
+  width: 3%;
+}
+
+#menu * table td:nth-of-type(2) {
+  width: 40%;
+}
+
+#menu * table td:nth-of-type(4) {
+  text-align: right;
+  width: 6%;
+}
+
+#menu * td {
+  height: fit-content;
+}
+
+#menu * input[type="color"] {
+  width: 4.5em;
+  height: 1em;
+  border: 0;
+}
+
+#menu * input[type="text"] {
+  border: 0px;
+  width: 62%;
+  font-size: smaller;
+}
+
+#menu * output {
+  text-align: right;
+  font-size: smaller;
+}
+
+#menu * input[type="number"] {
+  font-size: 0.8em;
+  border: 0;
+  text-align: right;
+  background-color: transparent;
+  width: 3.3em;
+}
+
+#menu * input[type="number"]::-webkit-inner-spin-button,
+#menu * input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#menu * input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#menu * input[type="number"]:hover {
+  outline: 1px solid black;
+}
+
+#menu * input.paired {
+  text-align: center;
+  background-color: white;
+}
+
+#menu * input.long {
+  width: 100%;
+  background-color: white;
+  text-align: left;
+}
+
+#menu * input[type="range"] {
+  display: flex;
+  align-self: center;
+  width: 100%;
+  height: 1dvi;
+  background: 0;
+  appearance: auto;
+  margin-left: 0;
+  border: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+#menu * input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border-radius: 15%;
+  width: 1.3dvi;
+  height: 1.3dvi;
+  background: #1e1e1e;
+  border: 1px solid black;
+  cursor: pointer;
+  margin-top: -0.4em;
+  box-shadow: 0.5px 0.5px 0px black;
+}
+
+#menu * input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  border-radius: 15%;
+  width: 1.3dvi;
+  height: 1.3dvi;
+  background: #1e1e1e;
+  border: 1px solid black;
+  cursor: pointer;
+  box-shadow: 0.5px 0.5px 0px black;
+}
+
+#menu * input[type="range"]::-webkit-slider-runnable-track {
+  height: 1dvi;
+  background: #666666;
+}
+
+#menu * input[type="range"]::-moz-range-track {
+  -moz-appearance: none;
+  background-color: #ffffff;
+  height: 1dvi;
+}
+
+#settings-menu * input[type="range"] {
+  width: 85%;
+  height: 1dvi;
+  background: 0;
+  appearance: auto;
+  margin-left: 0;
+  border: 0;
+  padding: 0;
+}
+
+#settings-menu * input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border-radius: 15%;
+  width: 1.3dvi;
+  height: 1.3dvi;
+  background: #1e1e1e;
+  border: 1px solid black;
+  cursor: pointer;
+  margin-top: -0.4em;
+  box-shadow: 0.5px 0.5px 0px black;
+}
+
+#settings-menu * input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  border-radius: 15%;
+  width: 1.3dvi;
+  height: 1.3dvi;
+  background: #1e1e1e;
+  border: 1px solid black;
+  cursor: pointer;
+  box-shadow: 0.5px 0.5px 0px black;
+}
+
+#settings-menu * input[type="range"]::-webkit-slider-runnable-track {
+  height: 1dvi;
+  background: #666666;
+}
+
+#settings-menu * input[type="range"]::-moz-range-track {
+  -moz-appearance: none;
+  background-color: #ffffff;
+  height: 1dvi;
+}
+
 #dashbar {
   display: flex;
   flex-direction: row;
   position: absolute;
   z-index: 666;
-  float: right;
+  right: 0;
   background-color: #393939;
+  width: 25%;
+  height: 5%;
 }
 
 #layersContent {
   display: flex;
-  flex-flow: column;
-  align-self: flex-start;
-  justify-content: center;
-  width: 95px;
-  height: 100%;
+  flex-flow: row;
+  justify-content: space-around;
+  bottom: 0;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+  height: 3%;
   position: absolute;
   z-index: 666;
   background-color: #1e1e1e8e;
@@ -48,36 +357,35 @@ font {
 }
 
 #layersPreset {
-  width: 70%;
+  position: absolute;
+  display: inline;
+  max-width: 100px;
   font-size: 1.2dvh;
-  padding: 0;
+  top: 0;
 }
 
 #layersContent * li {
+  position: relative;
   list-style-type: none;
-  background-color: var(--bg-main);
   cursor: pointer;
-  padding: 0.35em;
-  margin: 0.2em 0.3em;
   float: left;
-  width: 80px;
-  text-align: center;
-  text-transform: capitalize;
-
+  width: fit-content;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 #layersContent * li.buttonoff {
-  background-color: var(--bg-disabled);
-  color: #444444aa;
+  filter: brightness(50%);
 }
 
 #layersContent * li:hover {
   box-shadow: 0 0 2px 2px var(--dark-solid) 17;
 }
-
+#layersContent * li img {
+  height: 18px;
+  width: auto;
+}
 .tabcontent button:hover {
   background-color: var(--header);
 }
@@ -137,8 +445,11 @@ audio {
   position: absolute;
 }
 
-#menu-screen audio {
+audio#music, 
+audio#menumusic, 
+audio#sfx {
   display: none;
+  position: absolute;
 }
 
 #canvas {
@@ -180,6 +491,7 @@ a {
   font-size: 32px;
   stroke: none;
   text-shadow: 1px 1px 1px #9daac9;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -240,6 +552,7 @@ t,
 
 #armies text {
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   stroke: none;
   fill: #fff;
@@ -334,6 +647,7 @@ i.icon-lock {
 #statesTree text,
 #provincesTree text {
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   stroke: none;
   font-size: 11px;
@@ -422,6 +736,7 @@ button.ui-button:disabled:hover {
 
 .ui-dialog,
 #optionsContainer {
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -560,6 +875,7 @@ button.options:hover {
 
 input[type="color"] {
   -webkit-appearance: none;
+  appearance: none;
   cursor: pointer;
   border: 1px solid #a9a9a9;
 }
@@ -611,12 +927,16 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 #options input[type="number"]::-webkit-inner-spin-button,
 #options input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 #options input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
   appearance: textfield;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 #options input[type="number"]:hover {
@@ -646,6 +966,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 #options input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   border-radius: 15%;
   width: 0.91em;
   height: 0.91em;
@@ -800,7 +1121,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 
 #mapLayers {
-  display: inline-block;
+  display: block;
   padding: 0;
   margin: 0;
 }
@@ -827,22 +1148,26 @@ fieldset {
 }
 
 #cellInfo {
+  -webkit-user-select: text;
   user-select: text;
 }
 
 #tooltip {
-  position: fixed;
+  position: absolute;
   text-align: center;
-  bottom: 0.5vw;
-  width: 70%;
-  left: 15%;
+  width: fit-content;
+  height: fit-content;
+  max-width: 13%;
+  padding: 5px;
   cursor: default;
+  border: thick groove #ccab1e;
   text-shadow: 1px 1px 2px #1d0e0f;
   color: #ffffff;
-  font-size: calc(12px + 0.5vw);
+  font-size: calc(10px + 0.5vh);
+  font-weight: bold;
   white-space: pre-line;
-  z-index: 100000;
-  background: linear-gradient(0.1turn, #ffffff00, #c71d1d66, #ffffff00);
+  z-index: 10000000;
+  background: linear-gradient(0.1turn, #1e1e1e, #c71d1d, #1e1e1e);
 }
 
 #optionsContent table {
@@ -912,6 +1237,8 @@ fieldset {
 .matrix-table {
   max-height: 180vh;
   max-width: 185vw;
+  -webkit-scrollbar-width: thin;
+  -moz-scrollbar-width: thin;
   scrollbar-width: thin;
   overflow: auto;
 }
@@ -1290,10 +1617,12 @@ i.resetButton:active {
   position: relative;
   appearance: none;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .ui-dialog input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   border-radius: 15%;
   width: 1em;
   height: 1em;
@@ -1388,6 +1717,8 @@ div.slider .ui-slider-handle {
   max-width: 100vw;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-scrollbar-width: thin;
+  -moz-scrollbar-width: thin;
   scrollbar-width: thin;
 }
 
@@ -1491,6 +1822,8 @@ div.states div {
 div.states .biomeHabitability {
   width: 4em;
   -moz-appearance: textfield;
+  appearance: textfield;
+  appearance: textfield;
 }
 
 div.states > .statePopulation {
@@ -1551,6 +1884,7 @@ div.states > select {
   border: 0;
   background-color: transparent;
   -webkit-appearance: none;
+  appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
@@ -1722,6 +2056,7 @@ div.states > div.biomeArea {
 
 #militaryBody div.states > input {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 #militaryBody div.states > input,
@@ -1830,11 +2165,13 @@ div.editorLine {
   width: 22px;
   font-size: 9px;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 #pickerSpaces input::-webkit-inner-spin-button,
 #pickerSpaces input::-webkit-outer-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
@@ -2033,6 +2370,7 @@ div.textual span,
 #markers {
   cursor: pointer;
   font-family: var(--monospace);
+  -webkit-user-select: none;
   user-select: none;
   text-anchor: middle;
   dominant-baseline: central;
@@ -2078,6 +2416,7 @@ div.textual span,
 }
 
 #notesBody > iframe {
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -2150,6 +2489,7 @@ svg.button {
 }
 
 #alertMessage {
+  -webkit-user-select: text;
   user-select: text;
   max-height: 250vh;
   max-width: 150vw;
@@ -2170,6 +2510,7 @@ svg.button {
   font-size: 0.9em;
   font-style: italic;
   color: gray;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -2184,6 +2525,7 @@ svg.button {
 }
 
 #worldConfigurator {
+  align-self: flex-start;
   width: 100%;
   height: 100%;
   font-size: 2dvh;
@@ -2285,6 +2627,7 @@ svg.button {
 
 #legend {
   cursor: move;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -2432,6 +2775,7 @@ svg.button {
 }
 
 #chat-widget-container {
+  -webkit-user-select: none;
   user-select: none;
 }
 

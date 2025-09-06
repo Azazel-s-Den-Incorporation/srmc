@@ -14,22 +14,45 @@ if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
 
 // Tooltips
 const tooltip = document.getElementById("tooltip");
+const viewingbox = document.getElementById("main-ui").getBoundingClientRect();
+const vwh = viewingbox.height;
+const vww = viewingbox.width;
+window.onmousemove = function (e) {
+  showDataTip;
+    if ((e.x) <= (vww/2) && (e.y) <= (vwh/2)) {
+      tooltip.style.left = (e.x + 10) + 'px';
+      tooltip.style.top = (e.y + 10) + 'px';
+    }
+    if ((e.x) >= (vww/2) && (e.y) <= (vwh/2)) {
+      tooltip.style.right = (e.x + 10) + 'px';
+      tooltip.style.top = (e.y + 10) + 'px';
+    }
+    if ((e.x) <= (vww/2) && (e.y) >= (vwh/2)) {
+      tooltip.style.left = (e.x + 10) + 'px';
+      tooltip.style.bottom = (e.y + 10) + 'px';
+    }
+    if ((e.x) >= (vww/2) && (e.y) >= (vwh/2)) {
+      tooltip.style.right = (e.x + 10) + 'px';
+      tooltip.style.bottom = (e.y + 10) + 'px';
+  }
+};
 
 // show tip for non-svg elemets with data-tip
-document.getElementById("dialogs").addEventListener("mousemove", showDataTip);
-document.getElementById("dashbar").addEventListener("mousemove", showDataTip);
-document.getElementById("menu-screen").addEventListener("mousemove", showDataTip);
-document.getElementById("optionsContainer").addEventListener("mousemove", showDataTip);
-document.getElementById("exitCustomization").addEventListener("mousemove", showDataTip);
+// document.getElementById("dialogs").addEventListener("mousemove", showDataTip);
+// document.getElementById("main-ui").addEventListener("mousemove", showDataTip);
+// document.getElementById("layersContent").addEventListener("mousemove", showDataTip);
+// document.getElementById("optionsContainer").addEventListener("mousemove", showDataTip);
+// document.getElementById("exitCustomization").addEventListener("mousemove", showDataTip);
 
 const tipBackgroundMap = {
-  info: "linear-gradient(0.1turn, #ffffff00, #5e5c5c80, #ffffff00)",
-  success: "linear-gradient(0.1turn, #ffffff00, #127912cc, #ffffff00)",
-  warn: "linear-gradient(0.1turn, #ffffff00, #be5d08cc, #ffffff00)",
-  error: "linear-gradient(0.1turn, #ffffff00, #e11d1dcc, #ffffff00)"
+  info: "linear-gradient(0.1turn, #1e1e1e, #5e5c5c, #1e1e1e)",
+  success: "linear-gradient(0.1turn, #1e1e1e, #127912, #1e1e1e)",
+  warn: "linear-gradient(0.1turn, #1e1e1e, #be5d08, #1e1e1e)",
+  error: "linear-gradient(0.1turn, #1e1e1e, #e11d1d, #1e1e1e)"
 };
 
 function tip(tip, main = false, type = "info", time = 0) {
+  tooltip.style.display = "flex"
   tooltip.innerHTML = tip;
   tooltip.style.background = tipBackgroundMap[type];
 
@@ -51,14 +74,22 @@ function clearMainTip() {
   tooltip.innerHTML = "";
 }
 
+// Tooltip Controller
+if (tooltip.innerHTML == "") {
+  tooltip.style.display = "none";
+} else {
+  tooltip.style.display = "flex"
+};
+
 // show tip at the bottom of the screen, consider possible translation
 function showDataTip(event) {
   if (!event.target) return;
 
   let dataTip = event.target.dataset.tip;
-  if (!dataTip && event.target.parentNode.dataset.tip) dataTip = event.target.parentNode.dataset.tip;
+  if (!dataTip && event.target.parentNode.dataset.tip)  dataTip = event.target.parentNode.dataset.tip;
   if (!dataTip) return;
-
+  tooltip.style.display = "none";
+  
   const shortcut = event.target.dataset.shortcut;
   if (shortcut && !MOBILE) dataTip += `. Shortcut: ${shortcut}`;
 

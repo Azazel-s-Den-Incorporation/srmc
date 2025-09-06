@@ -1,38 +1,35 @@
 "use strict";
 
-//Audio Settings Handler
-function settingsApply() {
-    setMusicVolume();
-    setSFXVolume();
-}
-
-//Music Handler
+const menumusic = document.getElementById("menu-music");
 const music = document.getElementById("music");
 const sfx = document.getElementById("sfx");
 
+// Volume Controls
+
 function audioPermissionDialog() {
     window.onload = (event) => {
-        document.getElementById("showAudioPerm");
+        document.getElementById("showAudioPerm").style.display = "flex";
     }; 
 }
 function setMusicVolume() {
-    let musicVolume = document.getElementById("musicVolume").value;
-    if (music.muted == true) {
-        music.muted = false;
-    }
+    let musicVolume = (document.getElementById("musicVolume").value);
     music.volume = musicVolume;
+    menumusic.volume = musicVolume;
     document.getElementById("musicVol").innerHTML = rn(musicVolume*100, 1);
 }
 
 function muteMusicToggle() {
     if (music.muted == false) {
         music.muted = true;
-    } else if (music.muted === true) {
+    } else if (music.muted == true) {
         music.muted = false;
+    } else if (menumusic.muted == false) {
+        menumusic.muted = true;
+    } else if (menumusic.muted == true) {
+        menumusic.muted = false;
     }
 }
 
-//Audio Handler
 function setSFXVolume() {
     let sfxVolume = document.getElementById("sfxVolume").value;
     if (sfx.muted == true) {
@@ -41,3 +38,19 @@ function setSFXVolume() {
     sfx.volume = sfxVolume;
     document.getElementById("sfxVol").innerHTML = rn(sfxVolume*100, 1);
 }
+
+function muteSFXToggle() {
+    if (sfx.muted == false) {
+        sfx.muted = true;
+    } else if (sfx.muted == true) {
+        sfx.muted = false;
+    }
+}
+
+//Music Handler
+
+
+//SFX Handler
+const clickSFX = document.getElementsByName("click");
+
+document.getElementById("main-menu-container").querySelector("button").addEventListener("click", function () {clickSFX.play();});
