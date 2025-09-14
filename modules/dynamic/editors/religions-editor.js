@@ -15,8 +15,9 @@ export function open() {
   $("#religionsEditor").dialog({
     title: "Religions Editor",
     resizable: false,
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     close: closeReligionsEditor,
-    position: {my: "right top", at: "right-10 top+10", of: "svg"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}
   });
   $body.focus();
 }
@@ -436,7 +437,7 @@ function changePopulation() {
         $(this).dialog("close");
       }
     },
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 
   function applyPopulationChange() {
@@ -650,7 +651,7 @@ function enterReligionsManualAssignent() {
   religionsEditor.querySelectorAll(".hide").forEach(el => el.classList.add("hidden"));
   religionsFooter.style.display = "none";
   $body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "none"));
-  $("#religionsEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg"}});
+  $("#religionsEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}});
 
   tip("Click on religion to select, drag the circle to change religion", true);
   viewbox
@@ -753,7 +754,7 @@ function exitReligionsManualAssignment(close) {
     .forEach(el => el.classList.remove("hidden"));
   byId("religionsFooter").style.display = "block";
   $body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "all"));
-  if (!close) $("#religionsEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg"}});
+  if (!close) $("#religionsEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}});
 
   debug.select("#religionCenters").style("display", null);
   restoreDefaultEvents();

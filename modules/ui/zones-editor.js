@@ -15,7 +15,7 @@ function editZones() {
     title: "Zones Editor",
     resizable: false,
     close: () => exitZonesManualAssignment("close"),
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   // add listeners
@@ -179,7 +179,7 @@ function editZones() {
     zonesEditor.querySelectorAll(".hide").forEach(el => el.classList.add("hidden"));
     zonesFooter.style.display = "none";
     body.querySelectorAll("div > input, select, svg").forEach(e => (e.style.pointerEvents = "none"));
-    $("#zonesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+    $("#zonesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 
     tip("Click to select a zone, drag to paint a zone", true);
     viewbox
@@ -300,7 +300,7 @@ function editZones() {
     zonesFooter.style.display = "block";
     body.querySelectorAll("div > input, select, svg").forEach(e => (e.style.pointerEvents = "all"));
     if (!close)
-      $("#zonesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+      $("#zonesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 
     restoreDefaultEvents();
     clearMainTip();
@@ -450,7 +450,7 @@ function editZones() {
           $(this).dialog("close");
         }
       },
-      position: {my: "center", at: "center", of: "svg"}
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
     });
 
     function applyPopulationChange() {

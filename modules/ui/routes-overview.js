@@ -16,7 +16,7 @@ function overviewRoutes() {
     title: "Routes Overview",
     resizable: false,
     width: fitContent(),
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   // add listeners

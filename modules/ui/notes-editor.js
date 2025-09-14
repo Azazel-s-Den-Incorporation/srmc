@@ -42,7 +42,7 @@ function editNotes(id, name) {
     title: "Notes Editor",
     width: svgWidth * 0.8,
     height: svgHeight * 0.75,
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     close: removeEditor
   });
 

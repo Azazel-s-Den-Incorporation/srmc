@@ -19,40 +19,36 @@ font {
   pointer-events: none;
 }
 
+html {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
 #main-ui {
   width: 100%;
   height: 100%;
   position: fixed;
   z-index: 0;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
 #menu-screen {
   display: flex;
   position: absolute;
-  z-index: 99999;
+  z-index: 100000;
+  top: 0;
   width: 100%;
   height: 100%;
-  align-self: center;
   background-color: #1e1e1edd;
-  display: flex;
   justify-content: center;
-}
-
-#menu-screen img{
-  display: flex;
-  position: absolute;
-  z-index: 500;
-  width: 100%;
-  height: 100%;
-  align-self: center;
-  display: flex;
-  justify-content: center;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
 #map-box{
   display: flex;
-  position: absolute;
-  z-index: 1;
+  flex-flow: column;
   width: 100%;
   height: 100%;
   align-self: center;
@@ -66,26 +62,37 @@ font {
   flex-flow: column;
   position: absolute;
   z-index: 1000;
-  width: 60%;
+  width: 50%;
   height: fit-content;
   min-height: 50%;
   max-height: 80%;
-  background-color: #8e8e8edd;
-  padding: 1dvi;
   align-self: center;
   justify-content: space-evenly;
-  border-radius: 15px;
   color: black;
   font-size: 2dvi;
+  vertical-align: middle;
 }
 
-#menu > * {
+#menu > div {
   align-self: flex-start;
   justify-content: center;
-  display: none;
   flex-flow: column;
   width: 100%;
   height: 100%;
+}
+
+#main-menu-title-container {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: fit-content;
+  padding: 4px;
+}
+
+#main-menu-container img {
+  height: auto;
+  width: 69%;
+  align-self: center;
 }
 
 #menu{
@@ -94,6 +101,10 @@ font {
   width: 100%;
   height: fit-content;
   overflow-y: auto;
+  border: thick groove #ccab1e;
+  background-color: #e9dd9d73;
+  padding: 8px;
+  font-size: 2.5dvh;
 }
 
 #settings-menu p {
@@ -115,7 +126,7 @@ font {
   width: 60%;
   color: #e2d2c2;
   font-weight: bold;
-  font-size: 1.5dvi;
+  font-size: 1dvi;
   border: 0;
   margin: 2px;
   border-radius: 5px;
@@ -149,7 +160,7 @@ font {
   width: 100%;
   color: #e2d2c2;
   font-weight: bold;
-  font-size: 1.5dvi;
+  font-size: 1dvi;
   border: 0;
   margin: 2px;
   border-radius: 5px;
@@ -178,39 +189,60 @@ font {
   width: 6%;
 }
 
-#menu * td {
+#menu * tr {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
   height: fit-content;
+  padding: 1px;
+}
+
+#menu * td {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: fit-content;
+  padding: 1px;
+  justify-content: space-between;
+}
+
+#tdi{
+  padding: 5px;
+  width: 1.5dvi;
 }
 
 #menu * input[type="color"] {
-  width: 4.5em;
-  height: 1em;
+  width: 4dvh;
+  height: 4dvh;
   border: 0;
 }
 
 #menu * input[type="text"] {
   border: 0px;
   width: 62%;
-  font-size: smaller;
+  font-size: 2.5dvh;
 }
 
 #menu * output {
   text-align: right;
-  font-size: smaller;
+  font-size: 2.5dvh;
 }
 
 #menu * input[type="number"] {
-  font-size: 0.8em;
+  font-size: 2.5dvh;
   border: 0;
   text-align: right;
   background-color: transparent;
-  width: 3.3em;
+  width: 30%;
+  height: 4dvh;
+  padding: 0 2px 0 2px;
 }
 
 #menu * input[type="number"]::-webkit-inner-spin-button,
 #menu * input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+  padding: 0 2px 0 2px;
 }
 
 #menu * input[type="number"] {
@@ -324,44 +356,202 @@ font {
   height: 1dvi;
 }
 
-#dashbar {
+#dashbar-top {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  background: #1e1e1edd;
+  width: 100%;
+  height: 0;
   position: absolute;
   z-index: 666;
+}
+
+#dashbar-bottom {
+  display: flex;
+  flex-flow: row nowrap;
+  background: #1e1e1edd;
+  width: 100%;
+  height: 0;
+  position: absolute;
+  z-index: 666;
+  bottom: 0;
+}
+
+#nationbar {
+  display: flex;
+  flex-flow: row nowrap;
+  width: fit-content;
+  height: fit-content;
+  height: 0;
+  position: absolute;
+  z-index: 666;
+}
+
+#nationbar > * {
+  display: flex;
+  flex-flow: row nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  align-content: center;
+  background-color: #8d7a3e;
+  border: solid 1px #1e1e1e;
+  text-align: center;
+  font-size: 0.9vi;
+  color: black;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#nation-stats {
+  border: groove #ccab1e;
+  height: 2.5dvi;
+  width: fit-content;
+}
+
+#stat-col {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  width: 6.2dvi;
+  margin: -1px;
+}
+
+#stat-title {
+  background-color: #1e1e1e;
+  color: white;
+  font-weight: bold;
+}
+
+#stat-col > * span {
+  background-color: #1e1e1e;
+  color: white;
+  font-weight: bold;
+}
+
+#selected-nation {
+  border: thick groove #ccab1e;
+  width: 5dvi;
+  height: 5dvi;
+  background-color: #1e1e1e;
+}
+#selected-nation-emblem {
+  width: 100%;
+  height: 100%;
+  background-color: #1e1e1e;
+}
+
+#selected-nation:hover {
+  filter:brightness(110%);
+}
+
+.stateID {
+  width: 1em;
+  height: 1em;
+}
+
+#nationbar * > span:hover {
+  filter:brightness(80%);
+  cursor: pointer;
+}
+
+#time-box {
+  height: 4dvi;
+  width: fit-content;
+  display: flex;
+  position: absolute;
   right: 0;
-  background-color: #393939;
-  width: 25%;
-  height: 5%;
+  flex-wrap: row nowrap;
+  background-color: #1e1e1e;
+  border: groove #ccab1e;
+}
+
+#date {
+  height: 50%;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
+#timebox * > input[type="number"],
+#date-box * > input[type="integer"],
+#timebox * > input[type="text"] {
+  height: 100%;
+  font-size: 1dvi;
+  width: 4dvi;
+  color: #000;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#timebox * > button {
+  height: 100%;
+  width: 4dvi;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#timebox * > button:hover,
+#playpause:hover {
+  filter:brightness(80%)
+}
+
+#playpause {
+  height: 100%;
+  font-size: 3dvi;
+  vertical-align: middle;
+}
+
+#toolbar {
+  height: fit-content;
+  width: 20%;
+  display: flexbox;
+  position: absolute;
+  z-index: 667;
+  bottom: 0;
+  left: 0;
+  background-color: #1e1e1edd;
+}
+
+#toolbar * > button {
+  height: 100%;
+  width: 2dvi;
+  font-size: 1dvi;
+  background-color: #c6c2c2;
+  border: groove #ccab1e;
 }
 
 #layersContent {
   display: flex;
-  flex-flow: row;
+  flex-flow: row nowrap;
   justify-content: space-around;
-  bottom: 0;
-  margin-left: 5%;
-  margin-right: 5%;
-  width: 90%;
-  height: 3%;
   position: absolute;
-  z-index: 666;
-  background-color: #1e1e1e8e;
+  bottom: 0;
+  right: 0;
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 2px 2px 8px;
+  background-color: #ccab1e42;
+}
+
+#layersContent div {
+  display: flex;
+  height: 100%;
+  padding: 0 4px 0 4px;
+  justify-items: center;
+  align-items: center;
 }
 
 #savePresetButton,
 #removePresetButton {
-  width: 10%;
+  display: inline-block;
+  width: 20px;
   font-size: 1dvh;
-  padding: 0;
 }
 
 #layersPreset {
-  position: absolute;
   display: inline;
-  max-width: 100px;
-  font-size: 1.2dvh;
-  top: 0;
+  max-width: 120px;
+  font-size: 1.25dvh;
 }
 
 #layersContent * li {
@@ -383,8 +573,9 @@ font {
   box-shadow: 0 0 2px 2px var(--dark-solid) 17;
 }
 #layersContent * li img {
-  height: 18px;
+  height: 100%;
   width: auto;
+  max-width: 3dvi;
 }
 .tabcontent button:hover {
   background-color: var(--header);

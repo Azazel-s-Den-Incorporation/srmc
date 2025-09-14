@@ -37,6 +37,7 @@
     // data[37] routes
     // data[38] zones
     // data[39] wealth
+    // data[40] cells habitability
 
 // Functions to load and parse .map/.gz files
 async function quickLoad() {
@@ -358,7 +359,7 @@ async function parseLoadedData(data, mapVersion) {
 
     {
       svg.remove();
-      document.body.insertAdjacentHTML("afterbegin", data[5]);
+      document.getElementById("map-box").insertAdjacentHTML("afterbegin", data[5]);
     }
 
     {
@@ -463,6 +464,7 @@ async function parseLoadedData(data, mapVersion) {
       // data[28] had deprecated cells.crossroad
       pack.cells.routes = data[36] ? JSON.parse(data[36]) : {};
       pack.cells.wealth = Float32Array.from(data[21].split(","));
+      pack.cells.habitability = Uint8Array.from(data[40].split(","));
 
       if (data[31]) {
         const namesDL = data[31].split("/");
@@ -822,7 +824,7 @@ async function parseLoadedData(data, mapVersion) {
           $(this).dialog("close");
         }
       },
-      position: {my: "center", at: "center", of: "svg"}
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
     });
   }
 }

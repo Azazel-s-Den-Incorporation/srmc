@@ -25,21 +25,29 @@ async function exportToPng() {
   canvas.height = svgHeight * pngResolutionInput.value;
   const img = new Image();
   img.src = url;
+  
+  if (exportType == "download") {
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      link.download = getFileName() + ".png";
+      canvas.toBlob(function (blob) {
+        link.href = window.URL.createObjectURL(blob);
+        link.click();
+        window.setTimeout(function () {
+          canvas.remove();
+          window.URL.revokeObjectURL(link.href);
 
-  img.onload = function () {
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    link.download = getFileName() + ".png";
-    canvas.toBlob(function (blob) {
-      link.href = window.URL.createObjectURL(blob);
-      link.click();
-      window.setTimeout(function () {
-        canvas.remove();
-        window.URL.revokeObjectURL(link.href);
-
-        const message = `${link.download} is saved. Open 'Downloads' screen (ctrl + J) to check. You can set image scale in options`;
-        tip(message, true, "success", 5000);
-      }, 1000);
-    });
+          const message = `${link.download} is saved. Open 'Downloads' screen (ctrl + J) to check. You can set image scale in options`;
+          tip(message, true, "success", 5000);
+        }, 1000);
+      });
+    }
+  } else if (exportType == "gamemap") {
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      
+      
+    }
   };
 
   TIME && console.timeEnd("exportToPng");
@@ -320,6 +328,40 @@ async function getMapURL(type, options) {
     if (pattern) cloneDefs.appendChild(pattern.cloneNode(true));
   }
 
+  {
+    // replace external marker icons
+    const externalMarkerImages = cloneEl.querySelectorAll('#markers image[href]:not([href=""])');
+    const imageHrefs = Array.from(externalMarkerImages).map(img => img.getAttribute("href"));
+
+    for (const url of imageHrefs) {
+      await new Promise(resolve => {
+        getBase64(url, base64 => {
+          externalMarkerImages.forEach(img => {
+            if (img.getAttribute("href") === url) img.setAttribute("href", base64);
+          });
+          resolve();
+        });
+      });
+    }
+  }
+
+  {
+    // replace external regiment icons
+    const externalRegimentImages = cloneEl.querySelectorAll('#armies image[href]:not([href=""])');
+    const imageHrefs = Array.from(externalRegimentImages).map(img => img.getAttribute("href"));
+
+    for (const url of imageHrefs) {
+      await new Promise(resolve => {
+        getBase64(url, base64 => {
+          externalRegimentImages.forEach(img => {
+            if (img.getAttribute("href") === url) img.setAttribute("href", base64);
+          });
+          resolve();
+        });
+      });
+    }
+  }
+
   if (!cloneEl.getElementById("fogging-cont")) cloneEl.getElementById("fog")?.remove(); // remove unused fog
   if (!cloneEl.getElementById("regions")) cloneEl.getElementById("statePaths")?.remove(); // removed unused statePaths
   if (!cloneEl.getElementById("labels")) cloneEl.getElementById("textPaths")?.remove(); // removed unused textPaths
@@ -489,7 +531,7 @@ function saveGeoJsonRoutes() {
     return {
       type: "Feature",
       geometry: {type: "LineString", coordinates},
-      properties: {id, group, name}
+      properties: {id: i, group, name}
     };
   });
   const json = {type: "FeatureCollection", features};
@@ -508,7 +550,7 @@ function saveGeoJsonRivers() {
       return {
         type: "Feature",
         geometry: {type: "LineString", coordinates},
-        properties: {id, source, mouth, parent, basin, widthFactor, sourceWidth, discharge, name, type}
+        properties: {id: i, source, mouth, parent, basin, widthFactor, sourceWidth, discharge, name, type}
       };
     }
   );
@@ -524,7 +566,7 @@ function saveGeoJsonMarkers() {
     const coordinates = getCoordinates(x, y, 4);
     const id = `marker${i}`;
     const note = notes.find(note => note.id === id);
-    const properties = {id, type, icon, x, y, ...note, size, fill, stroke};
+    const properties = {id: i, type, icon, x, y, ...note, size, fill, stroke};
     return {type: "Feature", geometry: {type: "Point", coordinates}, properties};
   });
 

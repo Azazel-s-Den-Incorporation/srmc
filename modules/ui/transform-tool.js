@@ -15,7 +15,7 @@ async function openTransformTool() {
   $("#transformTool").dialog({
     title: "Transform map",
     resizable: false,
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Transform: function () {
         closeDialogs();

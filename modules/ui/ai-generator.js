@@ -114,7 +114,7 @@ function generateWithAi(defaultPrompt, onApply) {
 
   $("#aiGenerator").dialog({
     title: "AI Text Generator",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     resizable: false,
     buttons: {
       Generate: function (e) {

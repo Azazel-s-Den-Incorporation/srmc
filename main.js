@@ -36,9 +36,6 @@ if (PRODUCTION && "serviceWorker" in navigator) {
     {once: true}
   );
 }
-
-
-
 // append svg layers (in default order)
 let svg = d3.select("#map");
 let defs = svg.select("#deftemp");
@@ -161,6 +158,7 @@ let notes = [];
 let rulers = new Rulers();
 let customization = 0;
 
+
 let biomesData = Biomes.getDefault();
 let nameBases = Names.getNameBases(); // cultures-related data
 
@@ -185,7 +183,7 @@ const onZoom = debounce(function () {
 
   handleZoom(isScaleChanged, isPositionChanged);
 }, 50);
-const zoom = d3.zoom().scaleExtent([0.8, 30]).on("zoom", onZoom);
+const zoom = d3.zoom().scaleExtent([0.7, 40]).on("zoom", onZoom);
 
 // default options, based on Earth data
 let options = {
@@ -199,6 +197,7 @@ let options = {
   villageMaxPopulation: 2000
 };
 
+
 let mapCoordinates = {}; // map coordinates on globe
 let populationRate = +byId("populationRateInput").value;
 let distanceScale = +byId("distanceScaleInput").value;
@@ -207,9 +206,65 @@ let urbanDensity = +byId("urbanDensityInput").value;
 
 applyStoredOptions();
 
+// Resolutions - Width, Height
+const ultraRes = [3840,2160];
+const superRes = [2880,1620];
+const highRes = [1920,1080];
+const medRes = [1080,720];
+const lowRes = [720,480];
+const shtRes = [480,320];
+const custonRes = [,];
+
+let rs = [1920,1080];
+if (resolutionInput == "ultraRes") {
+  rs = ultraRes;
+} else if (resolutionInput == "superRes") {
+  rs = superRes;
+} else if (resolutionInput == "highRes") {
+  rs = highRes;
+} else if (resolutionInput == "medRes") {
+  rs = medRes;
+} else if (resolutionInput == "lowRes") {
+  rs = lowRes;
+} else if (resolutionInput == "shtRes") {
+  rs = shtRes;
+} else if (resolutionInput == "customRes") {
+  rs = customRes;
+};
+
+// Map Sizes - Width, Height
+const giantSize = [4320,2160];
+const hugeSize = [2880,1440];
+const largeSize = [2160,1080];
+const standardSize = [1920,960];
+const mediumSize = [1440,720];
+const smallSize = [1080,480];
+const tinySize = [720,360];
+const customSize = [,];
+
+let ms = [1920,960];
+if (mapSizeInput == "giantSize") {
+  ms = giantSize;
+} else if (mapSizeInput == "hugeSize") {
+  ms = hugeSize;
+} else if (mapSizeInput == "largeSize") {
+  ms = largeSize;
+} else if (mapSizeInput == "standardSize") {
+  ms = standardSize;
+} else if (mapSizeInput == "mediumSize") {
+  ms = mediumSize;
+} else if (mapSizeInput == "smallSize") {
+  ms = smallSize;
+} else if (mapSizeInput == "tinySize") {
+  ms = tinySize;
+} else if (mapSizeInput == "customSize") {
+  ms = customSize;
+};
+
+
 // voronoi graph extension, cannot be changed after generation
-let graphWidth = +mapWidthInput.value;
-let graphHeight = +mapHeightInput.value;
+let graphWidth = +ms[0];
+let graphHeight = +ms[1];
 
 // svg canvas resolution, can be changed
 let svgWidth = graphWidth;
@@ -218,6 +273,9 @@ let svgHeight = graphHeight;
 // main menu
 async function mainMenuInit() {
 }
+
+// Developement Mode
+let devmode = true;
 
 landmass.append("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
 oceanPattern
@@ -244,7 +302,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       resizable: false,
       title: "Loading error",
       width: "28em",
-      position: {my: "center center-4em", at: "center", of: "svg"},
+      position: {my: "center center-4em", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         OK: function () {
           $(this).dialog("close");
@@ -254,46 +312,63 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else {
     // Loading Sequence  
     try {
+      WARN && console.warn(VERSION);
       WARN && console.warn("generating placeholder map");
         handleLayersPresetChange("blank");
-        generateMapOnLoad();
+        await generateMapOnLoad();
       WARN && console.warn("generated playceholder map");
-      WARN && console.warn("Main menu");
+
+      WARN && console.warn("Loading Main Menu");
         document.getElementById("menu-screen").style.display = "flex";
-      WARN && console.warn(VERSION);
         document.getElementById("versionText").innerHTML = 'v'+VERSION;
         document.getElementById("saveMapButton").style.display = "none";
         document.getElementById("hideMenuButton").style.display = "none";
-      WARN && console.warn("Main menu loaded");
-    } catch (error) {
-      ERROR && console.error(error);
-    }
-    try {
-        handleLayersPresetChange("physical");
-        await hideLoading();
       WARN && console.warn("Loading Main Menu Complete");
     } catch (error) {
       ERROR && console.error(error);
+    };
+    WARN && console.warn("Wrapping Up Loading Sequence");
+    handleLayersPresetChange("physical");
+    await hideLoading();
+    restoreDefaultEvents(); // apply default viewbox events
+    initiateAutosave();
+  };
+  // Developer Mode Actions on Load
+  if (devmode == true) {
+      WARN && console.warn("Development Mode active!");
+      try {
+      WARN && console.warn("Generating new map.");
+        newMapButton();
+        await genNewMapButton(options);
+      WARN && console.warn("Map Generated.");
+    } catch (error) {
+      ERROR && console.error(error);
+    };
+    try {
+      WARN && console.warn("Defaulting to state[1]");
+        await selectPlayerState(1);
+      WARN && console.warn("State selected. "+playerState);
+    } catch (error) {
+      ERROR && console.error(error);
     }
-  }
-  restoreDefaultEvents(); // apply default viewbox events
-  initiateAutosave();
+  };
 });
 
-function hideLoading() {
+
+async function hideLoading() {
   d3.select("#loading").transition().duration(3000).style("opacity", 0);
   d3.select("#menu-screen").transition().duration(3000).style("opacity", 1);
   d3.select("#tooltip").transition().duration(3000).style("opacity", 1);
 }
 
-function showLoading() {
-  d3.select("#loading").transition().duration(200).style("opacity", 1);
-  d3.select("#menu-screen").transition().duration(200).style("opacity", 0);
-  d3.select("#tooltip").transition().duration(200).style("opacity", 0);
+async function showLoading() {
+  d3.select("#loading").transition().duration(50).style("opacity", 1);
+  d3.select("#menu-screen").transition().duration(50).style("opacity", 0);
+  d3.select("#tooltip").transition().duration(50).style("opacity", 0);
 }
 document.getElementById("menu-screen").style.display = "flex";
 
-function menuScreen() {
+async function menuScreen() {
   const mainmenu = document.getElementById("menu-screen")
   const optionsContainer = document.getElementById("collapsible")
   if (mainmenu.style.display == "flex"){
@@ -304,6 +379,7 @@ function menuScreen() {
     optionsContainer.style.display = "none";
   }
 }
+
 
 if (document.getElementById("menu-screen").style.display == "none") {
   mainMenuButton();
@@ -316,6 +392,7 @@ function clearMenu() {
   document.getElementById("load-menu").style.display = "none";
   document.getElementById("worldConfigurator").style.display = "none";
   document.getElementById("options-menu").style.display = "none";
+  document.getElementById("styles-menu").style.display = "none";
   document.getElementById("settings-menu").style.display = "none";
   document.getElementById("dropbox-menu").style.display = "none";
 }
@@ -330,17 +407,29 @@ function newMapButton() {
   document.getElementById("new-map-menu").style.display = "flex";
 } 
 
-function genNewMapButton() {
-  showLoading();
-  mainMenuButton();
-  handleLayersPresetChange("blank");
-  document.getElementById("menu-screen").style.display = "none";
-  document.getElementById("saveMapButton").style.display = "flex";
-  document.getElementById("hideMenuButton").style.display = "flex";
-  regenerateMap(options);
-  handleLayersPresetChange("political");
-  byId("optionsContainer").style.display = "block";
-  byId("optionsTrigger").style.display = "block";
+async function genNewMapButton(options) {
+  await showLoading();
+  try {
+    WARN && console.warn("Loading Game Resources");
+      mainMenuButton();
+      await handleLayersPresetChange("blank");
+      document.getElementById("menu-screen").style.display = "none";
+      document.getElementById("saveMapButton").style.display = "flex";
+      document.getElementById("hideMenuButton").style.display = "flex";
+      await regenerateMap(options);
+      await handleLayersPresetChange("political");
+    } catch (error) {
+      ERROR && console.error(error);
+    }
+    try {
+      for (const s of pack.states) {
+        if (s.removed) continue;
+        COArenderer.trigger("stateCOA" + s.i, s.coa);
+      }
+    } catch (error) {
+      ERROR && console.error(error);
+    }
+    await initPlayer();
   hideLoading();
 } 
 
@@ -357,6 +446,11 @@ function loadMapButton() {
 function optionsButton() {
   clearMenu();
   document.getElementById("options-menu").style.display = "flex";
+} 
+
+function stylesButton() {
+  clearMenu();
+  document.getElementById("styles-menu").style.display = "flex";
 } 
 
 function settingsButton() {
@@ -696,7 +790,7 @@ void (function addDragToUpload() {
       $("#alert").dialog({
         resizable: false,
         title: "Invalid file format",
-        position: {my: "center", at: "center", of: "svg"},
+        position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
         buttons: {
           Close: function () {
             $(this).dialog("close");
@@ -716,6 +810,138 @@ void (function addDragToUpload() {
     });
   });
 })();
+
+const assignGameVars = () => { 
+  TIME && console.time("assignGameVars");
+  WARN && console.warn("Assigning Game Variables");
+  const {states, burgs} = pack;
+  const cells = pack.cells.i;
+  // Cell Data
+  try {
+  WARN && console.warn("Adding Cell Data");
+  cells.forEach((c, i) => {
+      if (!c.i || c.removed) return;
+
+        const biome = pack.cells.biome[i];
+        const habit = 0;
+        
+        if ( biome === 0 ) {
+          habit = habitability[0];
+        } else if ( biome === 1 ) {
+          habit = habitability[1];
+        } else if ( biome === 2 ) {
+          habit = habitability[2];
+        } else if ( biome === 3 ) {
+          habit = habitability[3];
+        } else if ( biome === 4 ) {
+          habit = habitability[4];
+        } else if ( biome === 5 ) {
+          habit = habitability[5];
+        } else if ( biome === 6 ) {
+          habit = habitability[6];
+        } else if ( biome === 7 ) {
+          habit = habitability[7];
+        } else if ( biome === 8 ) {
+          habit = habitability[8];
+        } else if ( biome === 9 ) {
+          habit = habitability[9];
+        } else if ( biome === 10 ) {
+          habit = habitability[10];
+        } else if ( biome === 11 ) {
+          habit = habitability[11];
+        } else if ( biome === 12 ) {
+          habit = habitability[12];
+        };
+
+        c.habitability = habit;
+
+    });
+  } catch (error) {
+    ERROR && console.error(error);
+  } finally {};
+  
+  // States Data
+  try {
+  WARN && console.warn("Adding State Data");
+  states.forEach((s, i) => {
+    if (!s.i || s.removed || s.lock) return;
+        
+        // Stats based on Govt Form
+
+        const popularity = 0;
+        const piety = 0;
+
+        if (s.form === "Monarchy") {
+          s.popularity = 70;
+        } else if (s.form === "Republic") {
+          s.popularity = 90;
+        } else if (s.form === "Union") {
+          s.popularity = 80;
+        } else if (s.form === "Theocracy") {
+          s.popularity = 50;
+          s.piety = 60;
+        } else if (s.form === "Anarchy") {
+          s.popularity = 30;
+        } else if (s.form === "Autocratic") {
+          s.popularity = 40;
+        } else if (s.form === "Revolutionary") {
+          s.popularity = 60;
+        };
+
+        // Stats based on Cell Data
+        const urbanization = 0.30;
+        const urban = rn(s.urban * populationRate * urbanization);
+        const rural = rn(s.rural * populationRate);
+        const population = urban + rural;
+        const jobs = 0;
+        const youngpop = 0;
+        const workingpop = 0;
+        const elderpop = 0;
+        const wages = Math.random() * 10;
+        const wealth = wages * workingpop;
+
+        // Stats based on Military Units
+        const navy = 0;
+        const army = 0;
+        const airforce = 0;
+        const satelites = 0;
+
+        s.wages = wages;
+        s.wealth = wealth; 
+        s.urban = urban; 
+        s.rural = rural; 
+        s.population = population; 
+        s.jobs = jobs; 
+        s.youngpop = youngpop; 
+        s.workingpop = workingpop; 
+        s.elderpop = elderpop; 
+        s.urbanization = urbanization; 
+        s.popularity = popularity; 
+        s.piety = piety; 
+        s.army = army; 
+        s.navy = navy; 
+        s.airforce = airforce; 
+        s.satelites = satelites; 
+    });
+  } catch (error) {
+    ERROR && console.error(error);
+  } finally {};
+
+  // Burg Data
+  try {
+  WARN && console.warn("Adding Burg Data");
+  burgs.forEach((b, i) => {
+      if (!b.i || b.removed || b.lock) return;
+
+    });
+  } catch (error) {
+    ERROR && console.error(error);
+  } finally {};
+
+  // Time Data
+
+  TIME && console.timeEnd("assignGameVars");
+};
 
 async function generate(options) {
   try {
@@ -769,6 +995,8 @@ async function generate(options) {
     Markers.generate();
     Zones.generate();
 
+    assignGameVars();
+
     drawScaleBar(scaleBar, scale);
     Names.getMapName();
 
@@ -785,6 +1013,7 @@ async function generate(options) {
     $("#alert").dialog({
       resizable: false,
       title: "Generation error",
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       width: "32em",
       buttons: {
         "Clear cache": () => cleanupData(),
@@ -800,7 +1029,7 @@ async function generate(options) {
           $(this).dialog("close");
         }
       },
-      position: {my: "center", at: "center", of: "svg"}
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
     });
   }
 }

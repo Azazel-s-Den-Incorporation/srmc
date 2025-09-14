@@ -1,8 +1,7 @@
 "use strict";
-
 // module to control the Tools options (click to edit, to re-geenerate, tp add)
-
-toolsContent.addEventListener("click", function (event) {
+const toolbar = document.getElementById("toolbar");
+toolbar.addEventListener("click", function (event) {
   if (customization) return tip("Please exit the customization mode first", false, "error");
   if (!["BUTTON", "I"].includes(event.target.tagName)) return;
   const button = event.target.id;
@@ -422,7 +421,7 @@ function regenerateBurgs() {
   const sorted = cells.i.filter(i => score[i] > 0 && cells.culture[i]).sort((a, b) => score[b] - score[a]); // filtered and sorted array of indexes
   const existingStatesCount = states.filter(s => s.i && !s.removed).length;
   const burgsCount =
-    (manorsInput.value === "1000" ? rn(sorted.length / 5 / (grid.points.length / 10000) ** 0.8) : +manorsInput.value) +
+    (manorsInput.value === "1201" ? rn(sorted.length / 5 / (grid.points.length / 10000) ** 0.8) : +manorsInput.value) +
     existingStatesCount;
   const spacing = (graphWidth + graphHeight) / 150 / (burgsCount ** 0.7 / 66); // base min distance between towns
 
@@ -956,7 +955,7 @@ function configMarkersGeneration() {
   $("#alert").dialog({
     resizable: false,
     title: "Markers generation settings",
-    position: {my: "left top", at: "left+10 top+10", of: "svg", collision: "fit"},
+    position: {my: "left top", at: "left+10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"},
     buttons: {
       Regenerate: () => {
         applyChanges();
@@ -983,7 +982,7 @@ function viewCellDetails() {
     resizable: false,
     width: "22em",
     title: "Cell Details",
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 }
 

@@ -7,7 +7,7 @@ function openSubmapTool() {
     title: "Create a submap",
     resizable: false,
     width: "32em",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Submap: function () {
         closeDialogs();

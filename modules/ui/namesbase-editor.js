@@ -42,7 +42,7 @@ function editNamesbase() {
   $("#namesbaseEditor").dialog({
     title: "Namesbase Editor",
     width: "60vw",
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 
   function createBasesList() {

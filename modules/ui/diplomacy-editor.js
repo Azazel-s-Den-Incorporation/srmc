@@ -65,7 +65,7 @@ function editDiplomacy() {
     resizable: false,
     width: fitContent(),
     close: closeDiplomacyEditor,
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   // add listeners
@@ -389,7 +389,7 @@ function editDiplomacy() {
 
     $("#alert").dialog({
       title: "Relations history",
-      position: {my: "center", at: "center", of: "svg"},
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         Save: function () {
           const data = this.querySelector("div").innerText.split("\n").join("\r\n");
@@ -461,7 +461,7 @@ function editDiplomacy() {
 
     $("#diplomacyMatrix").dialog({
       title: "Relations matrix",
-      position: {my: "center", at: "center", of: "svg"},
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {}
     });
   }

@@ -55,37 +55,37 @@ collapsible.addEventListener("mouseleave", function () {
 });
 
 // Activate options tab on click
-document
-  .getElementById("options")
-  .querySelector("div.tab")
-  .addEventListener("click", function (event) {
-    if (event.target.tagName !== "BUTTON") return;
-    const id = event.target.id;
-    const active = byId("options").querySelector(".tab > button.active");
-    if (active && id === active.id) return; // already active tab is clicked
-
-    if (active) active.classList.remove("active");
-    byId(id).classList.add("active");
-    document
-      .getElementById("options")
-      .querySelectorAll(".tabcontent")
-      .forEach(e => (e.style.display = "none"));
-
-    if (id === "layersTab") {
-      layersContent.style.display = "block";
-    } else if (id === "styleTab") {
-      styleContent.style.display = "block";
-      selectStyleElement();
-    } else if (id === "optionsTab") {
-      optionsContent.style.display = "block";
-    } else if (id === "regenTab") {
-      customization === 1 ? (customizationMenu.style.display = "block") : (regenContent.style.display = "block");
-    } else if (id === "toolsTab") {
-      customization === 1 ? (customizationMenu.style.display = "block") : (toolsContent.style.display = "block");
-    } else if (id === "aboutTab") {
-      aboutContent.style.display = "block";
-    }
-  });
+//document
+//  .getElementById("options")
+//  .querySelector("div.tab")
+//  .addEventListener("click", function (event) {
+//    if (event.target.tagName !== "BUTTON") return;
+//    const id = event.target.id;
+//    const active = byId("options").querySelector(".tab > button.active");
+//    if (active && id === active.id) return; // already active tab is clicked
+//
+//    if (active) active.classList.remove("active");
+//    byId(id).classList.add("active");
+//    document
+//      .getElementById("options")
+//      .querySelectorAll(".tabcontent")
+//      .forEach(e => (e.style.display = "none"));
+//
+//    if (id === "layersTab") {
+//      layersContent.style.display = "block";
+//    } else if (id === "styleTab") {
+//      styleContent.style.display = "block";
+//      selectStyleElement();
+//    } else if (id === "optionsTab") {
+//      optionsContent.style.display = "block";
+//    } else if (id === "regenTab") {
+//      customization === 1 ? (customizationMenu.style.display = "block") : (regenContent.style.display = "block");
+//    } else if (id === "toolsTab") {
+//      customization === 1 ? (customizationMenu.style.display = "block") : (toolsContent.style.display = "block");
+//    } else if (id === "aboutTab") {
+//      aboutContent.style.display = "block";
+//    }
+//  });
 
 // show popup with a list of Patreon supportes (updated manually)
 async function showSupporters() {
@@ -99,7 +99,7 @@ async function showSupporters() {
     resizable: false,
     title: "Patreon Supporters",
     width: "min-width",
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 }
 
@@ -118,7 +118,7 @@ function updateOutputToFollowInput(ev) {
   const value = ev.target.value;
 
   // specific cases
-  if (id === "manorsInput") return (manorsOutput.value = value == 1000 ? "auto" : value);
+  if (id === "manorsInput") return (byId("manorsOutput").value = value == 1201 ? "auto" : value);
 
   // generic case
   if (id.slice(-5) === "Input") {
@@ -135,7 +135,7 @@ const optionsContent = byId("menu");
 
 optionsContent.addEventListener("input", event => {
   const {id, value} = event.target;
-  if (id === "mapWidthInput" || id === "mapHeightInput") mapSizeInputChange();
+  if (id === "mapSizeInput") mapSizeInputChange();
   else if (id === "pointsInput") changeCellsDensity(+value);
   else if (id === "culturesSet") changeCultureSet();
   else if (id === "statesNumber") changeStatesNumber(value);
@@ -152,6 +152,8 @@ optionsContent.addEventListener("change", event => {
   else if (id === "optionsSeed") generateMapWithSeed("seed change");
   else if (id === "uiSize") changeUiSize(+value);
   else if (id === "shapeRendering") setRendering(value);
+  else if (id === "dayInput") changeDay();
+  else if (id === "monthInput") changeMonth();
   else if (id === "yearInput") changeYear();
   else if (id === "eraInput") changeEra();
   else if (id === "stateLabelsModeInput") options.stateLabelsMode = value;
@@ -165,7 +167,6 @@ optionsContent.addEventListener("click", event => {
   else if (id === "optionsEraRegenerate") regenerateEra();
   else if (id === "templateInputContainer") openTemplateSelectionDialog();
   else if (id === "zoomExtentDefault") restoreDefaultZoomExtent();
-  else if (id === "translateExtent") toggleTranslateExtent(event.target);
   else if (id === "speakerTest") testSpeaker();
   else if (id === "themeColorRestore") restoreDefaultThemeColor();
   else if (id === "loadGoogleTranslateButton") loadGoogleTranslate();
@@ -173,15 +174,12 @@ optionsContent.addEventListener("click", event => {
 });
 
 function mapSizeInputChange() {
-  const $mapWidthInput = byId("mapWidthInput");
-  const $mapHeightInput = byId("mapHeightInput");
-
   fitMapToScreen();
-  localStorage.setItem("mapWidth", $mapWidthInput.value);
-  localStorage.setItem("mapHeight", $mapHeightInput.value);
+  localStorage.setItem("mapWidth", ms[0]);
+  localStorage.setItem("mapHeight", ms[1]);
 
-  const tooWide = +$mapWidthInput.value > window.innerWidth;
-  const tooHigh = +$mapHeightInput.value > window.innerHeight;
+  const tooWide = +ms[0] > window.innerWidth;
+  const tooHigh = +ms[1] > window.innerHeight;
 
   if (tooWide || tooHigh) {
     const message = `Canvas size is larger than window size (${window.innerWidth} x ${window.innerHeight}). It can affect performance`;
@@ -190,8 +188,8 @@ function mapSizeInputChange() {
 }
 
 function restoreDefaultCanvasSize() {
-  mapWidthInput.value = window.innerWidth;
-  mapHeightInput.value = window.innerHeight;
+  // 1920p default size
+  mapSizeInput.value = standardSize;
   localStorage.removeItem("mapHeight");
   localStorage.removeItem("mapWidth");
   fitMapToScreen();
@@ -199,8 +197,8 @@ function restoreDefaultCanvasSize() {
 
 // on map creation
 function applyGraphSize() {
-  graphWidth = +mapWidthInput.value;
-  graphHeight = +mapHeightInput.value;
+  graphWidth = +ms[0];
+  graphHeight = +ms[1];
 
   landmass.select("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
   oceanPattern.select("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
@@ -212,38 +210,22 @@ function applyGraphSize() {
 
 // on generate, on load, on resize, on canvas size change
 function fitMapToScreen() {
-  svgWidth = Math.min(+mapWidthInput.value, window.innerWidth);
-  svgHeight = Math.min(+mapHeightInput.value, window.innerHeight);
+  svgWidth = Math.min(+rs[0], 1920);
+  svgHeight = Math.min(+rs[1], 1080);
   svg.attr("width", svgWidth).attr("height", svgHeight);
 
-  const zoomMin = rn(Math.max(svgWidth / graphWidth, svgHeight / graphHeight), 3);
+  const zoomMin = 0.9;
   zoomExtentMin.value = zoomMin;
   const zoomMax = +zoomExtentMax.value;
 
-  zoom
-    .translateExtent([
-      [0, 0],
-      [graphWidth, graphHeight]
+    zoom.translateExtent([
+      [(-50), (-50)],
+      [(svgWidth + 50), (svgHeight - 50)]
     ])
     .scaleExtent([zoomMin, zoomMax]);
 
   fitScaleBar(scaleBar, svgWidth, svgHeight);
   if (window.fitLegendBox) fitLegendBox();
-}
-
-function toggleTranslateExtent(el) {
-  const on = (el.dataset.on = +!+el.dataset.on);
-  if (on) {
-    zoom.translateExtent([
-      [-graphWidth / 2, -graphHeight / 2],
-      [graphWidth * 1.5, graphHeight * 1.5]
-    ]);
-  } else {
-    zoom.translateExtent([
-      [0, 0],
-      [graphWidth, graphHeight]
-    ]);
-  }
 }
 
 // add voice options
@@ -289,7 +271,7 @@ function showSeedHistoryDialog() {
   $("#alert").dialog({
     resizable: false,
     title: "Seed history",
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 }
 
@@ -333,7 +315,17 @@ const cellsDensityMap = {
   10: 70000,
   11: 80000,
   12: 90000,
-  13: 100000
+  13: 100000,
+  14: 110000,
+  15: 120000,
+  16: 130000,
+  17: 140000,
+  18: 150000,
+  19: 160000,
+  20: 170000,
+  21: 180000,
+  22: 190000,
+  23: 200000
 };
 
 function changeCellsDensity(value) {
@@ -345,7 +337,7 @@ function changeCellsDensity(value) {
 }
 
 function getCellsDensityColor(cells) {
-  return cells > 50000 ? "#b12117" : cells !== 10000 ? "#dfdf12" : "#053305";
+  return cells > 80000 ? "#b12117" : cells < 50000 ? "#053305" : "#dfdf12";
 }
 
 function changeCultureSet() {
@@ -411,7 +403,6 @@ function changeUiSize(value) {
   uiSize.value = value;
   document.getElementsByTagName("body")[0].style.fontSize = rn(value * 10, 2) + "px";
   byId("options").style.width = value * 300 + "px";
-  byId("main-menu-container").style.width = value * 500 + "px";
 }
 
 function getUImaxSize() {
@@ -422,7 +413,7 @@ function changeTooltipSize(value) {
   tooltip.style.fontSize = `calc(${value}px + 0.5vw)`;
 }
 
-const THEME_COLOR = "#997787";
+const THEME_COLOR = "#ccab1eff";
 function restoreDefaultThemeColor() {
   localStorage.removeItem("themeColor");
   changeDialogsTheme(THEME_COLOR, transparencyInput.value);
@@ -521,16 +512,16 @@ function changeZoomExtent(value) {
 }
 
 function restoreDefaultZoomExtent() {
-  zoomExtentMin.value = 0.5;
-  zoomExtentMax.value = 20;
-  zoom.scaleExtent([0.5, 20]).scaleTo(svg, 1);
+  zoomExtentMin.value = 0.9;
+  zoomExtentMax.value = 40;
+  zoom.scaleExtent([0.9, 40]).scaleTo(svg, 1);
 }
 
 // restore options stored in localStorage
 function applyStoredOptions() {
   if (!stored("mapWidth") || !stored("mapHeight")) {
-    mapWidthInput.value = window.innerWidth;
-    mapHeightInput.value = window.innerHeight;
+    mapWidthInput.value = ms[0];
+    mapHeightInput.value = ms[1];
   }
 
   const heightmapId = stored("template");
@@ -572,14 +563,14 @@ function applyStoredOptions() {
 
   uiSize.max = uiSize.max = getUImaxSize();
   if (stored("uiSize")) changeUiSize(+stored("uiSize"));
-  else changeUiSize(minmax(rn(mapWidthInput.value / 1280, 1), 1, 2.5));
+  else changeUiSize(minmax(rn(720 / 1280, 1), 1, 2.5));
 
   // search params overwrite stored and default options
   const params = new URL(window.location.href).searchParams;
   const width = +params.get("width");
   const height = +params.get("height");
-  if (width) mapWidthInput.value = width;
-  if (height) mapHeightInput.value = height;
+  if (width) m[0] = width;
+  if (height) ms[1] = height;
 
   const transparency = stored("transparency") || 5;
   const themeColor = stored("themeColor");
@@ -594,12 +585,12 @@ function randomizeOptions() {
   const randomize = new URL(window.location.href).searchParams.get("options") === "default"; // ignore stored options
 
   // 'Options' settings
-  if (randomize || !locked("points")) changeCellsDensity(4); // reset to default, no need to randomize
+  if (randomize || !locked("points")) changeCellsDensity(8); // reset to default, no need to randomize
   if (randomize || !locked("template")) randomizeHeightmapTemplate();
   if (randomize || !locked("statesNumber")) statesNumber.value = gauss(18, 5, 2, 30);
   if (randomize || !locked("provincesRatio")) provincesRatio.value = gauss(20, 10, 20, 100);
   if (randomize || !locked("manors")) {
-    manorsInput.value = 1000;
+    manorsInput.value = 1201;
     manorsOutput.value = "auto";
   }
   if (randomize || !locked("religionsNumber")) religionsNumber.value = gauss(6, 3, 2, 10);
@@ -667,41 +658,7 @@ function setRendering(value) {
   }
 }
 
-// generate current year and era name
-function generateEra() {
-  if (!stored("year")) yearInput.value = rand(100, 2000); // current year
-  if (!stored("era")) eraInput.value = Names.getBaseShort(P(0.7) ? 1 : rand(nameBases.length)) + " Era";
-  options.year = +yearInput.value;
-  options.era = eraInput.value;
-  options.eraShort = options.era
-    .split(" ")
-    .map(w => w[0].toUpperCase())
-    .join(""); // short name for era
-}
 
-function regenerateEra() {
-  unlock("era");
-  options.era = eraInput.value = Names.getBaseShort(P(0.7) ? 1 : rand(nameBases.length)) + " Era";
-  options.eraShort = options.era
-    .split(" ")
-    .map(w => w[0].toUpperCase())
-    .join("");
-}
-
-function changeYear() {
-  if (!yearInput.value) return;
-  if (isNaN(+yearInput.value)) {
-    tip("Current year should be a number", false, "error");
-    return;
-  }
-  options.year = +yearInput.value;
-}
-
-function changeEra() {
-  if (!eraInput.value) return;
-  lock("era");
-  options.era = eraInput.value;
-}
 
 async function openTemplateSelectionDialog() {
   const HeightmapSelectionDialog = await import("../dynamic/heightmap-selection.js?v=1.96.00");
@@ -749,7 +706,7 @@ function showSavePane() {
     title: "Save map",
     resizable: false,
     width: "25em",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Close: function () {
         $(this).dialog("close");
@@ -771,7 +728,7 @@ function showExportPane() {
     title: "Export map data",
     resizable: false,
     width: "26em",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Close: function () {
         $(this).dialog("close");
@@ -790,7 +747,7 @@ async function showLoadPane() {
     title: "Load map",
     resizable: false,
     width: "auto",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Close: function () {
         $(this).dialog("close");
@@ -1005,7 +962,7 @@ async function enter3dView(type) {
     $("#preview3d").dialog({
       title: "3D Preview",
       resizable: true,
-      position: {my: "left bottom", at: "left+10 bottom-20", of: "svg"},
+      position: {my: "left bottom", at: "left+10 bottom-20", of: "svg", collision: "fit", within: "#main-ui"},
       resizeStop: resize3d,
       close: enterStandardView
     });
@@ -1030,7 +987,7 @@ function toggle3dOptions() {
     title: "3D mode settings",
     resizable: false,
     width: fitContent(),
-    position: {my: "right top", at: "right-30 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-30 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   updateValues();

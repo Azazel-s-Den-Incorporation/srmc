@@ -55,7 +55,7 @@ export function open(props) {
 
   $("#hierarchyTree").dialog({
     title: `${capitalize(props.type)} tree`,
-    position: {my: "left center", at: "left+10 center", of: "svg"},
+    position: {my: "left center", at: "left+10 center", of: "svg", collision: "fit", within: "#main-ui"},
     width
   });
 
@@ -444,7 +444,7 @@ function selectElement(d) {
 
     $("#hierarchyTree_originSelector").dialog({
       title: "Select origins",
-      position: {my: "center", at: "center", of: "svg"},
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         Select: () => {
           $("#hierarchyTree_originSelector").dialog("close");

@@ -33,7 +33,7 @@ async function saveMap(method) {
           $(this).dialog("close");
         }
       },
-      position: {my: "center", at: "center", of: "svg"}
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
     });
   }
 }
@@ -114,7 +114,7 @@ function prepareMapData() {
     .join("/");
 
   // round population to save space
-  const pop = Array.from(pack.cells.pop).map(p => rn(p, 4));
+  const pop = Array.from(pack.cells.pop).map(p => p);
 
   // data format as below
   const mapData = [
@@ -157,7 +157,8 @@ function prepareMapData() {
     cellRoutes,
     routes,
     zones,
-    pack.cells.wealth
+    pack.cells.wealth,
+    pack.cells.habitability
   ].join("\r\n");
   return mapData;
 }

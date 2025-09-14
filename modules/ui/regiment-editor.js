@@ -17,7 +17,7 @@ function editRegiment(selector) {
     title: "Edit Regiment",
     resizable: false,
     close: closeEditor,
-    position: {my: "left top", at: "left+10 top+10", of: "#map"}
+    position: {my: "left top", at: "left+10 top+42", of: "#map"}
   });
 
   if (modules.editRegiment) return;

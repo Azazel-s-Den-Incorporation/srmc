@@ -15,13 +15,14 @@ export function open() {
     title: "States Editor",
     resizable: false,
     close: closeStatesEditor,
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit", within: "#main-ui"}
   });
 }
 
 function insertEditorHtml() {
   const editorHtml = /* html */ `<div id="statesEditor" class="dialog stable">
-    <div id="statesHeader" class="header" style="grid-template-columns: 11em 8em 7em 7em 6em 6em 8em 6em 6em 3em 7em 6em">
+    <div id="statesHeader" class="header" style="grid-template-columns: 1em 11em 8em 7em 7em 6em 6em 8em 6em 6em 3em 7em 6em">
+      <div data-tip="Click to sort by state name" class="sortable alphabetically" data-sortby="name"></div>
       <div data-tip="Click to sort by state name" class="sortable alphabetically" data-sortby="name">State&nbsp;</div>
       <div data-tip="Click to sort by state form name" class="sortable alphabetically" data-sortby="form">Form&nbsp;</div>
       <div data-tip="Click to sort by capital name" class="sortable alphabetically" data-sortby="capital">Capital&nbsp;</div>
@@ -115,6 +116,7 @@ function addListeners() {
     const classList = $element.classList;
     const stateId = +$element.parentNode?.dataset?.id;
     if ($element.tagName === "FILL-BOX") stateChangeFill($element);
+    else if (classList.contains("stateID")) selectPlayerState(stateId);
     else if (classList.contains("name")) editStateName(stateId);
     else if (classList.contains("coaIcon")) editEmblem("state", "stateCOA" + stateId, pack.states[stateId]);
     else if (classList.contains("icon-star-empty")) stateCapitalZoomIn(stateId);
@@ -160,9 +162,7 @@ function statesEditorAddLines() {
   let totalArea = 0;
   let totalPopulation = 0;
   let totalBurgs = 0;
-  let wealth = 0;
-  let wages = 0;
-
+  
   for (const s of pack.states) {
     if (s.removed) continue;
     const area = getArea(s.area);
@@ -196,6 +196,7 @@ function statesEditorAddLines() {
         data-type=""
         data-expansionism=""
       >
+        <svg width="1em" height="1em" class="placeholder"></svg>
         <svg width="1em" height="1em" class="placeholder"></svg>
         <input data-tip="Neutral lands name. Click to change" class="stateName name pointer italic" value="${
           s.name
@@ -241,6 +242,7 @@ function statesEditorAddLines() {
       data-type=${s.type}
       data-expansionism=${s.expansionism}
     >
+      <span data-tip="State ID" width="1em" height="1em"  class="stateID">${s.i}</span>
       <fill-box fill="${s.color}"></fill-box>
       <input data-tip="State name. Click to change" class="stateName name pointer" value="${s.name}" readonly />
       <svg data-tip="Click to show and edit state emblem" class="coaIcon pointer" viewBox="0 0 200 200"><use href="#stateCOA${
@@ -405,7 +407,7 @@ function editStateName(state) {
         $(this).dialog("close");
       }
     },
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 
   if (modules.editStateName) return;
@@ -523,6 +525,7 @@ function changePopulation(stateId) {
   $("#alert").dialog({
     resizable: false,
     title: "Change state population",
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     width: "24em",
     buttons: {
       Apply: function () {
@@ -533,7 +536,7 @@ function changePopulation(stateId) {
         $(this).dialog("close");
       }
     },
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 
   function applyPopulationChange() {
@@ -614,7 +617,7 @@ function changeWealth(stateId) {
         $(this).dialog("close");
       }
     },
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 
   function applyWealthChange() {
@@ -689,7 +692,7 @@ function changeWealth(stateId) {
 //         $(this).dialog("close");
 //       }
 //     },
-//     position: {my: "center", at: "center", of: "svg"}
+//     position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
 //   });
 
 //   function applyWagesChange() {
@@ -970,7 +973,7 @@ function showStatesChart() {
   $("#alert").dialog({
     title: "States bubble chart",
     width: fitContent(),
-    position: {my: "left bottom", at: "left+10 bottom-10", of: "svg"},
+    position: {my: "left bottom", at: "left+10 bottom-10", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {},
     close: () => {
       alertMessage.innerHTML = "";
@@ -987,7 +990,7 @@ function openRegenerationMenu() {
   byId("statesEditor")
     .querySelectorAll(".show")
     .forEach(el => el.classList.remove("hidden"));
-  $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+  $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 }
 
 function recalculateStates(must) {
@@ -1024,7 +1027,7 @@ function exitRegenerationMenu() {
   byId("statesEditor")
     .querySelectorAll(".show")
     .forEach(el => el.classList.add("hidden"));
-  $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+  $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 }
 
 function enterStatesManualAssignent() {
@@ -1040,7 +1043,7 @@ function enterStatesManualAssignent() {
     .forEach(el => el.classList.add("hidden"));
   statesFooter.style.display = "none";
   $body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "none"));
-  $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+  $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 
   tip("Click on state to select, drag the circle to change state", true);
   viewbox
@@ -1307,7 +1310,7 @@ function exitStatesManualAssignment(close) {
   statesFooter.style.display = "block";
   $body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "all"));
   if (!close)
-    $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+    $("#statesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 
   restoreDefaultEvents();
   clearMainTip();

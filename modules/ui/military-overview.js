@@ -18,7 +18,7 @@ function overviewMilitary() {
     title: "Military Overview",
     resizable: false,
     width: fitContent(),
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   // add listeners
@@ -48,17 +48,13 @@ function overviewMilitary() {
   function updateHeaders() {
     const header = document.getElementById("militaryHeader");
     const units = options.military.length;
-    header.style.gridTemplateColumns = `8em repeat(${units}, 5.2em) 4em 7em 5em 6em`;
+   header.style.gridTemplateColumns = `8em repeat(${units}, 5.2em) 4em 7em 5em 6em`;
 
     header.querySelectorAll(".removable").forEach(el => el.remove());
     const insert = html => document.getElementById("militaryTotal").insertAdjacentHTML("beforebegin", html);
     for (const u of options.military) {
       const label = capitalize(u.name.replace(/_/g, " "));
-      insert(
-        `<div data-tip="State ${
-          u.name
-        } units number. Click to sort" class="sortable removable" data-sortby="${u.name.toLowerCase()}">${label}&nbsp;</div>`
-      );
+      insert(`<div data-tip="State ${u.name} units number. Click to sort" class="sortable removable" data-sortby="${u.name}">${label}&nbsp;</div>`);
     }
     header.querySelectorAll(".removable").forEach(function (e) {
       e.addEventListener("click", function () {
@@ -69,49 +65,50 @@ function overviewMilitary() {
 
   // add line for each state
   function addLines() {
+    console.log("addLines");
     body.innerHTML = "";
     let lines = "";
+    const units = options.military.length;
     const states = pack.states.filter(s => s.i && !s.removed);
-
-    for (const s of states) {
-      const population = rn((s.rural + s.urban * urbanization) * populationRate);
-      const getForces = u => s.military.reduce((s, r) => s + (r.u[u.name] || 0), 0);
-      const total = options.military.reduce((s, u) => s + getForces(u) * u.crew, 0);
+    const getForces=(unit,state)=>{
+      let count=0
+      state.military.forEach(regiment=>{
+       count+= regiment.unitCounts[unit.name]
+      })
+      return count;
+    };
+    for (const state of states) {
+      const population = rn((state.rural + state.urban * urbanization) * populationRate);
+     
+      const total = options.military.reduce((s, u) => s + getForces(u,state) * u.crew, 0);
       const rate = (total / population) * 100;
 
-      const sortData = options.military.map(u => `data-${u.name.toLowerCase()}="${getForces(u)}"`).join(" ");
-      const lineData = options.military
-        .map(u => `<div data-type="${u.name}" data-tip="State ${u.name} units number">${getForces(u)}</div>`)
-        .join(" ");
+      const sortData = options.military.map(u => `data-${u.name}="${getForces(u,state)}"`).join(" ");
+      const lineData = options.military.map(u => `<div data-type="${u.name}" data-tip="State ${u.name} units number">${getForces(u,state)}</div>`).join(" ");
 
       lines += /* html */ `<div
         class="states"
-        data-id=${s.i}
-        data-state="${s.name}"
+        data-id=${state.i}
+        data-state="${state.name}"
         ${sortData}
         data-total="${total}"
         data-population="${population}"
         data-rate="${rate}"
-        data-alert="${s.alert}"
+        data-alert="${state.alert}"
       >
-        <fill-box data-tip="${s.fullName}" fill="${s.color}" disabled></fill-box>
-        <input data-tip="${s.fullName}" style="width:6em" value="${s.name}" readonly />
+        <fill-box data-tip="${state.fullName}" fill="${state.color}" disabled></fill-box>
+        <input data-tip="${state.fullName}" style="width:6em" value="${state.name}" readonly />
         ${lineData}
-        <div data-type="total" data-tip="Total state military personnel (considering crew)" style="font-weight: bold">${si(
-          total
-        )}</div>
+        <div data-type="total" data-tip="Total state military personnel (considering crew)" style="font-weight: bold">${si(total)}</div>
         <div data-type="population" data-tip="State population">${si(population)}</div>
-        <div data-type="rate" data-tip="Military personnel rate (% of state population). Depends on war alert">${rn(
-          rate,
-          2
-        )}%</div>
+        <div data-type="rate" data-tip="Military personnel rate (% of state population). Depends on war alert">${rn(rate, 2)}%</div>
         <input
           data-tip="War Alert. Editable modifier to military forces number, depends of political situation"
           style="width:4.1em"
           type="number"
           min="0"
           step=".01"
-          value="${rn(s.alert, 2)}"
+          value="${rn(state.alert, 2)}"
         />
         <span data-tip="Show regiments list" class="icon-list-bullet pointer"></span>
       </div>`;
@@ -135,16 +132,20 @@ function overviewMilitary() {
     const dif = s.alert || alert ? alert / s.alert : 0; // modifier
     s.alert = line.dataset.alert = alert;
 
-    s.military.forEach(r => {
-      Object.keys(r.u).forEach(u => (r.u[u] = rn(r.u[u] * dif))); // change units value
-      r.a = d3.sum(Object.values(r.u)); // change total
-      armies.select(`g>g#regiment${s.i}-${r.i}>text`).text(Military.getTotal(r)); // change icon text
+    s.military.forEach(regiment => {
+      Object.keys(regiment.u).forEach(u => (regiment.u[u] = rn(regiment.u[u] * dif))); // change units value
+      regiment.a = d3.sum(Object.values(regiment.u)); // change total    
+      armies.select(`g>g#regiment${s.i}-${regiment.i}>text`).text(Military.getTotal(regiment)); // change icon text
     });
 
-    const getForces = u => s.military.reduce((s, r) => s + (r.u[u.name] || 0), 0);
-    options.military.forEach(
-      u => (line.dataset[u.name] = line.querySelector(`div[data-type='${u.name}']`).innerHTML = getForces(u))
-    );
+    const getForces=unit=>{
+      let count=0
+      state.military.forEach(regiment=>{
+       count+= regiment.unitCounts[unit.name]
+      })
+      return count;
+    };
+    options.military.forEach(u => (line.dataset[u.name] = line.querySelector(`div[data-type='${u.name}']`).innerHTML = getForces(u)));
 
     const population = rn((s.rural + s.urban * urbanization) * populationRate);
     const total = (line.dataset.total = options.military.reduce((s, u) => s + getForces(u) * u.crew, 0));
@@ -238,7 +239,7 @@ function overviewMilitary() {
   }
 
   function militaryCustomize() {
-    const types = ["melee", "ranged", "mounted", "machinery", "naval", "armored", "aviation", "magical"];
+    const types = ["levy", "private", "regular", "religious"];
     const tableBody = document.getElementById("militaryOptions").querySelector("tbody");
     removeUnitLines();
     options.military.map(unit => addUnitLine(unit));
@@ -247,19 +248,10 @@ function overviewMilitary() {
       title: "Edit Military Units",
       resizable: false,
       width: fitContent(),
-      position: {my: "center", at: "center", of: "svg"},
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         Apply: applyMilitaryOptions,
-        Add: () =>
-          addUnitLine({
-            icon: "🛡️",
-            name: "custom" + militaryOptionsTable.rows.length,
-            rural: 0.2,
-            urban: 0.5,
-            crew: 1,
-            power: 1,
-            type: "melee"
-          }),
+        Add: () => addUnitLine({icon: "🛡️", name: "custom" + militaryOptionsTable.rows.length, rural: 0.2, urban: 0.5, crew: 1, skirmish:1, shock:1,melee:1,armor:1, type: "levy",naval:false}),
         Restore: restoreDefaultUnits,
         Cancel: function () {
           $(this).dialog("close");
@@ -284,14 +276,7 @@ function overviewMilitary() {
       if (el.tagName !== "BUTTON") return;
       const type = el.dataset.type;
 
-      if (type === "icon") {
-        return selectIcon(el.textContent, function (value) {
-          el.innerHTML = value.startsWith("http") || value.startsWith("data:image")
-            ? `<img src="${value}" style="width:1.2em;height:1.2em;pointer-events:none;">`
-            : value;
-        });
-      }
-
+      if (type === "icon") return selectIcon(el.innerHTML, v => (el.innerHTML = v));
       if (type === "biomes") {
         const {i, name, color} = biomesData;
         const biomesArray = Array(i.length).fill(null);
@@ -321,11 +306,9 @@ function overviewMilitary() {
     }
 
     function addUnitLine(unit) {
-      const {type, icon, name, rural, urban, power, crew, separate} = unit;
+      const {type, icon, name, rural, urban, crew,skirmish, shock,melee,armor, separate,naval} = unit;
       const row = document.createElement("tr");
-      const typeOptions = types
-        .map(t => `<option ${type === t ? "selected" : ""} value="${t}">${t}</option>`)
-        .join(" ");
+      const typeOptions = types.map(t => `<option ${type === t ? "selected" : ""} value="${t}">${t}</option>`).join(" ");
 
       const getLimitButton = attr =>
         `<button 
@@ -336,15 +319,7 @@ function overviewMilitary() {
           ${getLimitText(unit[attr])}
         </button>`;
 
-      row.innerHTML = /* html */ `<td>
-          <button data-type="icon" data-tip="Click to select unit icon">
-            ${
-              icon.startsWith("http") || icon.startsWith("data:image")
-                ? `<img src="${icon}" style="width:1.2em;height:1.2em;pointer-events:none;">`
-                : icon || ""
-            }
-          </button>
-        </td>
+      row.innerHTML = /* html */ `<td><button data-type="icon" data-tip="Click to select unit icon">${icon || " "}</button></td>
         <td><input data-tip="Type unit name. If name is changed for existing unit, old unit will be replaced" value="${name}" /></td>
         <td>${getLimitButton("biomes")}</td>
         <td>${getLimitButton("states")}</td>
@@ -353,7 +328,10 @@ function overviewMilitary() {
         <td><input data-tip="Enter conscription percentage for rural population" type="number" min="0" max="100" step=".01" value="${rural}" /></td>
         <td><input data-tip="Enter conscription percentage for urban population" type="number" min="0" max="100" step=".01" value="${urban}" /></td>
         <td><input data-tip="Enter average number of people in crew (for total personnel calculation)" type="number" min="1" step="1" value="${crew}" /></td>
-        <td><input data-tip="Enter military power (used for battle simulation)" type="number" min="0" step=".1" value="${power}" /></td>
+        <td><input data-tip="Enter skirmish (used for battle simulation)" type="number" min="0" step=".1" value="${skirmish}" /></td>
+        <td><input data-tip="Enter shock (used for battle simulation)" type="number" min="0" step=".1" value="${shock}" /></td>
+        <td><input data-tip="Enter melee (used for battle simulation)" type="number" min="0" step=".1" value="${melee}" /></td>
+        <td><input data-tip="Enter armor level (used for battle simulation)" type="number" min="0" step=".1" value="${armor}" /></td>
         <td>
           <select data-tip="Select unit type to apply special rules on forces recalculation">
             ${typeOptions}
@@ -383,9 +361,7 @@ function overviewMilitary() {
       const lines = filtered.map(
         ({i, name, fullName, color}) =>
           `<tr data-tip="${name}"><td><span style="color:${color}">⬤</span></td>
-            <td><input data-i="${i}" id="el${i}" type="checkbox" class="checkbox" ${
-            !initial.length || initial.includes(i) ? "checked" : ""
-          } >
+            <td><input data-i="${i}" id="el${i}" type="checkbox" class="checkbox" ${!initial.length || initial.includes(i) ? "checked" : ""} >
             <label for="el${i}" class="checkbox-label">${fullName || name}</label>
           </td></tr>`
       );
@@ -428,27 +404,24 @@ function overviewMilitary() {
     function applyMilitaryOptions() {
       const unitLines = Array.from(tableBody.querySelectorAll("tr"));
       const names = unitLines.map(r => r.querySelector("input").value.replace(/[&\/\\#, +()$~%.'":*?<>{}]/g, "_"));
-      if (new Set(names).size !== names.length) return tip("All units should have unique names", false, "error");
+      if (new Set(names).size !== names.length) {
+        tip("All units should have unique names", false, "error");
+        return;
+      }
 
       $("#militaryOptions").dialog("close");
-
       options.military = unitLines.map((r, i) => {
         const elements = Array.from(r.querySelectorAll("input, button, select"));
-        const [icon, name, biomes, states, cultures, religions, rural, urban, crew, power, type, separate] =
-          elements.map(el => {
-            const {type, value} = el.dataset || {};
-            if (type === "icon") {
-              const value = el.innerHTML.trim();
-              const isImage = value.startsWith("<img");
-              return isImage ? value.match(/src="([^"]*)"/)[1] : value || "⠀";
-            }
-            if (type) return value ? value.split(",").map(v => parseInt(v)) : null;
-            if (el.type === "number") return +el.value || 0;
-            if (el.type === "checkbox") return +el.checked || 0;
-            return el.value;
-          });
+        const [icon, name, biomes, states, cultures, religions, rural, urban, crew, skirmish, shock,melee,armor, type, separate] = elements.map(el => {
+          const {type, value} = el.dataset || {};
+          if (type === "icon") return el.innerHTML || "⠀";
+          if (type) return value ? value.split(",").map(v => parseInt(v)) : null;
+          if (el.type === "number") return +el.value || 0;
+          if (el.type === "checkbox") return +el.checked || 0;
+          return el.value;
+        });
 
-        const unit = {icon, name: names[i], rural, urban, crew, power, type, separate};
+        const unit = {icon, name: names[i], rural, urban, crew, skirmish, shock,melee,armor, type, separate};
         if (biomes) unit.biomes = biomes;
         if (states) unit.states = states;
         if (cultures) unit.cultures = cultures;
@@ -463,8 +436,7 @@ function overviewMilitary() {
   }
 
   function militaryRecalculate() {
-    alertMessage.innerHTML =
-      "Are you sure you want to recalculate military forces for all states?<br>Regiments for all states will be regenerated";
+    alertMessage.innerHTML = "Are you sure you want to recalculate military forces for all states?<br>Regiments for all states will be regenerated";
     $("#alert").dialog({
       resizable: false,
       title: "Remove regiment",
@@ -488,7 +460,7 @@ function overviewMilitary() {
     body.querySelectorAll(":scope > div").forEach(function (el) {
       data += el.dataset.id + ",";
       data += el.dataset.state + ",";
-      data += units.map(u => el.dataset[u.toLowerCase()]).join(",") + ",";
+      data += units.map(u => el.dataset[u]).join(",") + ",";
       data += el.dataset.total + ",";
       data += el.dataset.population + ",";
       data += rn(el.dataset.rate, 2) + "%,";

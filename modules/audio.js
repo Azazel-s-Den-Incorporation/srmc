@@ -7,7 +7,7 @@ const sfx = document.getElementById("sfx");
 // Volume Controls
 
 function audioPermissionDialog() {
-    window.onload = (event) => {
+    window.onload = () => {
         document.getElementById("showAudioPerm").style.display = "flex";
     }; 
 }
@@ -51,6 +51,6 @@ function muteSFXToggle() {
 
 
 //SFX Handler
-const clickSFX = document.getElementsByName("click");
+const clickSFX = document.getElementsByName("clicksound");
 
-document.getElementById("main-menu-container").querySelector("button").addEventListener("click", function () {clickSFX.play();});
+document.getElementById("main-menu-container").querySelector("button").addEventListener("click", () => {clickSFX.play();});

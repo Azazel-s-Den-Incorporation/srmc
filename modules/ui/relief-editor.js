@@ -15,7 +15,7 @@ function editReliefIcon() {
     title: "Edit Relief Icons",
     resizable: false,
     width: "27em",
-    position: {my: "left top", at: "left+10 top+10", of: "#map"},
+    position: {my: "left top", at: "left+10 top+42", of: "#map"},
     close: closeReliefEditor
   });
 

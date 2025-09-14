@@ -32,7 +32,7 @@ function editMarker(markerI) {
   $("#markerEditor").dialog({
     title: "Edit Marker",
     resizable: false,
-    position: {my: "left top", at: "left+10 top+10", of: "svg", collision: "fit"},
+    position: {my: "left top", at: "left+10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"},
     close: closeMarkerEditor
   });
 

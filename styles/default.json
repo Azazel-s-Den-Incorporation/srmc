@@ -21,8 +21,8 @@
     "opacity": 0.8,
     "stroke": "#56566d",
     "stroke-width": 1,
-    "stroke-dasharray": 2,
-    "stroke-linecap": "butt",
+    "stroke-dasharray": 0,
+    "stroke-linecap": "inherit",
     "filter": null
   },
   "#provinceBorders": {
@@ -36,7 +36,7 @@
   "#cells": {
     "opacity": null,
     "stroke": "#808080",
-    "stroke-width": 0.1,
+    "stroke-width": 0.2,
     "filter": null,
     "mask": null
   },
@@ -45,7 +45,7 @@
     "scale": 1,
     "dx": 0,
     "dy": 0,
-    "type": "pointyHex",
+    "type": "square",
     "stroke": "#777777",
     "stroke-width": 0.5,
     "stroke-dasharray": null,
@@ -289,16 +289,16 @@
     "layers": "-6,-3,-1"
   },
   "#oceanBase": {
-    "fill": "#466eab"
+    "fill": "#203250"
   },
   "#oceanicPattern": {
     "href": "./images/pattern1.png",
-    "opacity": 0.2
+    "opacity": 0.1
   },
   "#terrs > #oceanHeights": {
     "data-render": 0,
     "opacity": 1,
-    "scheme": "bright",
+    "scheme": "natural",
     "terracing": 0,
     "skip": 0,
     "relax": 1,
@@ -308,7 +308,7 @@
   },
   "#terrs > #landHeights": {
     "opacity": 1,
-    "scheme": "bright",
+    "scheme": "natural",
     "terracing": 0,
     "skip": 5,
     "relax": 0,
@@ -429,7 +429,7 @@
     "font-size": 10,
     "data-bar-size": 2,
     "data-x": 99,
-    "data-y": 99,
+    "data-y": 120,
     "data-label": ""
   },
   "#scaleBarBack": {

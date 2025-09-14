@@ -40,6 +40,7 @@ function openDialog() {
     resizable: false,
     title: "Install the Application",
     width: "38em",
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Install: function () {
         $(this).dialog("close");

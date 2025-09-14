@@ -7,7 +7,7 @@ function editLake() {
   $("#lakeEditor").dialog({
     title: "Edit Lake",
     resizable: false,
-    position: {my: "center top+20", at: "top", of: d3.event, collision: "fit"},
+    position: {my: "center top+42", at: "top", of: d3.event, collision: "fit"},
     close: closeLakesEditor
   });
 

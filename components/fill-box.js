@@ -24,7 +24,7 @@
 {
   const template = document.createElement("template");
   template.innerHTML = /* html */ `
-    <svg>
+    <svg style='display: "none";'>
       <rect x="0" y="0" width="100%" height="100%">
     </svg>
   `;

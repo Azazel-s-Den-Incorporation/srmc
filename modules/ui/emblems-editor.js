@@ -17,7 +17,7 @@ function editEmblem(type, id, el) {
     resizable: true,
     width: "18.2em",
     height: "auto",
-    position: {my: "left top", at: "left+10 top+10", of: "svg", collision: "fit"},
+    position: {my: "left top", at: "left+10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"},
     close: closeEmblemEditor
   });
 

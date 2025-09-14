@@ -14,7 +14,7 @@ function editLabel() {
     title: "Edit Label",
     resizable: false,
     width: fitContent(),
-    position: {my: "center top+10", at: "bottom", of: text, collision: "fit"},
+    position: {my: "center top+42", at: "bottom", of: text, collision: "fit"},
     close: closeLabelEditor
   });
 

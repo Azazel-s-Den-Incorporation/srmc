@@ -97,7 +97,7 @@ function fitScaleBar(scaleBar, fullWidth, fullHeight) {
   const posY = +scaleBar.attr("data-y") || 99;
   const bbox = scaleBar.select("rect").node().getBBox();
 
-  const x = rn((fullWidth * posX) / 100 - bbox.width + 10);
-  const y = rn((fullHeight * posY) / 100 - bbox.height + 20);
+  const x = rn((fullWidth * posX) / 100 - (bbox.width + 10));
+  const y = rn((fullHeight * posY) / 100 - (bbox.height + 6));
   scaleBar.attr("transform", `translate(${x},${y})`);
 }

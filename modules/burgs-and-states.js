@@ -90,10 +90,10 @@ window.BurgsAndStates = (() => {
         const basename = b.name.length < 9 && each5th(b.cell) ? b.name : Names.getCultureShort(b.culture);
         const name = Names.getState(basename, b.culture);
         const type = cultures[b.culture].type;
-        const wages = Math.random() * 10;
 
         const coa = COA.generate(null, null, null, type);
         coa.shield = COA.getShield(b.culture, null);
+
         states.push({
           i,
           color: colors[i - 1],
@@ -103,8 +103,7 @@ window.BurgsAndStates = (() => {
           type,
           center: b.cell,
           culture: b.culture,
-          coa,
-          wages
+          coa
         });
         cells.burg[b.cell] = i;
       });
@@ -122,7 +121,7 @@ window.BurgsAndStates = (() => {
         .sort((a, b) => score[b] - score[a]); // filtered and sorted array of indexes
 
       const desiredNumber =
-        manorsInput.value == 1000
+        manorsInput.value == 1201
           ? rn(sorted.length / 5 / (grid.points.length / 10000) ** 0.8)
           : manorsInput.valueAsNumber;
       const burgsNumber = Math.min(desiredNumber, sorted.length); // towns to generate
@@ -149,16 +148,17 @@ window.BurgsAndStates = (() => {
         spacing *= 0.5;
       }
 
-      if (manorsInput.value != 1000 && burgsAdded < desiredNumber) {
+      if (manorsInput.value != 1201 && burgsAdded < desiredNumber) {
         ERROR && console.error(`Cannot place all burgs. Requested ${desiredNumber}, placed ${burgsAdded}`);
       }
 
       burgs[0] = {name: undefined}; // do not store burgsTree anymore
       TIME && console.timeEnd("placeTowns");
-    }
+    };
+
   };
 
-  // define burg coordinates, coa, port status and define details
+  // Burg Data - define burg coordinates, coa, port status and define details
   const specifyBurgs = () => {
     TIME && console.time("specifyBurgs");
     const {cells, features} = pack;
@@ -533,10 +533,10 @@ window.BurgsAndStates = (() => {
     const chronicle = (states[0].diplomacy = []);
     const valid = states.filter(s => s.i && !states.removed);
 
-    const neibs = {Ally: 1, Friendly: 2, Neutral: 1, Suspicion: 10, Rival: 9}; // relations to neighbors
-    const neibsOfNeibs = {Ally: 10, Friendly: 8, Neutral: 5, Suspicion: 1}; // relations to neighbors of neighbors
-    const far = {Friendly: 1, Neutral: 12, Suspicion: 2, Unknown: 6}; // relations to other
-    const navals = {Neutral: 1, Suspicion: 2, Rival: 1, Unknown: 1}; // relations of naval powers
+    const neibs = {Ally: 2, Friendly: 3, Neutral: 6, Suspicion: 5, Rival: 6, Unknown: 0}; // relations to neighbors
+    const neibsOfNeibs = {Ally: 4, Friendly: 8, Neutral: 9, Suspicion: 1, Rival: 3, Unknown: 0}; // relations to neighbors of neighbors
+    const far = {Ally: 0, Friendly: 1, Neutral: 12, Suspicion: 2, Rival: 1, Unknown: 0}; // relations to other
+    const navals = {Ally: 0, Friendly: 1, Neutral: 20, Suspicion: 1, Rival: 2, Unknown: 0}; // relations of naval powers
 
     valid.forEach(s => (s.diplomacy = new Array(states.length).fill("x"))); // clear all relationships
     if (valid.length < 2) return; // no states to renerate relations with
@@ -728,7 +728,14 @@ window.BurgsAndStates = (() => {
       return tier;
     });
 
-    const monarchy = ["Duchy", "Grand Duchy", "Principality", "Kingdom", "Empire"]; // per expansionism tier
+    const monarchy = [
+      "Duchy",
+      "Grand Duchy",
+      "Principality",
+      "Kingdom",
+      "Empire"
+    ]; // per expansionism tier
+
     const republic = {
       Republic: 75,
       Federation: 4,
@@ -740,6 +747,7 @@ window.BurgsAndStates = (() => {
       Diarchy: 1,
       Junta: 1
     }; // weighted random
+
     const union = {
       Union: 3,
       League: 4,
@@ -750,8 +758,27 @@ window.BurgsAndStates = (() => {
       Commonwealth: 1,
       Heptarchy: 1
     }; // weighted random
-    const theocracy = {Theocracy: 20, Brotherhood: 1, Thearchy: 2, See: 1, "Holy State": 1};
-    const anarchy = {"Free Territory": 2, Council: 3, Commune: 1, Community: 1};
+
+    const theocracy = {
+      Theocracy: 20,
+      Brotherhood: 1,
+      Thearchy: 2,
+      See: 1,
+      "Holy State": 1
+    };
+
+    const anarchy = {
+      "Free Territory": 2,
+      Council: 3,
+      Commune: 1,
+      Community: 1
+    };
+    const autocracy = {
+
+    };
+    const revolutionary = {
+
+    };
 
     for (const s of states) {
       if (list && !list.includes(s.i)) continue;
@@ -834,6 +861,10 @@ window.BurgsAndStates = (() => {
         if (tier > 2 && P(0.8) && [18, 17, 28].includes(base)) return "Caliphate"; // Arabic, Berber, Swahili
         return rw(theocracy);
       }
+
+      if (s.form === "Autocracy") {}
+      if (s.form === "Revolutionary") {}
+
     }
 
     TIME && console.timeEnd("defineStateForms");

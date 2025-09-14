@@ -115,14 +115,10 @@ function applyLayersPreset() {
 function setLayersPreset(preset) {
   byId("layersPreset").value = preset;
   localStorage.setItem("preset", preset);
-
-  const isDefault = getDefaultPresets()[preset];
-  byId("removePresetButton").style.display = isDefault ? "none" : "inline-block";
-  byId("savePresetButton").style.display = "none";
 }
 
 // toggle layers on manual preset change
-function handleLayersPresetChange(preset) {
+async function handleLayersPresetChange(preset) {
   setLayersPreset(preset);
 
   const layers = presets[preset]; // layers to be turned on
@@ -144,8 +140,8 @@ function savePreset() {
     layersPreset.add(new Option(preset, preset, false, true));
     localStorage.setItem("presets", JSON.stringify(presets));
     localStorage.setItem("preset", preset);
-    removePresetButton.style.display = "inline-block";
-    savePresetButton.style.display = "none";
+    removePresetButton.style.filter = "brightness(100%)";
+    savePresetButton.style.filter = "brightness(50%)";
   });
 }
 
@@ -155,8 +151,8 @@ function removePreset() {
   const index = Array.from(layersPreset.options).findIndex(o => o.value === preset);
   layersPreset.options.remove(index);
   layersPreset.value = "custom";
-  removePresetButton.style.display = "none";
-  savePresetButton.style.display = "inline-block";
+  removePresetButton.style.filter = "brightness(50%)";
+  savePresetButton.style.filter = "brightness(100%)";
 
   localStorage.setItem("presets", JSON.stringify(presets));
   localStorage.removeItem("preset");
@@ -171,15 +167,19 @@ function getCurrentPreset() {
     if (JSON.stringify(presets[preset].sort()) === JSON.stringify(layers)) {
       layersPreset.value = preset;
       const isDefault = getDefaultPresets()[preset];
-      removePresetButton.style.display = isDefault ? "none" : "inline-block";
-      savePresetButton.style.display = "none";
+      removePresetButton.style.filter = isDefault ? "brightness(50%)" : "brightness(100%)";
+      removePresetButton.disabled = true;
+      savePresetButton.style.filter = isDefault ? "brightness(50%)" : "brightness(100%)";
+      savePresetButton.disabled = true;
       return;
     }
   }
 
   layersPreset.value = "custom";
-  removePresetButton.style.display = "none";
-  savePresetButton.style.display = "inline-block";
+  removePresetButton.style.filter = "brightness(100%)";
+  removePresetButton.disabled = false;
+  savePresetButton.style.filter = "brightness(100%)";
+  savePresetButton.disabled = false;
 }
 
 // run on each map generation
@@ -639,8 +639,8 @@ function drawGrid() {
   const dy = gridOverlay.attr("dy") || 0;
   const tr = `scale(${scale}) translate(${dx} ${dy})`;
 
-  const maxWidth = Math.max(+mapWidthInput.value, graphWidth);
-  const maxHeight = Math.max(+mapHeightInput.value, graphHeight);
+  const maxWidth = Math.max(+ms[0], graphWidth);
+  const maxHeight = Math.max(+ms[1], graphHeight);
 
   d3.select(pattern)
     .attr("stroke", stroke)

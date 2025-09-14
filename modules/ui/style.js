@@ -687,7 +687,7 @@ openCreateHeightmapSchemeButton.on("click", function () {
       Create: handleCreate,
       Cancel: handleClose
     },
-    position: {my: "center top+150", at: "center top", of: "svg"}
+    position: {my: "center top+150", at: "center top", of: "svg", collision: "fit", within: "#main-ui"}
   });
 });
 
@@ -800,7 +800,7 @@ styleFontAdd.on("click", function () {
   $("#addFontDialog").dialog({
     title: "Add custom font",
     width: "26em",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Add: function () {
         const family = addFontNameInput.value;

@@ -23,6 +23,7 @@ function clicked() {
   if (grand.id === "emblems") editEmblem();
   else if (parent.id === "rivers") editRiver(el.id);
   else if (grand.id === "routes") editRoute(el.id);
+  else if (grand.id === "regions") selectState();
   else if (ancestor.id === "labels" && el.tagName === "tspan") editLabel();
   else if (grand.id === "burgLabels") editBurg();
   else if (grand.id === "burgIcons") editBurg();

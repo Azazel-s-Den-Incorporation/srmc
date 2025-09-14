@@ -19,7 +19,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     resizable: false,
     width: fitContent(),
     close: exitAddBurgMode,
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   // add listeners
@@ -485,7 +485,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     $("#alert").dialog({
       title: "Burgs bubble chart",
       width: fitContent(),
-      position: {my: "left bottom", at: "left+10 bottom-10", of: "svg"},
+      position: {my: "left bottom", at: "left+10 bottom-10", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {},
       close: () => (alertMessage.innerHTML = "")
     });
@@ -543,7 +543,7 @@ function overviewBurgs(settings = {stateId: null, cultureId: null}) {
     $("#alert").dialog({
       title: "Burgs bulk renaming",
       width: "22em",
-      position: {my: "center", at: "center", of: "svg"},
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         Download: function () {
           const data = pack.burgs

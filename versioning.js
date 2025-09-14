@@ -58,7 +58,7 @@ if (parseMapVersion(VERSION) !== VERSION) alert("versioning.js: Invalid format o
       resizable: false,
       title: "Fantasy Map Generator update",
       width: "28em",
-      position: {my: "center center-4em", at: "center", of: "svg"},
+      position: {my: "center center-4em", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         "Clear cache": () => cleanupData(),
         "Don't show again": function () {

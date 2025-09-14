@@ -218,7 +218,7 @@ export function open() {
 
   $("#chartsOverview").dialog({
     title: "Data Charts",
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     close: handleClose
   });
 }
@@ -618,7 +618,7 @@ function changeViewColumns() {
 }
 
 function updateDialogPosition() {
-  $("#chartsOverview").dialog({position: {my: "center", at: "center", of: "svg"}});
+  $("#chartsOverview").dialog({position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}});
 }
 
 function handleClose() {

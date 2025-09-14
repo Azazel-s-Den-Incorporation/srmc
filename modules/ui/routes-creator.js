@@ -25,7 +25,7 @@ function createRoute(defaultGroup) {
   $("#routeCreator").dialog({
     title: "Create Route",
     resizable: false,
-    position: {my: "left top", at: "left+10 top+10", of: "#map"},
+    position: {my: "left top", at: "left+10 top+42", of: "#map"},
     close: closeRouteCreator
   });
 

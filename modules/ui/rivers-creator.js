@@ -17,7 +17,7 @@ function createRiver() {
   $("#riverCreator").dialog({
     title: "Create River",
     resizable: false,
-    position: {my: "left top", at: "left+10 top+10", of: "#map"},
+    position: {my: "left top", at: "left+10 top+42", of: "#map"},
     close: closeRiverCreator
   });
 

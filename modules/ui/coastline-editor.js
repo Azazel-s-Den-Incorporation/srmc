@@ -8,7 +8,7 @@ function editCoastline() {
   $("#coastlineEditor").dialog({
     title: "Edit Coastline",
     resizable: false,
-    position: {my: "center top+20", at: "top", of: d3.event, collision: "fit"},
+    position: {my: "center top+42", at: "top", of: d3.event, collision: "fit"},
     close: closeCoastlineEditor
   });
 

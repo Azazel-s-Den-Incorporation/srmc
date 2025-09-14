@@ -19,7 +19,7 @@ function editProvinces() {
     resizable: false,
     width: fitContent(),
     close: closeProvincesEditor,
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   // add listeners
@@ -431,7 +431,7 @@ function editProvinces() {
           $(this).dialog("close");
         }
       },
-      position: {my: "center", at: "center", of: "svg"}
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
     });
 
     function applyPopulationChange() {
@@ -525,7 +525,7 @@ function editProvinces() {
           $(this).dialog("close");
         }
       },
-      position: {my: "center", at: "center", of: "svg"}
+      position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
     });
 
     if (modules.editProvinceName) return;
@@ -764,7 +764,7 @@ function editProvinces() {
     $("#alert").dialog({
       title: "Provinces chart",
       width: fitContent(),
-      position: {my: "left bottom", at: "left+10 bottom-10", of: "svg"},
+      position: {my: "left bottom", at: "left+10 bottom-10", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {},
       close: () => {
         alertMessage.innerHTML = "";
@@ -834,7 +834,7 @@ function editProvinces() {
     provincesHeader.querySelector("div[data-sortby='state']").style.left = "7.7em";
     provincesFooter.style.display = "none";
     body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "none"));
-    $("#provincesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+    $("#provincesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 
     tip("Click on a province to select, drag the circle to change province", true);
     viewbox
@@ -979,7 +979,7 @@ function editProvinces() {
     provincesFooter.style.display = "block";
     body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "all"));
     if (!close)
-      $("#provincesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}});
+      $("#provincesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}});
 
     restoreDefaultEvents();
     clearMainTip();

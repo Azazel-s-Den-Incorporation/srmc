@@ -16,8 +16,9 @@ export function open() {
   $("#culturesEditor").dialog({
     title: "Cultures Editor",
     resizable: false,
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     close: closeCulturesEditor,
-    position: {my: "right top", at: "right-10 top+10", of: "svg"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}
   });
   $body.focus();
 }
@@ -461,7 +462,7 @@ function changePopulation() {
         $(this).dialog("close");
       }
     },
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 }
 
@@ -680,7 +681,7 @@ function enterCultureManualAssignent() {
   culturesEditor.querySelectorAll(".hide").forEach(el => el.classList.add("hidden"));
   culturesFooter.style.display = "none";
   $body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "none"));
-  $("#culturesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg"}});
+  $("#culturesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}});
 
   tip("Click on culture to select, drag the circle to change culture", true);
   viewbox
@@ -782,7 +783,7 @@ function exitCulturesManualAssignment(close) {
   culturesEditor.querySelectorAll(".hide").forEach(el => el.classList.remove("hidden"));
   culturesFooter.style.display = "block";
   $body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "all"));
-  if (!close) $("#culturesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg"}});
+  if (!close) $("#culturesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}});
 
   debug.select("#cultureCenters").style("display", null);
   restoreDefaultEvents();

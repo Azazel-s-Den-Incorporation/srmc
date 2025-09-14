@@ -19,21 +19,24 @@ const vwh = viewingbox.height;
 const vww = viewingbox.width;
 window.onmousemove = function (e) {
   showDataTip;
-    if ((e.x) <= (vww/2) && (e.y) <= (vwh/2)) {
-      tooltip.style.left = (e.x + 10) + 'px';
-      tooltip.style.top = (e.y + 10) + 'px';
-    }
-    if ((e.x) >= (vww/2) && (e.y) <= (vwh/2)) {
-      tooltip.style.right = (e.x + 10) + 'px';
-      tooltip.style.top = (e.y + 10) + 'px';
-    }
-    if ((e.x) <= (vww/2) && (e.y) >= (vwh/2)) {
-      tooltip.style.left = (e.x + 10) + 'px';
-      tooltip.style.bottom = (e.y + 10) + 'px';
-    }
-    if ((e.x) >= (vww/2) && (e.y) >= (vwh/2)) {
-      tooltip.style.right = (e.x + 10) + 'px';
-      tooltip.style.bottom = (e.y + 10) + 'px';
+  const ttr = tooltip.getBoundingClientRect();
+  const ttw = ttr.width;
+  const tth = ttr.height;
+  if ((e.x) <= (vww/2) && (e.y) <= (vwh/2)) {
+    tooltip.style.left = (e.x + 10) + 'px';
+    tooltip.style.top = (e.y + 10) + 'px';
+  }
+  if ((e.x) >= (vww/2) && (e.y) <= (vwh/2)) {
+    tooltip.style.left = (e.x - ttw - 10) + 'px';
+    tooltip.style.top = (e.y + 10) + 'px';
+  }
+  if ((e.x) <= (vww/2) && (e.y) >= (vwh/2)) {
+    tooltip.style.left = (e.x + 10) + 'px';
+    tooltip.style.top = (e.y - tth - 10) + 'px';
+  }
+  if ((e.x) >= (vww/2) && (e.y) >= (vwh/2)) {
+    tooltip.style.left = (e.x - ttw - 10) + 'px';
+    tooltip.style.top = (e.y - tth - 10) + 'px';
   }
 };
 
@@ -64,8 +67,13 @@ function tip(tip, main = false, type = "info", time = 0) {
 }
 
 function showMainTip() {
-  tooltip.style.background = tooltip.dataset.color;
-  tooltip.innerHTML = tooltip.dataset.main;
+  if (tooltip.innerHTML == "") {
+    tooltip.style.display = "none";
+  } else {
+    tooltip.style.background = tooltip.dataset.color;
+    tooltip.innerHTML = tooltip.dataset.main;
+    tooltip.style.display = "flex"
+};
 }
 
 function clearMainTip() {
@@ -75,11 +83,6 @@ function clearMainTip() {
 }
 
 // Tooltip Controller
-if (tooltip.innerHTML == "") {
-  tooltip.style.display = "none";
-} else {
-  tooltip.style.display = "flex"
-};
 
 // show tip at the bottom of the screen, consider possible translation
 function showDataTip(event) {
@@ -319,10 +322,11 @@ function updateCellInfo(point, i, g) {
     ? `${pack.religions[cells.religion[i]].name} (${cells.religion[i]})`
     : "no";
   infoPopulation.innerHTML = getFriendlyPopulation(i);
-  infoWealth.innerHTML = getWealth(i);
+  infoWealth.innerHTML = cells.wealth;
   infoBurg.innerHTML = cells.burg[i] ? pack.burgs[cells.burg[i]].name + " (" + cells.burg[i] + ")" : "no";
   infoFeature.innerHTML = f ? pack.features[f].group + " (" + f + ")" : "n/a";
   infoBiome.innerHTML = biomesData.name[cells.biome[i]];
+  infoHabitability.innerHTML = cells.habitability[i];
 }
 
 function getGeozone(latitude) {
@@ -415,11 +419,6 @@ function getCellPopulation(i) {
 function getFriendlyPopulation(i) {
   const [rural, urban] = getCellPopulation(i);
   return `${si(rural + urban)} (${si(rural)} rural, urban ${si(urban)})`;
-}
-
-function getWealth(i) {
-  const wealth = pack.cells.burg[i] ? pack.burgs[pack.cells.burg[i]].wealth * wages: 0;
-  return `Wealth: ${si(wealth)}`;
 }
 
 function getPopulationTip(i) {
@@ -612,6 +611,6 @@ function showInfo() {
         $(this).dialog("close");
       }
     },
-    position: {my: "center", at: "center", of: "svg"}
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"}
   });
 }

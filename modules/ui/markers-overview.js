@@ -24,7 +24,7 @@ function overviewMarkers() {
     resizable: false,
     width: fitContent(),
     close: close,
-    position: {my: "right top", at: "right-10 top+10", of: "svg", collision: "fit"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui", collision: "fit"}
   });
 
   const listeners = [
@@ -214,15 +214,14 @@ function overviewMarkers() {
 
     const body = pack.markers.map(marker => {
       const {i, type, icon, x, y} = marker;
-      const id = `marker${i}`;
-      const note = notes.find(note => note.id === id);
+      const note = notes.find(note => note.i === "marker" + i);
       const name = note ? quote(note.name) : "Unknown";
       const legend = note ? quote(note.legend) : "";
 
       const lat = getLatitude(y, 2);
       const lon = getLongitude(x, 2);
 
-      return [id, type, icon, name, legend, x, y, lat, lon].join(",");
+      return [i, type, icon, name, legend, x, y, lat, lon].join(",");
     });
 
     const data = headers + body.join("\n");

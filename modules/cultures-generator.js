@@ -28,6 +28,7 @@ window.Cultures = (function () {
         $("#alert").dialog({
           resizable: false,
           title: "Extreme climate warning",
+          position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
           buttons: {
             Ok: function () {
               $(this).dialog("close");
@@ -43,6 +44,7 @@ window.Cultures = (function () {
         $("#alert").dialog({
           resizable: false,
           title: "Extreme climate warning",
+          position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
           buttons: {
             Ok: function () {
               $(this).dialog("close");

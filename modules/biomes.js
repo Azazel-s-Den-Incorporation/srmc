@@ -1,4 +1,17 @@
 "use strict";
+  
+
+
+const habitability = [0, 4, 10, 22, 30, 50, 100, 80, 90, 12, 4, 0, 12];
+const cost = [10, 200, 150, 60, 50, 70, 70, 80, 90, 200, 1000, 5000, 150]; // biome movement cost
+const biomesMartix = [
+  // hot ↔ cold [>19°C; <-4°C]; dry ↕ wet
+  new Uint8Array([1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10]),
+  new Uint8Array([3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 9, 9, 9, 9, 10, 10, 10]),
+  new Uint8Array([5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 9, 9, 9, 9, 10, 10, 10]),
+  new Uint8Array([5, 6, 6, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10]),
+  new Uint8Array([7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10])
+];
 
 window.Biomes = (function () {
   const MIN_LAND_HEIGHT = 20;
@@ -19,7 +32,6 @@ window.Biomes = (function () {
       "Glacier",
       "Wetland"
     ];
-
     const color = [
       "#466eab",
       "#fbe79f",
@@ -35,7 +47,6 @@ window.Biomes = (function () {
       "#d5e7eb",
       "#0b9131"
     ];
-    const habitability = [0, 4, 10, 22, 30, 50, 100, 80, 90, 12, 4, 0, 12];
     const iconsDensity = [0, 3, 2, 120, 120, 120, 120, 150, 150, 100, 5, 0, 250];
     const icons = [
       {},
@@ -51,15 +62,6 @@ window.Biomes = (function () {
       {grass: 1},
       {},
       {swamp: 1}
-    ];
-    const cost = [10, 200, 150, 60, 50, 70, 70, 80, 90, 200, 1000, 5000, 150]; // biome movement cost
-    const biomesMartix = [
-      // hot ↔ cold [>19°C; <-4°C]; dry ↕ wet
-      new Uint8Array([1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10]),
-      new Uint8Array([3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 9, 9, 9, 9, 10, 10, 10]),
-      new Uint8Array([5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 9, 9, 9, 9, 9, 10, 10, 10]),
-      new Uint8Array([5, 6, 6, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10]),
-      new Uint8Array([7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 10, 10])
     ];
 
     // parse icons weighted array into a simple array
@@ -83,6 +85,7 @@ window.Biomes = (function () {
     const {fl: flux, r: riverIds, h: heights, c: neighbors, g: gridReference} = pack.cells;
     const {temp, prec} = grid.cells;
     pack.cells.biome = new Uint8Array(pack.cells.i.length); // biomes array
+    pack.cells.habitability = new Uint8Array(pack.cells.i.length); // habitability array
 
     for (let cellId = 0; cellId < heights.length; cellId++) {
       const height = heights[cellId];

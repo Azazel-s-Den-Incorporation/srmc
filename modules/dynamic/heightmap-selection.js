@@ -15,7 +15,7 @@ export function open() {
   $("#heightmapSelection").dialog({
     title: "Select Heightmap",
     resizable: false,
-    position: {my: "center", at: "center", of: "svg"},
+    position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
     buttons: {
       Cancel: function () {
         $(this).dialog("close");

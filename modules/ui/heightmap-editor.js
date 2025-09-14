@@ -169,7 +169,6 @@ function editHeightmap(options) {
 
     customization = 0;
     customizationMenu.style.display = "none";
-    if (byId("options").querySelector(".tab > button.active").id === "toolsTab") toolsContent.style.display = "block";
     layersPreset.disabled = false;
     exitCustomization.style.display = "none"; // hide finalize button
 
@@ -565,7 +564,7 @@ function editHeightmap(options) {
       .dialog({
         title: "Paint Brushes",
         resizable: false,
-        position: {my: "right top", at: "right-10 top+10", of: "svg"}
+        position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}
       })
       .on("dialogclose", exitBrushMode);
 
@@ -802,7 +801,7 @@ function editHeightmap(options) {
       minHeight: "auto",
       width: "fit-content",
       resizable: false,
-      position: {my: "right top", at: "right-10 top+10", of: "svg"}
+      position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}
     });
 
     if (modules.openTemplateEditor) return;
@@ -1134,7 +1133,7 @@ function editHeightmap(options) {
       maxHeight: svgHeight * 0.8,
       minHeight: "auto",
       width: "20em",
-      position: {my: "right top", at: "right-10 top+10", of: "svg"},
+      position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"},
       beforeClose: closeImageConverter
     });
 

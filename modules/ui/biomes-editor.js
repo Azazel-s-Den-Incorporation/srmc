@@ -20,7 +20,7 @@ function editBiomes() {
     resizable: false,
     width: fitContent(),
     close: closeBiomesEditor,
-    position: {my: "right top", at: "right-10 top+10", of: "svg"}
+    position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}
   });
 
   // add listeners
@@ -351,7 +351,7 @@ function editBiomes() {
     biomesEditor.querySelectorAll(".hide").forEach(el => el.classList.add("hidden"));
     body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "none"));
     biomesFooter.style.display = "none";
-    $("#biomesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg"}});
+    $("#biomesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}});
 
     tip("Click on biome to select, drag the circle to change biome", true);
     viewbox
@@ -455,7 +455,7 @@ function editBiomes() {
     body.querySelectorAll("div > input, select, span, svg").forEach(e => (e.style.pointerEvents = "all"));
     biomesEditor.querySelectorAll(".hide").forEach(el => el.classList.remove("hidden"));
     biomesFooter.style.display = "block";
-    if (!close) $("#biomesEditor").dialog({position: {my: "right top", at: "right-10 top+10", of: "svg"}});
+    if (!close) $("#biomesEditor").dialog({position: {my: "right top", at: "right-10 top+42", of: "svg", collision: "fit", within: "#main-ui"}});
 
     restoreDefaultEvents();
     clearMainTip();

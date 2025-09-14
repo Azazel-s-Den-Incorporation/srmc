@@ -868,7 +868,7 @@
 
               <tr data-tip="Set background color">
                 <td>Background</td>
-                <td>
+                <td id="tdi">
                   <input id="styleLegendBack" type="color" value="#ffffff" />
                   <output id="styleLegendBackOutput">#ffffff</output>
                 </td>
@@ -885,7 +885,7 @@
             <tbody id="stylePopulation">
               <tr data-tip="Set bar color for rural population">
                 <td>Rural color</td>
-                <td>
+                <td id="tdi">
                   <input id="stylePopulationRuralStrokeInput" type="color" value="#0000ff" />
                   <output id="stylePopulationRuralStrokeOutput">#0000ff</output>
                 </td>
@@ -893,7 +893,7 @@
 
               <tr data-tip="Set bar color for urban population">
                 <td>Urban color</td>
-                <td>
+                <td id="tdi">
                   <input id="stylePopulationUrbanStrokeInput" type="color" value="#ff0000" />
                   <output id="stylePopulationUrbanStrokeOutput">#ff0000</output>
                 </td>
@@ -942,7 +942,7 @@
 
               <tr data-tip="Shift the texture by axes">
                 <td>Shift by axes</td>
-                <td>
+                <td id="tdi">
                   <input id="styleTextureShiftX" type="number" value="0" data-tip="Shift texture by x axis in pixels" />
                   <input id="styleTextureShiftY" type="number" value="0" data-tip="Shift texture by y axis in pixels" />
                 </td>
@@ -1034,7 +1034,7 @@
 
               <tr data-tip="Set ocean color">
                 <td>Color</td>
-                <td>
+                <td id="tdi">
                   <input id="styleOceanFill" type="color" value="#466eab" />
                   <output id="styleOceanFillOutput">#466eab</output>
                 </td>
@@ -1062,7 +1062,7 @@
 
               <tr data-tip="Set grid cells scale multiplier">
                 <td>Scale</td>
-                <td>
+                <td id="tdi">
                   <input id="styleGridScale" type="number" min=".1" max="10" step=".01" />
                   <output
                     id="styleGridSizeFriendly"
@@ -1082,7 +1082,7 @@
 
               <tr data-tip="Shift the element by axes">
                 <td>Shift by axes</td>
-                <td>
+                <td id="tdi">
                   <input id="styleGridShiftX" type="number" data-tip="Shift by x axis in pixels" />
                   <input id="styleGridShiftY" type="number" data-tip="Shift by y axis in pixels" />
                 </td>
@@ -1099,7 +1099,7 @@
 
               <tr data-tip="Shift wind (compass) rose by axes">
                 <td>Shift by axes</td>
-                <td>
+                <td id="tdi">
                   <input id="styleCompassShiftX" type="number" value="80" data-tip="Shift by x axis in pixels" />
                   <input id="styleCompassShiftY" type="number" value="80" data-tip="Shift by y axis in pixels" />
                 </td>
@@ -1138,7 +1138,7 @@
             <tbody id="styleFill">
               <tr data-tip="Set fill color">
                 <td>Fill color</td>
-                <td>
+                <td id="tdi">
                   <input id="styleFillInput" type="color" value="#5E4FA2" />
                   <output id="styleFillOutput">#5E4FA2</output>
                 </td>
@@ -1148,7 +1148,7 @@
             <tbody id="styleStroke">
               <tr data-tip="Set stroke color">
                 <td>Stroke color</td>
-                <td>
+                <td id="tdi">
                   <input id="styleStrokeInput" type="color" value="#5E4FA2" />
                   <output id="styleStrokeOutput">#5E4FA2</output>
                 </td>
@@ -1176,7 +1176,7 @@
             <tbody id="styleStrokeDash">
               <tr data-tip="Set stroke dash array (e.g. 5 2) and linecap">
                 <td>Stroke dash</td>
-                <td>
+                <td id="tdi">
                   <input id="styleStrokeDasharrayInput" type="text" value="1 2" style="width: 26%" />
                   <select id="styleStrokeLinecapInput" style="width: 32%">
                     <option value="inherit" selected>Inherit</option>
@@ -1191,7 +1191,7 @@
             <tbody id="styleShadow">
               <tr data-tip="Set text shadow">
                 <td>Text shadow</td>
-                <td>
+                <td id="tdi">
                   <input id="styleShadowInput" type="text" value="0 0 4px white" />
                 </td>
               </tr>
@@ -1266,7 +1266,7 @@
 
               <tr data-tip="Set labels color">
                 <td>Labels color</td>
-                <td>
+                <td id="tdi">
                   <input id="styleTemperatureFillInput" type="color" />
                   <output id="styleTemperatureFillOutput">#000</output>
                 </td>
@@ -1427,7 +1427,7 @@
 
               <tr data-tip="Type scale bar label, leave blank to hide label">
                 <td>Label</td>
-                <td>
+                <td id="tdi">
                   <input id="styleScaleBarLabel" type="text" />
                 </td>
               </tr>
@@ -1441,7 +1441,7 @@
 
               <tr data-tip="Set background fill color">
                 <td>Back fill</td>
-                <td>
+                <td id="tdi">
                   <input id="styleScaleBarBackgroundFill" type="color" />
                   <output id="styleScaleBarBackgroundFillOutput"></output>
                 </td>
@@ -1449,7 +1449,7 @@
 
               <tr data-tip="Set background stroke color and width">
                 <td>Back stroke</td>
-                <td>
+                <td id="tdi">
                   <input id="styleScaleBarBackgroundStroke" type="color" />
                   <output id="styleScaleBarBackgroundStrokeOutput"></output>
 
@@ -5416,11 +5416,11 @@
               <tr
                 data-tip="Set original map size on generation. It cannot be changed later. Always keep canvas size equal to your screen size or less. The best option is to use the default value. For full-globe maps use aspect ratio 2:1"
               >
-                <td>
+                <td id="tdi">
                   <i data-tip="Restore default canvas size" id="restoreDefaultCanvasSize" class="icon-ccw"></i>
                 </td>
                 <td>Canvas size</td>
-                <td>
+                <td id="tdi">
                   <input id="mapWidthInput" class="paired" type="number" min="240" value="960" />
                   <span>x</span>
                   <input id="mapHeightInput" class="paired" type="number" min="135" value="540" />
@@ -5432,7 +5432,7 @@
               <tr
                 data-tip="Map seed number. Press 'Enter' to apply. Seed produces the same map only if canvas size and options are the same"
               >
-                <td>
+                <td id="tdi">
                   <i
                     data-tip="Show seed history to apply a previous seed"
                     id="optionsMapHistory"
@@ -5440,10 +5440,10 @@
                   ></i>
                 </td>
                 <td>Map seed</td>
-                <td>
+                <td id="tdi">
                   <input id="optionsSeed" class="long" type="number" min="1" max="999999999" step="1" />
                 </td>
-                <td>
+                <td id="tdi">
                   <i
                     data-tip="Copy map seed as URL. It will produce the same map only if options are default or the same"
                     id="optionsCopySeed"
@@ -5455,11 +5455,11 @@
               <tr
                 data-tip="Set number of points to be used for graph generation. Highly affects performance. 10K is the only recommended value"
               >
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_points" class="icon-lock-open"></i>
                 </td>
                 <td>Points number</td>
-                <td>
+                <td id="tdi">
                   <input
                     id="pointsInput"
                     data-stored="points"
@@ -5476,11 +5476,11 @@
               </tr>
 
               <tr data-tip="Define map name (will be used to name downloaded files)">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_mapName" class="icon-lock-open"></i>
                 </td>
                 <td>Map name</td>
-                <td>
+                <td id="tdi">
                   <input
                     id="mapName"
                     data-stored="mapName"
@@ -5490,17 +5490,17 @@
                     type="text"
                   />
                 </td>
-                <td>
+                <td id="tdi">
                   <i data-tip="Regenerate map name" onclick="Names.getMapName(true)" class="icon-arrows-cw"></i>
                 </td>
               </tr>
 
               <tr data-tip="Define current year and era name">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_year" data-ids="year,era" class="icon-lock-open"></i>
                 </td>
                 <td>Year and era</td>
-                <td>
+                <td id="tdi">
                   <input
                     id="yearInput"
                     data-stored="year"
@@ -5519,13 +5519,13 @@
                     class="long"
                   />
                 </td>
-                <td>
+                <td id="tdi">
                   <i id="optionsEraRegenerate" data-tip="Regenerate era" class="icon-arrows-cw"></i>
                 </td>
               </tr>
 
               <tr data-tip="Select template or precreated heightmap to be used on generation">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_template" class="icon-lock-open"></i>
                 </td>
                 <td>Heightmap</td>
@@ -5536,20 +5536,20 @@
               </tr>
 
               <tr data-tip="Define how many Cultures should be generated">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_cultures" class="icon-lock-open"></i>
                 </td>
                 <td>Cultures number</td>
-                <td>
+                <td id="tdi">
                   <input id="culturesInput" data-stored="cultures" type="range" min="1" />
                 </td>
-                <td>
+                <td id="tdi">
                   <input id="culturesOutput" data-stored="cultures" type="number" min="1" />
                 </td>
               </tr>
 
               <tr data-tip="Select a set of cultures to be used for names and cultures generation">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_culturesSet" class="icon-lock-open"></i>
                 </td>
                 <td>Cultures set</td>
@@ -5569,7 +5569,7 @@
               </tr>
 
               <tr data-tip="Define how many states and capitals should be generated">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_statesNumber" class="icon-lock-open"></i>
                 </td>
                 <td>States number</td>
@@ -5579,7 +5579,7 @@
               </tr>
 
               <tr data-tip="Define burgs percentage to form a separate province">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_provincesRatio" class="icon-lock-open"></i>
                 </td>
                 <td>Provinces ratio</td>
@@ -5589,7 +5589,7 @@
               </tr>
 
               <tr data-tip="Define how much states and cultures can vary in size. Defines expansionism value">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_sizeVariety" class="icon-lock-open"></i>
                 </td>
                 <td>Size variety</td>
@@ -5599,7 +5599,7 @@
               </tr>
 
               <tr data-tip="Set state and cultures growth rate. Defines how many lands will stay neutral">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_growthRate" class="icon-lock-open"></i>
                 </td>
                 <td>Growth rate</td>
@@ -5609,11 +5609,11 @@
               </tr>
 
               <tr data-tip="Define a number of towns to be placed (if enough suitable land exists)">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_manors" class="icon-lock-open"></i>
                 </td>
                 <td>Towns number</td>
-                <td>
+                <td id="tdi">
                   <input id="manorsInput" data-stored="manors" type="range" min="0" max="1000" step="1" value="1000" />
                 </td>
                 <td>
@@ -5624,7 +5624,7 @@
               <tr
                 data-tip="Define how many organized religions and cults should be generated. Cultures will have their own folk religions in any case"
               >
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_religionsNumber" class="icon-lock-open"></i>
                 </td>
                 <td>Religions number</td>
@@ -5640,7 +5640,7 @@
               </tr>
 
               <tr data-tip="Select state labels mode: display short or full names">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_stateLabelsMode" class="icon-lock-open"></i>
                 </td>
                 <td>State labels</td>
@@ -5689,14 +5689,14 @@
               </tr>
 
               <tr data-tip="Set theme hue for dialogs and tool windows">
-                <td>
+                <td id="tdi">
                   <i data-tip="Restore default theme color: pale magenta" id="themeColorRestore" class="icon-ccw"></i>
                 </td>
                 <td>Theme color</td>
-                <td>
+                <td id="tdi">
                   <input id="themeHueInput" type="range" min="0" max="359" />
                 </td>
-                <td>
+                <td id="tdi">
                   <input id="themeColorInput" data-stored="themeColor" type="color" />
                 </td>
               </tr>
@@ -5712,7 +5712,7 @@
               <tr data-tip="Set autosave interval in minutes. Set 0 to disable autosave. Map is saved to browser memory">
                 <td></td>
                 <td>Autosave interval</td>
-                <td>
+                <td id="tdi">
                   <input
                     id="autosaveIntervalInput"
                     data-stored="autosaveInterval"
@@ -5723,7 +5723,7 @@
                     value="0"
                   />
                 </td>
-                <td>
+                <td id="tdi">
                   <input
                     id="autosaveIntervalOutput"
                     data-stored="autosaveInterval"
@@ -5748,7 +5748,7 @@
               </tr>
 
               <tr data-tip="Set minimum and maximum possible zoom level">
-                <td>
+                <td id="tdi">
                   <i data-tip="Restore default zoom extent: [1, 20]" id="zoomExtentDefault" class="icon-ccw"></i>
                 </td>
                 <td>Zoom extent</td>
@@ -5775,7 +5775,7 @@
                     value="20"
                   />
                 </td>
-                <td>
+                <td id="tdi">
                   <i
                     data-tip="Allow to drag map beyond canvas borders"
                     id="translateExtent"
@@ -5800,7 +5800,7 @@
               <tr
                 data-tip="Load Google Translate and select language. Note that automatic translation can break some page functional. In this case reset the language back to English or refresh the page"
               >
-                <td>
+                <td id="tdi">
                   <i data-tip="Reset language to English" id="resetLanguage" class="icon-ccw"></i>
                 </td>
                 <td>Language</td>
@@ -5815,7 +5815,7 @@
           
             <table>
               <tr data-tip="Select emblem shape. Can be changed indivudually in Emblem editor">
-                <td>
+                <td id="tdi">
                   <i data-locked="0" id="lock_emblemShape" class="icon-lock"></i>
                 </td>
                 <td>Emblem shape</td>
