@@ -1,5 +1,18 @@
 "use strict";
 
+class Player {
+ #i;
+ #color; 
+ constructor(i, color) {
+  this.#i = i;
+  this.#color = color;
+ }
+ get i() {return this.#i};
+ set i(i) {this.#i = i}
+ get color() {return this.#color};
+ set color(color) {this.#color = color}
+}
+
 // init
 let playerState = "";
 let sps = "pack.states";
@@ -7,16 +20,16 @@ let sps = "pack.states";
 async function initPlayer(spsi) {
   playerState = spsi;
   sps = pack.states[playerState];
+  document.getElementById("popularity").innerHTML = 0;
+  document.getElementById("population").innerHTML = 0;
+  document.getElementById("economy").innerHTML = 0;
+  document.getElementById("piety").innerHTML = 0;
+  document.getElementById("army").innerHTML = 0;
+  document.getElementById("navy").innerHTML = 0;
+  document.getElementById("airforce").innerHTML = 0;
+  document.getElementById("satelites").innerHTML = 0;
 };
 
-document.getElementById("popularity").innerHTML = 0;
-document.getElementById("population").innerHTML = 0;
-document.getElementById("economy").innerHTML = 0;
-document.getElementById("piety").innerHTML = 0;
-document.getElementById("army").innerHTML = 0;
-document.getElementById("navy").innerHTML = 0;
-document.getElementById("airforce").innerHTML = 0;
-document.getElementById("satelites").innerHTML = 0;
 
 
 

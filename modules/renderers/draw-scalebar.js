@@ -37,7 +37,7 @@ function drawScaleBar(scaleBar, scaleLevel) {
     .attr("stroke-dasharray", size + " " + rn(length / 5 - size, 2))
     .attr("stroke", "#3d3d3d");
 
-  const texts = content.append("g").attr("text-anchor", "middle").attr("font-family", "var(--serif)");
+  const texts = content.append("g").attr("text-anchor", "middle").attr("font-family", "monospace");
   texts
     .selectAll("text")
     .data(d3.range(0, 6))

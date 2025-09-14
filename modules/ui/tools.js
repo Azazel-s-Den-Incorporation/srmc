@@ -219,7 +219,7 @@ function recreateStates() {
 
   if (validBurgs.length < statesCount) {
     const message = `Not enough burgs to generate ${statesCount} states. Will generate only ${validBurgs.length} states`;
-    tip(message, false, "warn");
+    tip(message, "warn");
   }
 
   const validStates = pack.states.filter(s => s.i && !s.removed);
@@ -629,7 +629,7 @@ function addLabelOnClick() {
       .attr("opacity", 1)
       .attr("stroke", "#3a3a3a")
       .attr("stroke-width", 0)
-      .attr("font-family", "Almendra SC")
+      .attr("font-family", "monospace")
       .attr("font-size", 18)
       .attr("data-size", 18)
       .attr("filter", null);

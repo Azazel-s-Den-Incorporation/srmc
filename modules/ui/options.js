@@ -183,7 +183,7 @@ function mapSizeInputChange() {
 
   if (tooWide || tooHigh) {
     const message = `Canvas size is larger than window size (${window.innerWidth} x ${window.innerHeight}). It can affect performance`;
-    tip(message, false, "warn", 4000);
+    tip(message, "warn", 4000);
   }
 }
 
@@ -214,13 +214,13 @@ function fitMapToScreen() {
   svgHeight = Math.min(+rs[1], 1080);
   svg.attr("width", svgWidth).attr("height", svgHeight);
 
-  const zoomMin = 0.9;
+  const zoomMin = 1;
   zoomExtentMin.value = zoomMin;
   const zoomMax = +zoomExtentMax.value;
 
     zoom.translateExtent([
       [(-10), 0],
-      [(rs[0] + 10), (rs[1])]
+      [(rs[0] + 10), (ms[1])]
     ])
     .scaleExtent([zoomMin, zoomMax]);
 
@@ -401,8 +401,8 @@ function changeUiSize(value) {
   if (value > max) value = max;
 
   uiSize.value = value;
-  document.getElementsByTagName("body")[0].style.fontSize = rn(value * 10, 2) + "px";
-  byId("options").style.width = value * 300 + "px";
+  // document.getElementsByTagName("body")[0].style.fontSize = rn(value * 10, 2) + "px";
+  // byId("options").style.width = value * 300 + "px";
 }
 
 function getUImaxSize() {

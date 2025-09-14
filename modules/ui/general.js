@@ -54,30 +54,25 @@ const tipBackgroundMap = {
   error: "linear-gradient(0.1turn, #1e1e1e, #e11d1d, #1e1e1e)"
 };
 
-function tip(tip, main = false, type = "info", time = 0) {
+function tip(tip, type = "info", time = 2500) {
   tooltip.style.display = "flex"
   tooltip.innerHTML = tip;
   tooltip.style.background = tipBackgroundMap[type];
 
-  if (main) {
-    tooltip.dataset.main = tip;
-    tooltip.dataset.color = tooltip.style.background;
-  }
   if (time) setTimeout(clearMainTip, time);
 }
 
 function showMainTip() {
   if (tooltip.innerHTML == "") {
     clearMainTip();
-    tooltip.style.display = "none";
   } else {
-    tooltip.style.background = tooltip.dataset.color;
-    tooltip.innerHTML = tooltip.dataset.main;
     tooltip.style.display = "flex"
+    tooltip.innerHTML = tooltip.dataset.main;
 };
 }
 
 function clearMainTip() {
+  tooltip.style.display = "none";
   tooltip.dataset.color = "";
   tooltip.dataset.main = "";
   tooltip.innerHTML = "";
@@ -91,6 +86,7 @@ function showDataTip(event) {
 
   let dataTip = event.target.dataset.tip;
   if (!dataTip && event.target.parentNode.dataset.tip)  dataTip = event.target.parentNode.dataset.tip;
+  if (!dataTip && event.target.parentNode === null) return;
   if (!dataTip) return;
   const shortcut = event.target.dataset.shortcut;
   if (shortcut && !MOBILE) dataTip += `. Shortcut: ${shortcut}`;

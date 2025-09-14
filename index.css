@@ -1,6 +1,6 @@
 :root {
-  --monospace: Consolas, monospace;
-  --serif: Georgia, serif;
+  --monospace: monospace;
+  --serif: Times, serif;
   --sans-serif: Helvetica, Arial, sans-serif;
 }
 
@@ -22,6 +22,7 @@ font {
 html {
   overflow: hidden;
   vertical-align: middle;
+  font-family: monospace, Roboto, Oxygen, Ubuntu;
 }
 
 #main-ui {
@@ -462,6 +463,7 @@ html {
   flex-wrap: row nowrap;
   background-color: #1e1e1e;
   border: groove #ccab1e;
+  text-align: center;
 }
 
 #date {
@@ -705,7 +707,7 @@ a {
 }
 
 #temperature {
-  font-family: var(--sans-serif);
+  font-family: monospace;
   font-weight: 700;
   text-anchor: middle;
   dominant-baseline: central;
@@ -749,7 +751,7 @@ t,
   text-shadow: 0 0 4px #000;
   dominant-baseline: central;
   text-anchor: middle;
-  font-family: var(--sans-serif);
+  font-family: monospace;
   fill-opacity: 1;
 }
 
@@ -829,7 +831,7 @@ i.icon-lock {
 
 .chartInfo {
   text-align: center;
-  font-family: var(--sans-serif);
+  font-family: monospace;
   font-style: italic;
   font-size: 12px;
 }
@@ -946,7 +948,7 @@ button.ui-button:disabled:hover {
 
 #options {
   position: absolute;
-  font-family: var(--monospace);
+  font-family: monospace;
   border: solid 1px #5e4fa2;
   margin: 10px;
   padding-bottom: 0.3em;
@@ -956,7 +958,7 @@ button.ui-button:disabled:hover {
 #options input,
 #options select,
 #options button {
-  font-family: var(--monospace);
+  font-family: monospace;
 }
 
 #collapsible {
@@ -977,7 +979,7 @@ button.ui-button:disabled:hover {
 
 div.tab > button#optionsHide {
   width: auto;
-  font-family: var(--sans-serif);
+  font-family: monospace;
   padding: 0.6em 0.45em;
 }
 
@@ -1007,8 +1009,8 @@ button.options:hover {
 
 #options .tip {
   color: #444;
-  font-size: 0.9em;
-  font-family: sans-serif;
+  font-size: 1em;
+  font-family: monospace;
   font-style: italic;
   margin-left: 0.5em;
 }
@@ -1029,12 +1031,12 @@ button.options:hover {
 }
 
 #optionsContent span {
-  font-size: 0.9em;
+  font-size: 0.3em;
 }
 
 #options i {
   color: #31272c;
-  font-size: 0.85em;
+  font-size: 0.5em;
   cursor: pointer;
 }
 
@@ -1253,7 +1255,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0.45em 0.75em;
   margin: 0.4em 0;
   white-space: nowrap;
-  font-family: var(--monospace);
+  font-family: monospace;
   animation: glowing 2s infinite;
 }
 
@@ -1517,7 +1519,7 @@ fieldset {
   padding: 0.1em 0.5em;
   float: left;
   font-size: 1.2em;
-  font-family: var(--monospace);
+  font-family: monospace;
 }
 
 #brushesButtons > button {
@@ -1576,7 +1578,7 @@ fieldset {
   background-color: #ffffff95;
   color: #05044d;
   font-style: italic;
-  font-family: var(--monospace);
+  font-family: monospace;
 }
 
 #templateBody select {
@@ -2313,7 +2315,7 @@ div.editorLine {
   fill: #f8ffff;
   font-size: 12px;
   font-weight: bold;
-  font-family: var(--sans-serif);
+  font-family: monospace;
   cursor: move !important;
 }
 
@@ -2326,7 +2328,7 @@ div.editorLine {
 #pickerCloseText {
   fill: #f8ffff;
   font-size: 10px;
-  font-family: var(--sans-serif);
+  font-family: monospace;
   pointer-events: none;
 }
 
@@ -2445,7 +2447,7 @@ div.editorLine {
 }
 
 #ruler text {
-  font-family: var(--serif);
+  font-family: monospace;
   fill: #3d3d3d;
   text-anchor: middle;
   text-shadow: 0 0 4px white;
@@ -2482,7 +2484,7 @@ div.editorLine {
 
 #coordinateLabels {
   fill: #333333;
-  font-family: var(--monospace);
+  font-family: monospace;
   text-shadow: 0 0 4px white;
   stroke-width: 0;
   dominant-baseline: central;
@@ -2525,7 +2527,7 @@ input[type="checkbox"] {
   border: 1px solid darkgrey;
   border-radius: 15%;
   background: white;
-  font-family: var(--monospace);
+  font-family: monospace;
 }
 
 .checkbox:checked + .checkbox-label:before {
@@ -2538,7 +2540,7 @@ input[type="checkbox"] {
 div.textual select,
 div.textual textarea,
 div.textual input {
-  font-family: var(--monospace);
+  font-family: monospace;
 }
 
 div.textual fieldset {
@@ -2553,13 +2555,13 @@ div.textual span,
 }
 
 #namesbaseExamples {
-  font-family: var(--monospace);
+  font-family: monospace;
   cursor: pointer;
 }
 
 #markers {
   cursor: pointer;
-  font-family: var(--monospace);
+  font-family: monospace;
   -webkit-user-select: none;
   user-select: none;
   text-anchor: middle;
@@ -2620,7 +2622,7 @@ div.textual span,
   outline: 0;
   overflow-y: auto;
   padding: 0.6em;
-  font-family: var(--monospace);
+  font-family: monospace;
   background-color: #fff;
   border: 1px solid #dedede;
   color: #000;
@@ -2759,14 +2761,14 @@ svg.button {
 #globaAxisLabels {
   font-style: italic;
   font-size: 9px;
-  font-family: var(--monospace);
+  font-family: monospace;
   stroke: none;
   fill: #001754;
 }
 
 #globeLatLabels {
   font-size: 12px;
-  font-family: var(--monospace);
+  font-family: monospace;
   stroke: none;
   fill: #001754;
 }
@@ -2829,7 +2831,7 @@ svg.button {
 
 #errorBox {
   font-size: 0.9em;
-  font-family: var(--monospace);
+  font-family: monospace;
   color: #920303;
   background-color: #dabdbd91;
   padding: 2px;
@@ -2864,7 +2866,7 @@ svg.button {
 #promptText {
   padding: 0 0 0.6em 0;
   font-weight: bold;
-  font-family: var(--sans-serif);
+  font-family: monospace;
 }
 
 #mapOverlay {

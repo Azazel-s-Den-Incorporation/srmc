@@ -425,13 +425,13 @@ body .ui-dialog {
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-  font-family: var(--sans-serif);
+  font-family: monospace;
 }
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-  font-family: var(--sans-serif);
+  font-family: monospace;
   font-size: 1em;
 }
 .ui-widget button[class^="icon-"] {
