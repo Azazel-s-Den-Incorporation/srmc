@@ -120,6 +120,12 @@ function handleMouseMove() {
   if (tooltip.dataset.main) showMainTip();
   else showMapTooltip(point, d3.event, i, gridCell);
   if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
+  
+  // Highlight cell on hover
+  const cell = customization === 1 ? getGridPolygon(i)[0] : getPackPolygon(i)[0];
+  const polygon = customization === 1 ? getGridPolygon(i) : getPackPolygon(i);
+  const path = polygon + ", " + cell;
+  byId("cell").innerHTML = `<path d="M${path}" />`;
 }
 
 let currentNoteId = null; // store currently displayed node to not rerender to often
@@ -290,6 +296,8 @@ function highlightEditorLine(editor, id, timeout = 10000) {
       hovered && hovered.classList.remove("hovered");
     }, timeout);
 }
+
+
 
 // get cell info on mouse move
 function updateCellInfo(point, i, g) {

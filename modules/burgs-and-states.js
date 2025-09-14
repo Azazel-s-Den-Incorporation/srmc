@@ -1,5 +1,23 @@
 "use strict";
 
+
+class State {
+  // Variable Declarations
+  #i;
+  // Variable Data
+  constructor(i) {
+    this.#i = i;
+  }
+
+  // Methods
+  get i() {return this.#i;}
+  set i(i) {this.#i = i}
+}
+
+
+
+
+
 window.BurgsAndStates = (() => {
   const generate = () => {
     const {cells, cultures} = pack;

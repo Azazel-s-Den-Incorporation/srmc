@@ -33,6 +33,14 @@
     "stroke-linecap": "round",
     "filter": null
   },
+  "#cell": {
+    "opacity": 1,
+    "fill-opacity": 0,
+    "stroke": "#aaaaaa",
+    "stroke-width": 1,
+    "filter": null,
+    "mask": null
+  },
   "#cells": {
     "opacity": null,
     "stroke": "#808080",

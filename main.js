@@ -51,6 +51,7 @@ let texture = viewbox.append("g").attr("id", "texture");
 let terrs = viewbox.append("g").attr("id", "terrs");
 let biomes = viewbox.append("g").attr("id", "biomes");
 let cells = viewbox.append("g").attr("id", "cells");
+let cell = viewbox.append("g").attr("id", "cell");
 let gridOverlay = viewbox.append("g").attr("id", "gridOverlay");
 let coordinates = viewbox.append("g").attr("id", "coordinates");
 let compass = viewbox.append("g").attr("id", "compass").style("display", "none");
