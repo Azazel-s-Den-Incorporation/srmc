@@ -68,6 +68,7 @@ function tip(tip, main = false, type = "info", time = 0) {
 
 function showMainTip() {
   if (tooltip.innerHTML == "") {
+    clearMainTip();
     tooltip.style.display = "none";
   } else {
     tooltip.style.background = tooltip.dataset.color;
@@ -91,8 +92,6 @@ function showDataTip(event) {
   let dataTip = event.target.dataset.tip;
   if (!dataTip && event.target.parentNode.dataset.tip)  dataTip = event.target.parentNode.dataset.tip;
   if (!dataTip) return;
-  tooltip.style.display = "none";
-  
   const shortcut = event.target.dataset.shortcut;
   if (shortcut && !MOBILE) dataTip += `. Shortcut: ${shortcut}`;
 
@@ -113,20 +112,28 @@ const onMouseMove = debounce(handleMouseMove, 100);
 function handleMouseMove() {
   const point = d3.mouse(this);
   const i = findCell(point[0], point[1]); // pack cell id
-  if (i === undefined) return;
+  if (i === undefined)tooltip.style.display = "none";
 
   showNotes(d3.event);
   const gridCell = findGridCell(point[0], point[1], grid);
-  if (tooltip.dataset.main) showMainTip();
-  else showMapTooltip(point, d3.event, i, gridCell);
+  if (tooltip.dataset.main) {showMainTip();} 
+  else {showMapTooltip(point, d3.event, i, gridCell);}
   if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
-  
+
+  highlightCell(i);
+}
+
   // Highlight cell on hover
+function highlightCell(i) {
+  if (i === undefined) return;
   const cell = customization === 1 ? getGridPolygon(i)[0] : getPackPolygon(i)[0];
   const polygon = customization === 1 ? getGridPolygon(i) : getPackPolygon(i);
   const path = polygon + ", " + cell;
   byId("cell").innerHTML = `<path d="M${path}" />`;
-}
+  if (tooltip.innerHTML == "") {tooltip.innerHTML = `Cell ID: ${i}`} else {
+  tooltip.innerHTML += `
+  Cell ID: ${i}`;}
+};
 
 let currentNoteId = null; // store currently displayed node to not rerender to often
 

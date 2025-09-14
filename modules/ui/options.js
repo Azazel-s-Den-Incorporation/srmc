@@ -219,8 +219,8 @@ function fitMapToScreen() {
   const zoomMax = +zoomExtentMax.value;
 
     zoom.translateExtent([
-      [(-50), (-50)],
-      [(svgWidth + 50), (svgHeight - 50)]
+      [(-10), 0],
+      [(rs[0] + 10), (rs[1])]
     ])
     .scaleExtent([zoomMin, zoomMax]);
 

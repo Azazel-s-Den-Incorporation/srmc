@@ -369,7 +369,6 @@ html {
 #dashbar-bottom {
   display: flex;
   flex-flow: row nowrap;
-  background: #1e1e1edd;
   width: 100%;
   height: 0;
   position: absolute;
