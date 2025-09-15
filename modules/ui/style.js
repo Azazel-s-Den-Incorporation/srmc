@@ -387,7 +387,7 @@ function selectStyleElement() {
     styleScaleBarSize.value = el.attr("data-bar-size");
     styleScaleBarFontSize.value = el.attr("font-size");
     styleScaleBarPositionX.value = el.attr("data-x") || "99";
-    styleScaleBarPositionY.value = el.attr("data-y") || "99";
+    styleScaleBarPositionY.value = el.attr("data-y") || "120";
     styleScaleBarLabel.value = el.attr("data-label") || "";
 
     const scaleBarBack = el.select("#scaleBarBack");

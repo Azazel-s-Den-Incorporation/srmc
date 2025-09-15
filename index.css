@@ -464,6 +464,7 @@ html {
   background-color: #1e1e1e;
   border: groove #ccab1e;
   text-align: center;
+  vertical-align: middle;
 }
 
 #date {
@@ -473,20 +474,30 @@ html {
   flex-direction: row;
 }
 
-#timebox * > input[type="number"],
-#date-box * > input[type="integer"],
-#timebox * > input[type="text"] {
+#timebox input[type="number"],
+#date-box input[type="integer"],
+#timebox input[type="text"] {
   height: 100%;
   font-size: 1dvi;
   width: 4dvi;
   color: #000;
+  text-align: center;
+  vertical-align: middle;
   -moz-appearance: textfield;
   appearance: textfield;
 }
-
-#timebox * > button {
+#speeds {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#speeds button {
   height: 100%;
-  width: 4dvi;
+  width: 2.4dvi;
+  text-align: center;
+  vertical-align: middle;
   -moz-appearance: textfield;
   appearance: textfield;
 }
@@ -496,10 +507,11 @@ html {
   filter:brightness(80%)
 }
 
-#playpause {
-  height: 100%;
+button#playpause {
+  height: 90%;
   font-size: 3dvi;
   vertical-align: middle;
+  text-align: center;
 }
 
 #toolbar {
@@ -904,7 +916,7 @@ text.drag {
 }
 
 #dialogs {
-  background-color: var(--bg-dialogs);
+  background-color: #c6c2c2;
 }
 
 .draggable {
@@ -1805,7 +1817,7 @@ i.resetButton:active {
 .ui-dialog input[type="range"] {
   padding: 0;
   height: 2px;
-  background: #d4d4d4;
+  background: #7b7b7b;
   position: relative;
   appearance: none;
   -webkit-appearance: none;
@@ -1981,7 +1993,7 @@ div.header > div:first-child {
 }
 
 div.states {
-  border: 1px solid #d4d4d4;
+  border: 1px solid #ffffff;
   background-image: linear-gradient(to right, #fafafa80 0%, #f0f0f080 50%, #c8c8c880 100%);
   margin: 0.1em 0;
   padding: 0 0.2em;
@@ -1992,7 +2004,7 @@ div.states {
 div.states:hover,
 div.states.hovered {
   border: 1px solid #c4c4c4;
-  background-image: linear-gradient(to right, #dedede 100%, #f2f2f2 50%, #fcfcfc 0%);
+  background-image: linear-gradient(to right, #dddddd 100%, #ececec 50%, #fcfcfc 0%);
 }
 
 div.states > *,

@@ -94,7 +94,7 @@ function fitScaleBar(scaleBar, fullWidth, fullHeight) {
   if (!scaleBar.select("rect").size() || scaleBar.style("display") === "none") return;
 
   const posX = +scaleBar.attr("data-x") || 99;
-  const posY = +scaleBar.attr("data-y") || 99;
+  const posY = +scaleBar.attr("data-y") || 95;
   const bbox = scaleBar.select("rect").node().getBBox();
 
   const x = rn((fullWidth * posX) / 100 - (bbox.width + 10));

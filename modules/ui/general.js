@@ -104,31 +104,44 @@ function showElementLockTip(event) {
   }
 }
 
-const onMouseMove = debounce(handleMouseMove, 100);
-function handleMouseMove() {
-  const point = d3.mouse(this);
-  const i = findCell(point[0], point[1]); // pack cell id
-  if (i === undefined)tooltip.style.display = "none";
+// const onMouseMove = debounce(handleMouseMove, 100);
+// function handleMouseMove() {
+//   const point = d3.mouse(this);
+//   const i = findCell(point[0], point[1]); // pack cell id
+//   if (i === undefined)tooltip.style.display = "none";
 
-  showNotes(d3.event);
-  const gridCell = findGridCell(point[0], point[1], grid);
-  if (tooltip.dataset.main) {showMainTip();} 
-  else {showMapTooltip(point, d3.event, i, gridCell);}
-  if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
+//   showNotes(d3.event);
+//   const gridCell = findGridCell(point[0], point[1], grid);
+//   if (tooltip.dataset.main) {showMainTip();} 
+//   else {showMapTooltip(point, d3.event, i, gridCell);}
+//   if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
+// }
 
-  highlightCell(i);
+while (tooltip.dataset.main != undefined) {
+  showMainTip(d3.mouse(this));
 }
 
-  // Highlight cell on hover
+
+
+// Highlight cell on hover
+while (loadedComplete === true) {
+  const point = d3.mouse(this);
+  const i = findCell(point[0], point[1]); // pack cell id
+  highlightCell(i);
+};
+  
 function highlightCell(i) {
   if (i === undefined) return;
-  const cell = customization === 1 ? getGridPolygon(i)[0] : getPackPolygon(i)[0];
-  const polygon = customization === 1 ? getGridPolygon(i) : getPackPolygon(i);
-  const path = polygon + ", " + cell;
-  byId("cell").innerHTML = `<path d="M${path}" />`;
-  if (tooltip.innerHTML == "") {tooltip.innerHTML = `Cell ID: ${i}`} else {
-  tooltip.innerHTML += `
-  Cell ID: ${i}`;}
+  const point1 = customization === 1 ? getGridPolygon(i)[0] : getPackPolygon(i)[0];
+  const path = customization === 1 ? getGridPolygon(i) : getPackPolygon(i);
+  const polygon = path + ", " + point1; // Completes the loop with the first point listed again at the end
+  
+  byId("cell").innerHTML = `<path d="M${polygon}" />`;
+  if (tooltip.innerHTML == "") {tooltip.innerHTML = `Cell ID: ${i}`}
+  else {
+    tooltip.innerHTML += `
+    Cell ID: ${i}`;
+  }
 };
 
 let currentNoteId = null; // store currently displayed node to not rerender to often
@@ -157,7 +170,10 @@ function showNotes(e) {
 }
 
 // show viewbox tooltip if main tooltip is blank
-function showMapTooltip(point, e, i, g) {
+while (false == true) {
+  const point = d3.mouse(this);
+}
+function showMapTooltip(point, e, i, g, time = 8000) {
   tip(""); // clear tip
   const path = e.composedPath ? e.composedPath() : getComposedPath(e.target); // apply polyfill
   if (!path[path.length - 8]) return;
@@ -288,6 +304,7 @@ function showMapTooltip(point, e, i, g) {
     tip("Culture: " + pack.cultures[culture].name);
     if (document.getElementById("culturesEditor")?.offsetParent) highlightEditorLine(culturesEditor, culture);
   } else if (layerIsOn("toggleHeight")) tip("Height: " + getFriendlyHeight(point));
+  if (time) setTimeout(tip(""), time);
 }
 
 function highlightEditorLine(editor, id, timeout = 10000) {

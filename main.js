@@ -52,7 +52,7 @@ let terrs = viewbox.append("g").attr("id", "terrs");
 let biomes = viewbox.append("g").attr("id", "biomes");
 let cells = viewbox.append("g").attr("id", "cells");
 let cell = viewbox.append("g").attr("id", "cell");
-let gridOverlay = viewbox.append("g").attr("id", "gridOverlay");
+let gridOverlay = viewbox.append("g").attr("id", "gridOverlay").style("display", "none");
 let coordinates = viewbox.append("g").attr("id", "coordinates");
 let compass = viewbox.append("g").attr("id", "compass").style("display", "none");
 let rivers = viewbox.append("g").attr("id", "rivers");
@@ -277,6 +277,7 @@ async function mainMenuInit() {
 
 // Developement Mode
 let devmode = true;
+let loadedComplete = false;
 
 landmass.append("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
 oceanPattern
@@ -333,6 +334,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await hideLoading();
     restoreDefaultEvents(); // apply default viewbox events
     initiateAutosave();
+    loadedComplete = true;
   };
   // Developer Mode Actions on Load
   if (devmode == true) {
