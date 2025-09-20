@@ -1,5 +1,4 @@
 "use strict";
-
 // functions to save the project to a file
 async function saveMap(method) {
   if (customization) return tip("Map cannot be saved in EDIT mode, please complete the edit and retry", false, "error");

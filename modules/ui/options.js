@@ -1,6 +1,87 @@
 // UI module to control the options (preferences)
 "use strict";
 
+// Resolutions - Width, Height
+const ultraRes = [3840,2160];
+const superRes = [2880,1620];
+const highRes = [1920,1080];
+const medRes = [1080,720];
+const lowRes = [720,480];
+const shtRes = [480,320];
+const custonRes = [,];
+
+if (resolutionInput == "ultraRes") {
+  rs = ultraRes;
+} else if (resolutionInput == "superRes") {
+  rs = superRes;
+} else if (resolutionInput == "highRes") {
+  rs = highRes;
+} else if (resolutionInput == "medRes") {
+  rs = medRes;
+} else if (resolutionInput == "lowRes") {
+  rs = lowRes;
+} else if (resolutionInput == "shtRes") {
+  rs = shtRes;
+} else if (resolutionInput == "customRes") {
+  rs = customRes;
+};
+
+let rs = medRes;
+
+// Map Sizes - Width, Height, Cell Density
+const giantSize = [4320,2160,80];
+const hugeSize = [2880,1440,60];
+const largeSize = [2160,1080,50];
+const standardSize = [1920,960,40];
+const mediumSize = [1440,720,30];
+const smallSize = [1080,480,20];
+const tinySize = [720,360,10];
+const customSize = [,,];
+
+if (mapSizeInput == "giantSize") {
+  ms = giantSize;
+} else if (mapSizeInput == "hugeSize") {
+  ms = hugeSize;
+} else if (mapSizeInput == "largeSize") {
+  ms = largeSize;
+} else if (mapSizeInput == "standardSize") {
+  ms = standardSize;
+} else if (mapSizeInput == "mediumSize") {
+  ms = mediumSize;
+} else if (mapSizeInput == "smallSize") {
+  ms = smallSize;
+} else if (mapSizeInput == "tinySize") {
+  ms = tinySize;
+} else if (mapSizeInput == "customSize") {
+  ms = customSize;
+};
+
+let ms = standardSize;
+
+
+// voronoi graph extension, cannot be changed after generation
+let graphWidth = +ms[0];
+let graphHeight = +ms[1];
+let cellsDesired = +ms[2];
+
+// svg canvas resolution, can be changed
+let svgWidth = graphWidth;
+let svgHeight = graphHeight;
+
+function setResolution() {
+  window.resizeTo(rs[0], rs[1]);
+  const zoomMin = (rs[0]/ms[0]);
+  zoomExtentMin.value = zoomMin;
+  const zoomMax = +zoomExtentMax.value;
+
+    zoom.translateExtent([
+      [(-10), 0],
+      [(ms[0] + 10), (ms[1])]
+    ])
+    .scaleExtent([zoomMin, zoomMax]);
+}
+
+
 $("#optionsContainer").draggable({handle: ".drag-trigger", snap: "svg", snapMode: "both"});
 $("#exitCustomization").draggable({handle: "div"});
 $("#mapLayers").disableSelection();
@@ -156,6 +237,7 @@ optionsContent.addEventListener("change", event => {
   else if (id === "monthInput") changeMonth();
   else if (id === "yearInput") changeYear();
   else if (id === "eraInput") changeEra();
+  else if (id === "resolutionInput") setResolution();
   else if (id === "stateLabelsModeInput") options.stateLabelsMode = value;
 });
 
@@ -210,23 +292,24 @@ function applyGraphSize() {
 
 // on generate, on load, on resize, on canvas size change
 function fitMapToScreen() {
-  svgWidth = Math.min(+rs[0], 1920);
-  svgHeight = Math.min(+rs[1], 1080);
+  svgWidth = Math.min(+ms[0], 1920);
+  svgHeight = Math.min(+ms[1], 1080);
   svg.attr("width", svgWidth).attr("height", svgHeight);
 
-  const zoomMin = 1;
+  const zoomMin = (rs[0]/ms[0]);
   zoomExtentMin.value = zoomMin;
   const zoomMax = +zoomExtentMax.value;
 
     zoom.translateExtent([
       [(-10), 0],
-      [(rs[0] + 10), (ms[1])]
+      [(ms[0] + 10), (ms[1])]
     ])
     .scaleExtent([zoomMin, zoomMax]);
 
   fitScaleBar(scaleBar, svgWidth, svgHeight);
   if (window.fitLegendBox) fitLegendBox();
 }
+
 
 // add voice options
 const voiceInterval = setInterval(function () {
@@ -512,17 +595,17 @@ function changeZoomExtent(value) {
 }
 
 function restoreDefaultZoomExtent() {
-  zoomExtentMin.value = 0.9;
+  zoomExtentMin.value = (ms[0]/rs[0]);
   zoomExtentMax.value = 40;
-  zoom.scaleExtent([0.9, 40]).scaleTo(svg, 1);
+  zoom.scaleExtent([(ms[0]/rs[0]), 40]).scaleTo(svg, 1);
 }
 
 // restore options stored in localStorage
 function applyStoredOptions() {
-  if (!stored("mapWidth") || !stored("mapHeight")) {
-    mapWidthInput.value = ms[0];
-    mapHeightInput.value = ms[1];
-  }
+  // if (!stored("mapWidth") || !stored("mapHeight")) {
+  //   mapWidthInput.value = ms[0];
+  //   mapHeightInput.value = ms[1];
+  // }
 
   const heightmapId = stored("template");
   if (heightmapId) {

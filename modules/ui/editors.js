@@ -6,7 +6,7 @@ modules.editors = true;
 // restore default viewbox events
 function restoreDefaultEvents() {
   svg.call(zoom);
-  viewbox.style("cursor", "default").on(".drag", null).on("click", clicked);//.on("touchmove mousemove", onMouseMove);
+  viewbox.style("cursor", "default").on(".drag", null).on("click", clicked);//viewbox.on("touchmove mousemove", );
   legend.call(d3.drag().on("start", dragLegendBox));
   svg.call(zoom);
 }

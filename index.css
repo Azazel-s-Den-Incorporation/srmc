@@ -938,10 +938,10 @@ button.ui-button:disabled:hover {
   cursor: default;
 }
 
-.ui-dialog,
-#optionsContainer {
+.ui-dialog {
   -webkit-user-select: none;
   user-select: none;
+  align-self: center;
 }
 
 #optionsTrigger {
@@ -1957,8 +1957,8 @@ div.slider .ui-slider-handle {
 }
 
 .dialog {
-  max-width: 120vw;
-  max-height: 120vw;
+  max-width: 60%;
+  max-height: 60%;
 }
 
 .dialog > div {
@@ -2872,7 +2872,7 @@ svg.button {
   background-color: var(--bg-dialogs);
   border: solid 1px var(--dark-solid);
   font-size: 1.2em;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 #promptText {

@@ -1,6 +1,13 @@
 "use strict";
-// Azgaar (azgaar.fmg@yandex.com). Minsk, 2017-2023. MIT License
+
+
+// Azazel Mango (). Florida, USA, 2025. MIT License.
+// https://github.com/-
+
+// Original Work
+// Azgaar (azgaar.fmg@yandex.com). Minsk, 2017-2025. MIT License
 // https://github.com/Azgaar/Fantasy-Map-Generator
+
 
 // set debug options
 const PRODUCTION = location.hostname && location.hostname !== "localhost" && location.hostname !== "127.0.0.1";
@@ -184,7 +191,7 @@ const onZoom = debounce(function () {
 
   handleZoom(isScaleChanged, isPositionChanged);
 }, 50);
-const zoom = d3.zoom().scaleExtent([0.7, 40]).on("zoom", onZoom);
+const zoom = d3.zoom().scaleExtent([(rs[0]/ms[0]), 40]).on("zoom", onZoom);
 
 // default options, based on Earth data
 let options = {
@@ -206,70 +213,8 @@ let urbanization = +byId("urbanizationInput").value;
 let urbanDensity = +byId("urbanDensityInput").value;
 
 applyStoredOptions();
+setResolution();
 
-// Resolutions - Width, Height
-const ultraRes = [3840,2160];
-const superRes = [2880,1620];
-const highRes = [1920,1080];
-const medRes = [1080,720];
-const lowRes = [720,480];
-const shtRes = [480,320];
-const custonRes = [,];
-
-let rs = [1920,1080];
-if (resolutionInput == "ultraRes") {
-  rs = ultraRes;
-} else if (resolutionInput == "superRes") {
-  rs = superRes;
-} else if (resolutionInput == "highRes") {
-  rs = highRes;
-} else if (resolutionInput == "medRes") {
-  rs = medRes;
-} else if (resolutionInput == "lowRes") {
-  rs = lowRes;
-} else if (resolutionInput == "shtRes") {
-  rs = shtRes;
-} else if (resolutionInput == "customRes") {
-  rs = customRes;
-};
-
-// Map Sizes - Width, Height
-const giantSize = [4320,2160];
-const hugeSize = [2880,1440];
-const largeSize = [2160,1080];
-const standardSize = [1920,960];
-const mediumSize = [1440,720];
-const smallSize = [1080,480];
-const tinySize = [720,360];
-const customSize = [,];
-
-let ms = [1920,960];
-if (mapSizeInput == "giantSize") {
-  ms = giantSize;
-} else if (mapSizeInput == "hugeSize") {
-  ms = hugeSize;
-} else if (mapSizeInput == "largeSize") {
-  ms = largeSize;
-} else if (mapSizeInput == "standardSize") {
-  ms = standardSize;
-} else if (mapSizeInput == "mediumSize") {
-  ms = mediumSize;
-} else if (mapSizeInput == "smallSize") {
-  ms = smallSize;
-} else if (mapSizeInput == "tinySize") {
-  ms = tinySize;
-} else if (mapSizeInput == "customSize") {
-  ms = customSize;
-};
-
-
-// voronoi graph extension, cannot be changed after generation
-let graphWidth = +ms[0];
-let graphHeight = +ms[1];
-
-// svg canvas resolution, can be changed
-let svgWidth = graphWidth;
-let svgHeight = graphHeight;
 
 // main menu
 async function mainMenuInit() {
@@ -277,7 +222,6 @@ async function mainMenuInit() {
 
 // Developement Mode
 let devmode = true;
-let loadedComplete = false;
 
 landmass.append("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
 oceanPattern
@@ -303,7 +247,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     $("#alert").dialog({
       resizable: false,
       title: "Loading error",
-      width: "28em",
+      width: "50%",
       position: {my: "center center-4em", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
       buttons: {
         OK: function () {
@@ -1017,7 +961,7 @@ async function generate(options) {
       resizable: false,
       title: "Generation error",
       position: {my: "center", at: "center", of: "svg", collision: "fit", within: "#main-ui"},
-      width: "32em",
+      width: "50%",
       buttons: {
         "Clear cache": () => cleanupData(),
         "Main Menu": function() {

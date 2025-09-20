@@ -1,5 +1,6 @@
 "use strict";
 // Module to store generic UI functions
+let loadedComplete = false;
 
 window.addEventListener("resize", function (e) {
   if (stored("mapWidth") && stored("mapHeight")) return;
@@ -117,8 +118,16 @@ function showElementLockTip(event) {
 //   if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
 // }
 
-while (tooltip.dataset.main != undefined) {
-  showMainTip(d3.mouse(this));
+while (loadedComplete === true) {
+  let isCooldown = false;
+  const point = d3.mouse(this);
+  const i = findCell(point[0], point[1]); // pack cell id
+  const gridCell = findGridCell(point[0], point[1], grid);
+  while (isCooldown = false) {
+    isCooldown = true;
+    showMainTip(point, d3.event, i, gridCell);
+    setTimeout(() => (isCooldown = false), 200);
+  }
 }
 
 
@@ -127,7 +136,7 @@ while (tooltip.dataset.main != undefined) {
 while (loadedComplete === true) {
   const point = d3.mouse(this);
   const i = findCell(point[0], point[1]); // pack cell id
-  highlightCell(i);
+  highlightCell(i); 
 };
   
 function highlightCell(i) {
@@ -142,6 +151,7 @@ function highlightCell(i) {
     tooltip.innerHTML += `
     Cell ID: ${i}`;
   }
+  INFO && console.info("Cell ID: "+i);
 };
 
 let currentNoteId = null; // store currently displayed node to not rerender to often
@@ -170,8 +180,11 @@ function showNotes(e) {
 }
 
 // show viewbox tooltip if main tooltip is blank
-while (false == true) {
+  viewbox.on("touchmove mousemove", );
+while ( loadedComplete == true) {
   const point = d3.mouse(this);
+  const i = findCell(point[0], point[1]); // pack cell id
+  showMapTooltip(point, e, i, g);
 }
 function showMapTooltip(point, e, i, g, time = 8000) {
   tip(""); // clear tip
