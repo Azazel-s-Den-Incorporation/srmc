@@ -122,8 +122,8 @@ function editUnits() {
   function addRuler() {
     if (!layerIsOn("toggleRulers")) toggleRulers();
 
-    const width = Math.min(graphWidth, svgWidth);
-    const height = Math.min(graphHeight, svgHeight);
+    const width = svgWidth;
+    const height = svgHeight;
     const pt = byId("map").createSVGPoint();
     (pt.x = width / 2);
     (pt.y = height / 4);

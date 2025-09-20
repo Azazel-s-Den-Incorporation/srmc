@@ -173,6 +173,73 @@ let nameBases = Names.getNameBases(); // cultures-related data
 let color = d3.scaleSequential(d3.interpolateSpectral); // default color scheme
 const lineGen = d3.line().curve(d3.curveBasis); // d3 line generator with default curve interpolation
 
+
+// Resolutions - Width, Height
+const ultraRes = [3840,2160];
+const superRes = [2880,1620];
+const highRes = [1920,1080];
+const medRes = [1080,720];
+const lowRes = [720,480];
+const shtRes = [480,320];
+const custonRes = [,];
+
+if (resolutionInput == "ultraRes") {
+  rs = ultraRes;
+} else if (resolutionInput == "superRes") {
+  rs = superRes;
+} else if (resolutionInput == "highRes") {
+  rs = highRes;
+} else if (resolutionInput == "medRes") {
+  rs = medRes;
+} else if (resolutionInput == "lowRes") {
+  rs = lowRes;
+} else if (resolutionInput == "shtRes") {
+  rs = shtRes;
+} else if (resolutionInput == "customRes") {
+  rs = customRes;
+};
+
+let rs = medRes;
+
+// Map Sizes - Width, Height, Cell Density
+const giantSize = [4320,2160,80];
+const hugeSize = [2880,1440,60];
+const largeSize = [2160,1080,50];
+const standardSize = [1920,960,40];
+const mediumSize = [1440,720,30];
+const smallSize = [1080,480,20];
+const tinySize = [720,360,10];
+const customSize = [,,];
+
+if (mapSizeInput == "giantSize") {
+  ms = giantSize;
+} else if (mapSizeInput == "hugeSize") {
+  ms = hugeSize;
+} else if (mapSizeInput == "largeSize") {
+  ms = largeSize;
+} else if (mapSizeInput == "standardSize") {
+  ms = standardSize;
+} else if (mapSizeInput == "mediumSize") {
+  ms = mediumSize;
+} else if (mapSizeInput == "smallSize") {
+  ms = smallSize;
+} else if (mapSizeInput == "tinySize") {
+  ms = tinySize;
+} else if (mapSizeInput == "customSize") {
+  ms = customSize;
+};
+
+let ms = standardSize;
+
+// voronoi graph extension, cannot be changed after generation
+let graphWidth = +ms[0];
+let graphHeight = +ms[1];
+let cellsDesired = +ms[2];
+
+// svg canvas resolution, can be changed
+let svgWidth = rs[0];
+let svgHeight = rs[1];
+
 // d3 zoom behavior
 let scale = 1;
 let viewX = 0;
@@ -191,7 +258,15 @@ const onZoom = debounce(function () {
 
   handleZoom(isScaleChanged, isPositionChanged);
 }, 50);
-const zoom = d3.zoom().scaleExtent([(rs[0]/ms[0]), 40]).on("zoom", onZoom);
+const zoomMin = (( rs[1] / (69 + rs[0]) ) + ( ms[1] / (69 + ms[0]) ))/2;
+const zoomMax = +zoomExtentMax.value;
+const zoom = d3.zoom().scaleExtent([zoomMin, zoomMax]).on("zoom", onZoom);
+
+const translateExtent = zoom.translateExtent([
+    [(-10), 0],
+    [(ms[0] + 10), (ms[1])]
+  ])
+const scaleExtent = zoom.scaleExtent([zoomMin, zoomMax]);
 
 // default options, based on Earth data
 let options = {
@@ -319,13 +394,10 @@ document.getElementById("menu-screen").style.display = "flex";
 
 async function menuScreen() {
   const mainmenu = document.getElementById("menu-screen")
-  const optionsContainer = document.getElementById("collapsible")
   if (mainmenu.style.display == "flex"){
     mainmenu.style.display = "none";
-    optionsContainer.style.display = "grid";
   } else  if (mainmenu.style.display == "none"){
     mainmenu.style.display = "flex";
-    optionsContainer.style.display = "none";
   }
 }
 
@@ -371,6 +443,7 @@ async function genNewMapButton(options) {
       ERROR && console.error(error);
     }
     try {
+      WARN && console.warn("Loading State Coat of Arms");
       for (const s of pack.states) {
         if (s.removed) continue;
         COArenderer.trigger("stateCOA" + s.i, s.coa);

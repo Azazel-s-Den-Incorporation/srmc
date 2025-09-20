@@ -23,10 +23,10 @@ function handleKeyup(event) {
   const shift = shiftKey || key === "Shift";
 
   if (code === "F1") showInfo();
-  else if (code === "F2") genNewMapButton();
+  else if (code === "F2") showLoading() && genNewMapButton();
   else if (code === "F6") saveMap("storage");
   else if (code === "F9") quickLoad();
-  else if (code === "Tab") toggleOptions(event);
+  else if (code === "Tab") return;
   else if (code === "Escape" && document.getElementById("main-menu").style.display == "none" && document.getElementById("menu-screen").style.display == "flex") mainMenuButton();
   // else if (code === "Escape" && document.getElementById("saveMapButton").style.display == "flex" && document.getElementsById("alert").style.display !== "none" && document.getElementById("menu-screen").style.display == "none") ;
   else if (code === "Escape" && document.getElementById("saveMapButton").style.display == "flex" && document.getElementById("menu-screen").style.display == "none") closeAllDialogs(), menuScreen();
@@ -168,5 +168,4 @@ function removeElementOnKey() {
 
 function closeAllDialogs() {
   closeDialogs();
-  hideOptions();
 }

@@ -1,173 +1,12 @@
 // UI module to control the options (preferences)
 "use strict";
 
-// Resolutions - Width, Height
-const ultraRes = [3840,2160];
-const superRes = [2880,1620];
-const highRes = [1920,1080];
-const medRes = [1080,720];
-const lowRes = [720,480];
-const shtRes = [480,320];
-const custonRes = [,];
-
-if (resolutionInput == "ultraRes") {
-  rs = ultraRes;
-} else if (resolutionInput == "superRes") {
-  rs = superRes;
-} else if (resolutionInput == "highRes") {
-  rs = highRes;
-} else if (resolutionInput == "medRes") {
-  rs = medRes;
-} else if (resolutionInput == "lowRes") {
-  rs = lowRes;
-} else if (resolutionInput == "shtRes") {
-  rs = shtRes;
-} else if (resolutionInput == "customRes") {
-  rs = customRes;
-};
-
-let rs = medRes;
-
-// Map Sizes - Width, Height, Cell Density
-const giantSize = [4320,2160,80];
-const hugeSize = [2880,1440,60];
-const largeSize = [2160,1080,50];
-const standardSize = [1920,960,40];
-const mediumSize = [1440,720,30];
-const smallSize = [1080,480,20];
-const tinySize = [720,360,10];
-const customSize = [,,];
-
-if (mapSizeInput == "giantSize") {
-  ms = giantSize;
-} else if (mapSizeInput == "hugeSize") {
-  ms = hugeSize;
-} else if (mapSizeInput == "largeSize") {
-  ms = largeSize;
-} else if (mapSizeInput == "standardSize") {
-  ms = standardSize;
-} else if (mapSizeInput == "mediumSize") {
-  ms = mediumSize;
-} else if (mapSizeInput == "smallSize") {
-  ms = smallSize;
-} else if (mapSizeInput == "tinySize") {
-  ms = tinySize;
-} else if (mapSizeInput == "customSize") {
-  ms = customSize;
-};
-
-let ms = standardSize;
-
-
-// voronoi graph extension, cannot be changed after generation
-let graphWidth = +ms[0];
-let graphHeight = +ms[1];
-let cellsDesired = +ms[2];
-
-// svg canvas resolution, can be changed
-let svgWidth = graphWidth;
-let svgHeight = graphHeight;
-
-function setResolution() {
-  document.getElementById("html").style.width = rs[0];
-  document.getElementById("html").style.height = rs[1];
-  const zoomMin = (rs[0]/ms[0]);
-  zoomExtentMin.value = zoomMin;
-  const zoomMax = +zoomExtentMax.value;
-
-    zoom.translateExtent([
-      [(-10), 0],
-      [(ms[0] + 10), (ms[1])]
-    ])
-    .scaleExtent([zoomMin, zoomMax]);
-}
-
+const THEME_COLOR = "#ccab1eff";
 
 $("#optionsContainer").draggable({handle: ".drag-trigger", snap: "svg", snapMode: "both"});
 $("#exitCustomization").draggable({handle: "div"});
 $("#mapLayers").disableSelection();
 
-// remove glow if tip is aknowledged
-if (stored("disable_click_arrow_tooltip")) {
-  clearMainTip();
-  optionsTrigger.classList.remove("glow");
-  azazelsden.classList.remove("glow");
-}
-
-// Show options pane on trigger click
-function showOptions(event) {
-  if (!stored("disable_click_arrow_tooltip")) {
-    clearMainTip();
-    localStorage.setItem("disable_click_arrow_tooltip", true);
-    azazelsden.classList.remove("glow");
-    optionsTrigger.classList.remove("glow");
-  }
-  byId("options").style.display = "block";
-  optionsTrigger.style.display = "none";
-  azazelsden.style.display = "none";
-  if (event) event.stopPropagation();
-}
-
-// Hide options pane on trigger click
-function hideOptions(event) {
-  byId("options").style.display = "none";
-  optionsContainer.style.display = "block";
-  optionsTrigger.style.display = "block";
-  azazelsden.style.display = "block";
-  if (event) event.stopPropagation();
-}
-
-// To toggle options on hotkey press
-function toggleOptions(event) {
-  if (byId("options").style.display === "none") showOptions(event);
-  else hideOptions(event);
-}
-
-// Toggle "New Map!" pane on hover
-optionsTrigger.addEventListener("mouseenter", function () {
-    if (optionsTrigger.classList.contains("glow")) return;
-    if (byId("options").style.display === "none")
-      regenerate.style.display = "block";
-  }
-);
-
-collapsible.addEventListener("mouseleave", function () {
-    azazelsden.classList.remove("glow");
-    optionsTrigger.classList.remove("glow");
-});
-
-// Activate options tab on click
-//document
-//  .getElementById("options")
-//  .querySelector("div.tab")
-//  .addEventListener("click", function (event) {
-//    if (event.target.tagName !== "BUTTON") return;
-//    const id = event.target.id;
-//    const active = byId("options").querySelector(".tab > button.active");
-//    if (active && id === active.id) return; // already active tab is clicked
-//
-//    if (active) active.classList.remove("active");
-//    byId(id).classList.add("active");
-//    document
-//      .getElementById("options")
-//      .querySelectorAll(".tabcontent")
-//      .forEach(e => (e.style.display = "none"));
-//
-//    if (id === "layersTab") {
-//      layersContent.style.display = "block";
-//    } else if (id === "styleTab") {
-//      styleContent.style.display = "block";
-//      selectStyleElement();
-//    } else if (id === "optionsTab") {
-//      optionsContent.style.display = "block";
-//    } else if (id === "regenTab") {
-//      customization === 1 ? (customizationMenu.style.display = "block") : (regenContent.style.display = "block");
-//    } else if (id === "toolsTab") {
-//      customization === 1 ? (customizationMenu.style.display = "block") : (toolsContent.style.display = "block");
-//    } else if (id === "aboutTab") {
-//      aboutContent.style.display = "block";
-//    }
-//  });
 
 // show popup with a list of Patreon supportes (updated manually)
 async function showSupporters() {
@@ -258,8 +97,7 @@ optionsContent.addEventListener("click", event => {
 
 function mapSizeInputChange() {
   fitMapToScreen();
-  localStorage.setItem("mapWidth", ms[0]);
-  localStorage.setItem("mapHeight", ms[1]);
+  localStorage.setItem("mapSize", ms);
 
   const tooWide = +ms[0] > window.innerWidth;
   const tooHigh = +ms[1] > window.innerHeight;
@@ -278,6 +116,7 @@ function restoreDefaultCanvasSize() {
   fitMapToScreen();
 }
 
+
 // on map creation
 function applyGraphSize() {
   graphWidth = +ms[0];
@@ -291,22 +130,21 @@ function applyGraphSize() {
   defs.select("mask#water > rect").attr("width", graphWidth).attr("height", graphHeight);
 }
 
+function setResolution() {
+  localStorage.setItem("resolutionSize", rs);
+  document.getElementById("html").style.width = rs[0];
+  document.getElementById("html").style.height = rs[1];
+  svgWidth = +rs[0];
+  svgHeight = +rs[1];
+  svg.attr("width", svgWidth).attr("height", svgHeight);
+  zoomExtentMin.value = zoomMin;
+  translateExtent;
+  scaleExtent;
+}
+
 // on generate, on load, on resize, on canvas size change
 function fitMapToScreen() {
-  svgWidth = Math.min(+ms[0], 1920);
-  svgHeight = Math.min(+ms[1], 1080);
-  svg.attr("width", svgWidth).attr("height", svgHeight);
-
-  const zoomMin = (rs[0]/ms[0]);
-  zoomExtentMin.value = zoomMin;
-  const zoomMax = +zoomExtentMax.value;
-
-    zoom.translateExtent([
-      [(-10), 0],
-      [(ms[0] + 10), (ms[1])]
-    ])
-    .scaleExtent([zoomMin, zoomMax]);
-
+  setResolution()
   fitScaleBar(scaleBar, svgWidth, svgHeight);
   if (window.fitLegendBox) fitLegendBox();
 }
@@ -497,7 +335,6 @@ function changeTooltipSize(value) {
   tooltip.style.fontSize = `calc(${value}px + 0.5vw)`;
 }
 
-const THEME_COLOR = "#ccab1eff";
 function restoreDefaultThemeColor() {
   localStorage.removeItem("themeColor");
   changeDialogsTheme(THEME_COLOR, transparencyInput.value);
@@ -596,9 +433,9 @@ function changeZoomExtent(value) {
 }
 
 function restoreDefaultZoomExtent() {
-  zoomExtentMin.value = (ms[0]/rs[0]);
-  zoomExtentMax.value = 40;
-  zoom.scaleExtent([(ms[0]/rs[0]), 40]).scaleTo(svg, 1);
+  zoomExtentMin.value = zoomMin;
+  zoomExtentMax.value = zoomMax;
+  scaleExtent.scaleTo(svg, 1);
 }
 
 // restore options stored in localStorage
