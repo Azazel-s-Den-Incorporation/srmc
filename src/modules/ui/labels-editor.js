@@ -8,7 +8,6 @@ function editLabel() {
   const textPath = tspan.parentNode;
   const text = textPath.parentNode;
   elSelected = d3.select(text).call(d3.drag().on("start", dragLabel)).classed("draggable", true);
-  viewbox.on("touchmove mousemove", showEditorTips);
 
   $("#labelEditor").dialog({
     title: "Edit Label",

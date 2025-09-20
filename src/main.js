@@ -1,5 +1,5 @@
 "use strict";
-
+// import logo from '/srmc/assets/images/logo-universal.png';
 
 // Azazel Mango (). Florida, USA, 2025. MIT License.
 // https://github.com/-
@@ -28,7 +28,7 @@ const UINT32_MAX = 4294967295;
 
 if (PRODUCTION && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(err => {
+    navigator.serviceWorker.register("/srmc/frontend/src/sw.js").catch(err => {
       console.error("ServiceWorker registration failed: ", err);
     });
   });
@@ -37,7 +37,7 @@ if (PRODUCTION && "serviceWorker" in navigator) {
     "beforeinstallprompt",
     async event => {
       event.preventDefault();
-      const Installation = await import("./modules/dynamic/installation.js?v=1.89.19");
+      const Installation = await import("/srmc/frontend/src/modules/dynamic/installation.js");
       Installation.init(event);
     },
     {once: true}
@@ -240,6 +240,7 @@ oceanLayers
   .attr("height", graphHeight);
 
 document.addEventListener("DOMContentLoaded", async () => {
+  TIME && console.time("Initilization");
   if (!location.hostname) {
     const wiki = "https://github.com/Azgaar/Fantasy-Map-Generator/wiki/Run-FMG-locally";
     alertMessage.innerHTML = /* html */ `Fantasy Map Generator cannot run serverless. Follow the <a href="${wiki}" target="_blank">instructions</a> on how you can easily run a local web-server`;
@@ -279,6 +280,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     restoreDefaultEvents(); // apply default viewbox events
     initiateAutosave();
     loadedComplete = true;
+    TIME && console.timeEnd("Initilization");
   };
   // Developer Mode Actions on Load
   if (devmode == true) {

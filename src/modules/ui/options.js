@@ -69,7 +69,8 @@ let svgWidth = graphWidth;
 let svgHeight = graphHeight;
 
 function setResolution() {
-  window.resizeTo(rs[0], rs[1]);
+  document.getElementById("html").style.width = rs[0];
+  document.getElementById("html").style.height = rs[1];
   const zoomMin = (rs[0]/ms[0]);
   zoomExtentMin.value = zoomMin;
   const zoomMax = +zoomExtentMax.value;

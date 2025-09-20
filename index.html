@@ -22,10 +22,10 @@
       gtag("config", "G-VJL3J26W7R");
     </script>
 <!-- 
-    <link rel="icon" type="image/png" href="images/icons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="images/icons/favicon-16x16.png" sizes="16x16" /> -->
+    <link rel="icon" type="image/png" href="/srmc/frontend/src/images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/srmc/frontend/src/images/icons/favicon-16x16.png" sizes="16x16" /> -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="512x512" />
-    <link rel="apple-touch-icon" href="images/icons/maskable_icon_x192.png" />
+    <link rel="apple-touch-icon" href="/srmc/frontend/src/images/icons/maskable_icon_x192.png" />
     <link rel="canonical" href="https://azgaar.github.io/Fantasy-Map-Generator/" />
     <link rel="manifest" href="manifest.webmanifest" />
     
@@ -138,11 +138,11 @@
       }
     </style>
 
-    <link rel="preload" href="index.css?v=1.108.6" as="style" onload="this.onload=null; this.rel='stylesheet'" />
-    <link rel="preload" href="icons.css" as="style" onload="this.onload=null; this.rel='stylesheet'" />
+    <link rel="preload" href="/srmc/frontend/src/index.css" as="style" onload="this.onload=null; this.rel='stylesheet'" />
+    <link rel="preload" href="/srmc/frontend/src/icons.css" as="style" onload="this.onload=null; this.rel='stylesheet'" />
     <link
       rel="preload"
-      href="libs/jquery-ui.css?v=1.106.5"
+      href="/srmc/frontend/src/libs/jquery-ui.css"
       as="style"
       onload="this.onload=null; this.rel='stylesheet'"
     />
@@ -167,9 +167,9 @@
         </div>
 
         <div id="music-box">
-          <audio id="menu-music" name="menu-music" autoplay loop src="/audio/music/azmaptheme.mp3" style="display: none;"></audio>
-          <audio id="music" name="ambient-theme-1" loop src="/audio/music/azmaptheme.mp3" style="display: none;"></audio>
-          <audio id="sfx" name="clicksound" src="/audio/sfx/click.mp3" style="display: none;"></audio>
+          <audio id="menu-music" name="menu-music" autoplay loop src="/srmc/frontend/src/audio/music/azmaptheme.mp3" style="display: none;"></audio>
+          <audio id="music" name="ambient-theme-1" loop src="/srmc/frontend/src/audio/music/azmaptheme.mp3" style="display: none;"></audio>
+          <audio id="sfx" name="clicksound" src="/srmc/frontend/src/audio/sfx/click.mp3" style="display: none;"></audio>
         </div>
 
         <div id="time-box">
@@ -405,7 +405,7 @@
             </g>
 
             <pattern id="oceanic" width="100" height="100" patternUnits="userSpaceOnUse">
-              <image id="oceanicPattern" href="./images/pattern1.png" opacity="0.2"></image>
+              <image id="oceanicPattern" href="/srmc/frontend/src/images/pattern1.png" opacity="0.2"></image>
             </pattern>
 
             <mask id="vignette-mask">
@@ -536,7 +536,7 @@
                 onclick="toggleTexture(event)"
                 style="display: none;"
               >
-              <img loading="eager" src="/images/icons/textures.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/textures.png">
               </li>
               <li
                 id="toggleHeight"
@@ -544,7 +544,7 @@
                 data-shortcut="H"
                 onclick="toggleHeight(event)"
               >
-              <img loading="eager" src="/images/icons/heightmap.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/heightmap.png">
               </li>
               <li
                 id="toggleBiomes"
@@ -552,7 +552,7 @@
                 data-shortcut="B"
                 onclick="toggleBiomes(event)"
               >
-              <img loading="eager" src="/images/icons/biomes.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/biomes.png">
               </li>
               <li
                 id="toggleCells"
@@ -560,7 +560,7 @@
                 data-shortcut="E"
                 onclick="toggleCells(event)"
               >
-              <img loading="eager" src="/images/icons/cells.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/cells.png">
               </li>
               <li
                 id="toggleGrid"
@@ -568,7 +568,7 @@
                 data-shortcut="G"
                 onclick="toggleGrid(event)"
               >
-              <img loading="eager" src="/images/icons/grid.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/grid.png">
               </li>
               <li
                 id="toggleCoordinates"
@@ -576,7 +576,7 @@
                 data-shortcut="O"
                 onclick="toggleCoordinates(event)"
               >
-              <img loading="eager" src="/images/icons/coords.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/coords.png">
               </li>
               <li
                 id="toggleCompass"
@@ -585,7 +585,7 @@
                 onclick="toggleCompass(event)"
                 style="display: none;"
               >
-              <img loading="eager" src="/images/icons/windrose.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/windrose.png">
               </li>
               <li
                 id="toggleRivers"
@@ -593,7 +593,7 @@
                 data-shortcut="V"
                 onclick="toggleRivers(event)"
               >
-              <img loading="eager" src="/images/icons/rivers.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/rivers.png">
               </li>
               <li
                 id="toggleRelief"
@@ -601,7 +601,7 @@
                 data-shortcut="F"
                 onclick="toggleRelief(event)"
               >
-              <img loading="eager" src="/images/icons/relief.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/relief.png">
               </li>
               <li
                 id="toggleReligions"
@@ -609,7 +609,7 @@
                 data-shortcut="R"
                 onclick="toggleReligions(event)"
               >
-              <img loading="eager" src="/images/icons/religion.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/religion.png">
               </li>
               <li
                 id="toggleCultures"
@@ -617,7 +617,7 @@
                 data-shortcut="C"
                 onclick="toggleCultures(event)"
               >
-              <img loading="eager" src="/images/icons/cultures.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/cultures.png">
               </li>
               <li
                 id="toggleStates"
@@ -625,7 +625,7 @@
                 data-shortcut="S"
                 onclick="toggleStates(event)"
               >
-              <img loading="eager" src="/images/icons/states.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/states.png">
               </li>
               <li
                 id="toggleProvinces"
@@ -633,7 +633,7 @@
                 data-shortcut="P"
                 onclick="toggleProvinces(event)"
               >
-              <img loading="eager" src="/images/icons/provinces.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/provinces.png">
               </li>
               <li
                 id="toggleZones"
@@ -641,7 +641,7 @@
                 data-shortcut="Z"
                 onclick="toggleZones(event)"
               >
-              <img loading="eager" src="/images/icons/zones.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/zones.png">
               </li>
               <li
                 id="toggleBorders"
@@ -649,7 +649,7 @@
                 data-shortcut="D"
                 onclick="toggleBorders(event)"
               >
-              <img loading="eager" src="/images/icons/borders.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/borders.png">
               </li>
               <li
                 id="toggleRoutes"
@@ -657,7 +657,7 @@
                 data-shortcut="U"
                 onclick="toggleRoutes(event)"
               >
-              <img loading="eager" src="/images/icons/routes.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/routes.png">
               </li>
               <li
                 id="toggleTemperature"
@@ -665,7 +665,7 @@
                 data-shortcut="T"
                 onclick="toggleTemperature(event)"
               >
-              <img loading="eager" src="/images/icons/temperature.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/temperature.png">
               </li>
               <li
                 id="togglePopulation"
@@ -673,7 +673,7 @@
                 data-shortcut="N"
                 onclick="togglePopulation(event)"
               >
-              <img loading="eager" src="/images/icons/population.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/population.png">
               </li>
               <li
                 id="toggleIce"
@@ -681,7 +681,7 @@
                 data-shortcut="J"
                 onclick="toggleIce(event)"
               >
-              <img loading="eager" src="/images/icons/ice.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/ice.png">
               </li>
               <li
                 id="togglePrecipitation"
@@ -689,7 +689,7 @@
                 data-shortcut="A"
                 onclick="togglePrecipitation(event)"
               >
-              <img loading="eager" src="/images/icons/precipitation.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/precipitation.png">
               </li>
               <li
                 id="toggleEmblems"
@@ -697,7 +697,7 @@
                 data-shortcut="Y"
                 onclick="toggleEmblems(event)"
               >
-              <img loading="eager" src="/images/icons/emblems.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/emblems.png">
               </li>
               <li
                 id="toggleLabels"
@@ -705,7 +705,7 @@
                 data-shortcut="L"
                 onclick="toggleLabels(event)"
               >
-              <img loading="eager" src="/images/icons/labels.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/labels.png">
               </li>
               <li
                 id="toggleBurgIcons"
@@ -713,7 +713,7 @@
                 data-shortcut="I"
                 onclick="toggleBurgIcons(event)"
               >
-              <img loading="eager" src="/images/icons/icons.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/icons.png">
               </li>
               <li
                 id="toggleMilitary"
@@ -721,7 +721,7 @@
                 data-shortcut="M"
                 onclick="toggleMilitary(event)"
               >
-              <img loading="eager" src="/images/icons/military.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/military.png">
               </li>
               <li
                 id="toggleMarkers"
@@ -729,7 +729,7 @@
                 data-shortcut="K"
                 onclick="toggleMarkers(event)"
               >
-              <img loading="eager" src="/images/icons/markers.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/markers.png">
               </li>
               <li
                 id="toggleRulers"
@@ -737,7 +737,7 @@
                 data-shortcut="= (equal sign)"
                 onclick="toggleRulers(event)"
               >
-              <img loading="eager" src="/images/icons/rulers.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/rulers.png">
               </li>
               <li
                 id="toggleScaleBar"
@@ -746,7 +746,7 @@
                 onclick="toggleScaleBar(event)"
                 class="solid"
               >
-              <img loading="eager" src="/images/icons/scalebar.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/scalebar.png">
               </li>
               <li
                 id="toggleVignette"
@@ -756,7 +756,7 @@
                 class="solid"
                 style="display: none;"
               >
-              <img loading="eager" src="/images/icons/vignette.png">
+              <img loading="eager" src="/srmc/frontend/src/images/icons/vignette.png">
               </li>
             </ul>
           </div>
@@ -4735,7 +4735,7 @@
       <div id="main-menu-container">
         <div id="main-menu-title-container">
           <div id="titleName">Azazel Mango's</div>
-          <img src="/title.png"/>
+          <img src="/srmc/frontend/src/title.png"/>
           <div id="versionText">‎ ‎</div>
         </div>
         <div id="menu">
@@ -8161,130 +8161,130 @@
       </defs>
     </svg>
     
-    <script src="components/fill-box.js"></script>
-    <script src="components/slider-input.js"></script>
+    <script src="/srmc/frontend/src/components/fill-box.js"></script>
+    <script src="/srmc/frontend/src/components/slider-input.js"></script>
 
-    <script src="libs/jquery-3.1.1.min.js"></script>
-    <script src="libs/jquery-ui.min.js"></script>
-    <script src="versioning.js"></script>
-    <script src="libs/d3.min.js"></script>
-    <script src="libs/flatqueue.js"></script>
-    <script src="libs/delaunator.min.js"></script>
-    <script src="libs/indexedDB.js?v=1.99.00"></script>
+    <script src="/srmc/frontend/src/libs/jquery-3.1.1.min.js"></script>
+    <script src="/srmc/frontend/src/libs/jquery-ui.min.js"></script>
+    <script src="/srmc/frontend/src/versioning.js"></script>
+    <script src="/srmc/frontend/src/libs/d3.min.js"></script>
+    <script src="/srmc/frontend/src/libs/flatqueue.js"></script>
+    <script src="/srmc/frontend/src/libs/delaunator.min.js"></script>
+    <script src="/srmc/frontend/src/libs/indexedDB.js"></script>
 
-    <script src="utils/shorthands.js?v=1.106.0"></script>
-    <script src="utils/commonUtils.js?v=1.103.0"></script>
-    <script src="utils/arrayUtils.js?v=1.99.00"></script>
-    <script src="utils/functionUtils.js?v=1.99.00"></script>
-    <script src="utils/colorUtils.js?v=1.99.00"></script>
-    <script src="utils/graphUtils.js?v=1.106.0"></script>
-    <script src="utils/nodeUtils.js?v=1.99.00"></script>
-    <script src="utils/numberUtils.js?v=1.99.00"></script>
-    <script src="utils/polyfills.js?v=1.99.00"></script>
-    <script src="utils/probabilityUtils.js?v=1.99.05"></script>
-    <script src="utils/stringUtils.js?v=1.106.0"></script>
-    <script src="utils/languageUtils.js?v=1.99.00"></script>
-    <script src="utils/unitUtils.js?v=1.99.00"></script>
-    <script src="utils/pathUtils.js?v=1.106.0"></script>
-    <script defer src="utils/debugUtils.js?v=1.106.0"></script>
+    <script src="/srmc/frontend/src/utils/shorthands.js"></script>
+    <script src="/srmc/frontend/src/utils/commonUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/arrayUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/functionUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/colorUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/graphUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/nodeUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/numberUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/polyfills.js"></script>
+    <script src="/srmc/frontend/src/utils/probabilityUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/stringUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/languageUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/unitUtils.js"></script>
+    <script src="/srmc/frontend/src/utils/pathUtils.js"></script>
+    <script defer src="/srmc/frontend/src/utils/debugUtils.js"></script>
 
-    <script src="modules/time.js"></script>
-    <script src="modules/players.js"></script>
-    <script src="modules/states.js"></script>
-    <script src="modules/burgs.js"></script>
-    <script src="modules/audio.js"></script>
-    <script src="modules/voronoi.js"></script>
-    <script src="config/heightmap-templates.js"></script>
-    <script src="config/precreated-heightmaps.js"></script>
-    <script src="modules/heightmap-generator.js?v=1.99.00"></script>
-    <script src="modules/features.js?v=1.104.0"></script>
-    <script src="modules/ocean-layers.js?v=1.108.4"></script>
-    <script src="modules/river-generator.js?v=1.106.7"></script>
-    <script src="modules/lakes.js?v=1.99.00"></script>
-    <script src="modules/biomes.js?v=1.99.00"></script>
-    <script src="modules/names-generator.js?v=1.105.11"></script>
-    <script src="modules/cultures-generator.js?v=1.106.0"></script>
-    <script src="modules/burgs-and-states.js?v=1.106.0"></script>
-    <script src="modules/provinces-generator.js?v=1.106.0"></script>
-    <script src="modules/routes-generator.js?v=1.106.0"></script>
-    <script src="modules/religions-generator.js?v=1.106.0"></script>
-    <script src="modules/military-generator.js?v=1.107.0"></script>
-    <script src="modules/markers-generator.js?v=1.107.0"></script>
-    <script src="modules/zones-generator.js?v=1.106.0"></script>
-    <script src="modules/coa-generator.js?v=1.99.00"></script>
-    <script src="modules/resample.js?v=1.106.4"></script>
-    <script src="libs/alea.min.js?v1.105.0"></script>
-    <script src="libs/polylabel.min.js?v1.105.0"></script>
-    <script src="libs/lineclip.min.js?v1.105.0"></script>
-    <script src="libs/simplify.js?v1.105.6"></script>
-    <script src="modules/fonts.js?v=1.99.03"></script>
-    <script src="modules/ui/layers.js?v=1.108.4"></script>
-    <script src="modules/ui/measurers.js?v=1.99.00"></script>
-    <script src="modules/ui/style-presets.js?v=1.100.00"></script>
-    <script src="modules/ui/general.js?v=1.100.00"></script>
-    <script src="modules/ui/options.js?v=1.106.2"></script>
-    <script src="main.js?v=1.108.1"></script>
+    <script src="/srmc/frontend/src/modules/time.js"></script>
+    <script src="/srmc/frontend/src/modules/players.js"></script>
+    <script src="/srmc/frontend/src/modules/states.js"></script>
+    <script src="/srmc/frontend/src/modules/burgs.js"></script>
+    <script src="/srmc/frontend/src/modules/audio.js"></script>
+    <script src="/srmc/frontend/src/modules/voronoi.js"></script>
+    <script src="/srmc/frontend/src/config/heightmap-templates.js"></script>
+    <script src="/srmc/frontend/src/config/precreated-heightmaps.js"></script>
+    <script src="/srmc/frontend/src/modules/heightmap-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/features.js"></script>
+    <script src="/srmc/frontend/src/modules/ocean-layers.js"></script>
+    <script src="/srmc/frontend/src/modules/river-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/lakes.js"></script>
+    <script src="/srmc/frontend/src/modules/biomes.js"></script>
+    <script src="/srmc/frontend/src/modules/names-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/cultures-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/burgs-and-states.js"></script>
+    <script src="/srmc/frontend/src/modules/provinces-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/routes-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/religions-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/military-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/markers-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/zones-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/coa-generator.js"></script>
+    <script src="/srmc/frontend/src/modules/resample.js"></script>
+    <script src="/srmc/frontend/src/libs/alea.min.js"></script>
+    <script src="/srmc/frontend/src/libs/polylabel.min.js"></script>
+    <script src="/srmc/frontend/src/libs/lineclip.min.js"></script>
+    <script src="/srmc/frontend/src/libs/simplify.js"></script>
+    <script src="/srmc/frontend/src/modules/fonts.js"></script>
+    <script src="/srmc/frontend/src/modules/ui/layers.js"></script>
+    <script src="/srmc/frontend/src/modules/ui/measurers.js"></script>
+    <script src="/srmc/frontend/src/modules/ui/style-presets.js"></script>
+    <script src="/srmc/frontend/src/modules/ui/general.js"></script>
+    <script src="/srmc/frontend/src/modules/ui/options.js"></script>
+    <script src="/srmc/frontend/src/main.js"></script>
 
-    <script defer src="modules/ui/style.js?v=1.108.4"></script>
-    <script defer src="modules/ui/editors.js?v=1.108.5"></script>
-    <script defer src="modules/ui/tools.js?v=1.108.5"></script>
-    <script defer src="modules/ui/world-configurator.js?v=1.105.4"></script>
-    <script defer src="modules/ui/heightmap-editor.js?v=1.105.2"></script>
-    <script defer src="modules/ui/provinces-editor.js?v=1.108.1"></script>
-    <script defer src="modules/ui/biomes-editor.js?v=1.108.4"></script>
-    <script defer src="modules/ui/namesbase-editor.js?v=1.105.11"></script>
-    <script defer src="modules/ui/elevation-profile.js?v=1.99.00"></script>
-    <script defer src="modules/ui/temperature-graph.js?v=1.106.6"></script>
-    <script defer src="modules/ui/routes-editor.js?v=1.104.3"></script>
-    <script defer src="modules/ui/routes-creator.js?v=1.104.3"></script>
-    <script defer src="modules/ui/route-group-editor.js?v=1.103.8"></script>
-    <script defer src="modules/ui/ice-editor.js?v=1.99.00"></script>
-    <script defer src="modules/ui/lakes-editor.js?v=1.106.0"></script>
-    <script defer src="modules/ui/coastline-editor.js?v=1.99.00"></script>
-    <script defer src="modules/ui/labels-editor.js?v=1.106.0"></script>
-    <script defer src="modules/ui/rivers-editor.js?v=1.106.0"></script>
-    <script defer src="modules/ui/rivers-creator.js?v=1.106.0"></script>
-    <script defer src="modules/ui/relief-editor.js?v=1.99.00"></script>
-    <script defer src="modules/ui/burg-editor.js?v=1.106.6"></script>
-    <script defer src="modules/ui/units-editor.js?v=1.104.0"></script>
-    <script defer src="modules/ui/notes-editor.js?v=1.107.3"></script>
-    <script defer src="modules/ui/ai-generator.js?v=1.105.22"></script>
-    <script defer src="modules/ui/diplomacy-editor.js?v=1.99.00"></script>
-    <script defer src="modules/ui/zones-editor.js?v=1.105.20"></script>
-    <script defer src="modules/ui/burgs-overview.js?v=1.105.15"></script>
-    <script defer src="modules/ui/routes-overview.js?v=1.104.3"></script>
-    <script defer src="modules/ui/rivers-overview.js?v=1.99.00"></script>
-    <script defer src="modules/ui/military-overview.js?v=1.108.5"></script>
-    <script defer src="modules/ui/regiments-overview.js?v=1.108.5"></script>
-    <script defer src="modules/ui/markers-overview.js?v=1.108.5"></script>
-    <script defer src="modules/ui/regiment-editor.js?v=1.108.5"></script>
-    <script defer src="modules/ui/battle-screen.js?v=1.108.5"></script>
-    <script defer src="modules/ui/emblems-editor.js?v=1.99.00"></script>
-    <script defer src="modules/ui/markers-editor.js?v=1.108.5"></script>
-    <script defer src="modules/ui/3d.js?v=1.99.00"></script>
-    <script defer src="modules/ui/submap-tool.js?v=1.106.2"></script>
-    <script defer src="modules/ui/transform-tool.js?v=1.106.2"></script>
-    <script defer src="modules/ui/hotkeys.js?v=1.104.0"></script>
-    <script defer src="modules/coa-renderer.js?v=1.99.00"></script>
-    <script defer src="libs/rgbquant.min.js"></script>
-    <script defer src="libs/jquery.ui.touch-punch.min.js"></script>
-    <script defer src="modules/io/save.js?v=1.107.4"></script>
-    <script defer src="modules/io/load.js?v=1.108.6"></script>
-    <script defer src="modules/io/cloud.js?v=1.106.0"></script>
-    <script defer src="modules/io/export.js?v=1.100.00"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/style.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/editors.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/tools.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/world-configurator.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/heightmap-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/provinces-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/biomes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/namesbase-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/elevation-profile.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/temperature-graph.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/routes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/routes-creator.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/route-group-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/ice-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/lakes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/coastline-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/labels-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/rivers-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/rivers-creator.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/relief-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/burg-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/units-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/notes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/ai-generator.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/diplomacy-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/zones-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/burgs-overview.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/routes-overview.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/rivers-overview.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/military-overview.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/regiments-overview.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/markers-overview.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/regiment-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/battle-screen.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/emblems-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/markers-editor.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/3d.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/submap-tool.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/transform-tool.js"></script>
+    <script defer src="/srmc/frontend/src/modules/ui/hotkeys.js"></script>
+    <script defer src="/srmc/frontend/src/modules/coa-renderer.js"></script>
+    <script defer src="/srmc/frontend/src/libs/rgbquant.min.js"></script>
+    <script defer src="/srmc/frontend/src/libs/jquery.ui.touch-punch.min.js"></script>
+    <script defer src="/srmc/frontend/src/modules/io/save.js"></script>
+    <script defer src="/srmc/frontend/src/modules/io/load.js"></script>
+    <script defer src="/srmc/frontend/src/modules/io/cloud.js"></script>
+    <script defer src="/srmc/frontend/src/modules/io/export.js"></script>
 
-    <script defer src="modules/renderers/draw-features.js?v=1.108.2"></script>
-    <script defer src="modules/renderers/draw-borders.js?v=1.104.0"></script>
-    <script defer src="modules/renderers/draw-heightmap.js?v=1.104.0"></script>
-    <script defer src="modules/renderers/draw-markers.js?v=1.108.5"></script>
-    <script defer src="modules/renderers/draw-scalebar.js?v=1.108.1"></script>
-    <script defer src="modules/renderers/draw-temperature.js?v=1.104.0"></script>
-    <script defer src="modules/renderers/draw-emblems.js?v=1.104.0"></script>
-    <script defer src="modules/renderers/draw-military.js?v=1.108.5"></script>
-    <script defer src="modules/renderers/draw-state-labels.js?v=1.108.1"></script>
-    <script defer src="modules/renderers/draw-burg-labels.js?v=1.108.1"></script>
-    <script defer src="modules/renderers/draw-burg-icons.js?v=1.104.0"></script>
-    <script defer src="modules/renderers/draw-relief-icons.js?v=1.108.4"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-features.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-borders.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-heightmap.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-markers.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-scalebar.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-temperature.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-emblems.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-military.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-state-labels.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-burg-labels.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-burg-icons.js"></script>
+    <script defer src="/srmc/frontend/src/modules/renderers/draw-relief-icons.js"></script>
   </div>
   </body>
 </html>
