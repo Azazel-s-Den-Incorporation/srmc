@@ -63,6 +63,7 @@ optionsContent.addEventListener("input", event => {
   else if (id === "emblemShape") changeEmblemShape(value);
   else if (id === "tooltipSize") changeTooltipSize(value);
   else if (id === "themeHueInput") changeThemeHue(value);
+  else if (id === "resolutionInput") setResolution();
   else if (id === "themeColorInput") changeDialogsTheme(themeColorInput.value, transparencyInput.value);
   else if (id === "transparencyInput") changeDialogsTheme(themeColorInput.value, value);
 });
@@ -77,7 +78,6 @@ optionsContent.addEventListener("change", event => {
   else if (id === "monthInput") changeMonth();
   else if (id === "yearInput") changeYear();
   else if (id === "eraInput") changeEra();
-  else if (id === "resolutionInput") setResolution();
   else if (id === "stateLabelsModeInput") options.stateLabelsMode = value;
 });
 
@@ -94,61 +94,6 @@ optionsContent.addEventListener("click", event => {
   else if (id === "loadGoogleTranslateButton") loadGoogleTranslate();
   else if (id === "resetLanguage") resetLanguage();
 });
-
-function mapSizeInputChange() {
-  fitMapToScreen();
-  localStorage.setItem("mapSize", ms);
-
-  const tooWide = +ms[0] > window.innerWidth;
-  const tooHigh = +ms[1] > window.innerHeight;
-
-  if (tooWide || tooHigh) {
-    const message = `Canvas size is larger than window size (${window.innerWidth} x ${window.innerHeight}). It can affect performance`;
-    tip(message, "warn", 4000);
-  }
-}
-
-function restoreDefaultCanvasSize() {
-  // 1920p default size
-  mapSizeInput.value = standardSize;
-  localStorage.removeItem("mapHeight");
-  localStorage.removeItem("mapWidth");
-  fitMapToScreen();
-}
-
-
-// on map creation
-function applyGraphSize() {
-  graphWidth = +ms[0];
-  graphHeight = +ms[1];
-
-  landmass.select("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
-  oceanPattern.select("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
-  oceanLayers.select("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
-  fogging.selectAll("rect").attr("x", 0).attr("y", 0).attr("width", graphWidth).attr("height", graphHeight);
-  defs.select("mask#fog > rect").attr("width", graphWidth).attr("height", graphHeight);
-  defs.select("mask#water > rect").attr("width", graphWidth).attr("height", graphHeight);
-}
-
-function setResolution() {
-  localStorage.setItem("resolutionSize", rs);
-  document.getElementById("html").style.width = rs[0];
-  document.getElementById("html").style.height = rs[1];
-  svgWidth = +rs[0];
-  svgHeight = +rs[1];
-  svg.attr("width", svgWidth).attr("height", svgHeight);
-  zoomExtentMin.value = zoomMin;
-  translateExtent;
-  scaleExtent;
-}
-
-// on generate, on load, on resize, on canvas size change
-function fitMapToScreen() {
-  setResolution()
-  fitScaleBar(scaleBar, svgWidth, svgHeight);
-  if (window.fitLegendBox) fitLegendBox();
-}
-
 
 // add voice options
 const voiceInterval = setInterval(function () {

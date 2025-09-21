@@ -177,8 +177,6 @@
       <div id="map-box">
         <svg
           id="map"
-          width="100%"
-          height="100%"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -5819,7 +5817,7 @@
                 <td></td>
                 <td>Interface size</td>
                 <tr colspan="2">
-                  <select id="resolutionInput" class="paired" data-stored="resolutionSize">
+                  <select id="resolutionInput" class="paired" data-stored="resolutionSize" onchange="setResolution()">
                     <option id="ultraRes" data-tip="3840 x 2160 pixels">4K (3840p)</option>
                     <option id="superRes" data-tip="2880 x 1620 pixels">2K (2880p)</option>
                     <option id="highRes" data-tip="1920 x 960 pixels">1920p</option>

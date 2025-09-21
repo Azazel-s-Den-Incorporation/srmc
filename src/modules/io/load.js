@@ -792,7 +792,7 @@ async function parseLoadedData(data, mapVersion) {
       if (window.restoreDefaultEvents) restoreDefaultEvents();
       focusOn(); // based on searchParams focus on point, cell or burg
       invokeActiveZooming();
-      fitMapToScreen();
+      setResolution;
     }
 
     WARN && console.warn(`TOTAL: ${rn((performance.now() - uploadMap.timeStart) / 1000, 2)}s`);

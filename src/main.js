@@ -174,33 +174,6 @@ let color = d3.scaleSequential(d3.interpolateSpectral); // default color scheme
 const lineGen = d3.line().curve(d3.curveBasis); // d3 line generator with default curve interpolation
 
 
-// Resolutions - Width, Height
-const ultraRes = [3840,2160];
-const superRes = [2880,1620];
-const highRes = [1920,1080];
-const medRes = [1080,720];
-const lowRes = [720,480];
-const shtRes = [480,320];
-const custonRes = [,];
-
-if (resolutionInput == "ultraRes") {
-  rs = ultraRes;
-} else if (resolutionInput == "superRes") {
-  rs = superRes;
-} else if (resolutionInput == "highRes") {
-  rs = highRes;
-} else if (resolutionInput == "medRes") {
-  rs = medRes;
-} else if (resolutionInput == "lowRes") {
-  rs = lowRes;
-} else if (resolutionInput == "shtRes") {
-  rs = shtRes;
-} else if (resolutionInput == "customRes") {
-  rs = customRes;
-};
-
-let rs = medRes;
-
 // Map Sizes - Width, Height, Cell Density
 const giantSize = [4320,2160,80];
 const hugeSize = [2880,1440,60];
@@ -211,25 +184,111 @@ const smallSize = [1080,480,20];
 const tinySize = [720,360,10];
 const customSize = [,,];
 
-if (mapSizeInput == "giantSize") {
-  ms = giantSize;
-} else if (mapSizeInput == "hugeSize") {
-  ms = hugeSize;
-} else if (mapSizeInput == "largeSize") {
-  ms = largeSize;
-} else if (mapSizeInput == "standardSize") {
-  ms = standardSize;
-} else if (mapSizeInput == "mediumSize") {
-  ms = mediumSize;
-} else if (mapSizeInput == "smallSize") {
-  ms = smallSize;
-} else if (mapSizeInput == "tinySize") {
-  ms = tinySize;
-} else if (mapSizeInput == "customSize") {
-  ms = customSize;
+function msGet() {
+  if (byId("mapSizeInput").selectedIndex == 0) {
+    ms = giantSize;
+  } else if (byId("mapSizeInput").selectedIndex == 1) {
+    ms = hugeSize;
+  } else if (byId("mapSizeInput").selectedIndex == 2) {
+    ms = largeSize;
+  } else if (byId("mapSizeInput").selectedIndex == 3) {
+    ms = standardSize;
+  } else if (byId("mapSizeInput").selectedIndex == 4) {
+    ms = mediumSize;
+  } else if (byId("mapSizeInput").selectedIndex == 5) {
+    ms = smallSize;
+  } else if (byId("mapSizeInput").selectedIndex == 6) {
+    ms = tinySize;
+  } else if (byId("mapSizeInput").selectedIndex == 7) {
+    ms = customSize;
+  };
 };
+let ms;
+msGet();
 
-let ms = standardSize;
+// Resolutions - Width, Height
+const ultraRes = [3840,2160];
+const superRes = [2880,1620];
+const highRes = [1920,1080];
+const medRes = [1080,720];
+const lowRes = [720,480];
+const shtRes = [480,320];
+const custonRes = [,];
+
+function rsGet() {
+  if (byId("resolutionInput").selectedIndex == 0) {
+    rs = ultraRes;
+  } else if (byId("resolutionInput").selectedIndex == 1) {
+    rs = superRes;
+  } else if (byId("resolutionInput").selectedIndex == 2) {
+    rs = highRes;
+  } else if (byId("resolutionInput").selectedIndex == 3) {
+    rs = medRes;
+  } else if (byId("resolutionInput").selectedIndex == 4) {
+    rs = lowRes;
+  } else if (byId("resolutionInput").selectedIndex == 5) {
+    rs = shtRes;
+  } else if (byId("resolutionInput").selectedIndex == 6) {
+    rs = customRes;
+  };
+};
+let rs;
+rsGet();
+
+
+function mapSizeInputChange() {
+  setResolution;
+  localStorage.setItem("mapSize", ms);
+
+  const tooWide = +ms[0] > window.innerWidth;
+  const tooHigh = +ms[1] > window.innerHeight;
+
+  if (tooWide || tooHigh) {
+    const message = `Canvas size is larger than window size (${window.innerWidth} x ${window.innerHeight}). It can affect performance`;
+    tip(message, "warn", 4000);
+  }
+}
+
+function restoreDefaultCanvasSize() {
+  // 1920p default size
+  mapSizeInput.value = standardSize;
+  localStorage.removeItem("mapHeight");
+  localStorage.removeItem("mapWidth");
+  setResolution;
+}
+
+
+// on generate, on load, on resize, on canvas size change
+function setResolution() {
+  rsGet();
+  msGet();
+  WARN && console.warn("Setting Resolution to " + rs[0]+"x"+rs[1]);
+  localStorage.setItem("resolutionSize", rs);
+  const elUi = [
+    byId("html"),
+    byId("map")
+  ];
+  elUi.forEach(elUi => {elUi.style.width = rs[0],elUi.style.height = rs[1]});
+  svgWidth = rs[0];
+  svgHeight = rs[1];
+  svg.attr("width", svgWidth).attr("height", svgHeight);
+  landmass.select("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
+  oceanPattern.select("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
+  oceanLayers.select("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
+  fogging.selectAll("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
+  defs.select("mask#fog > rect").attr("width", svgWidth).attr("height", svgHeight);
+  defs.select("mask#water > rect").attr("width", svgWidth).attr("height", svgHeight);
+  zoomExtentMin.value = zoomMin;
+  translateExtent;
+  scaleExtent;
+}
+
+// on map creation
+function applyGraphSize() {
+  msGet();
+  graphWidth = +ms[0];
+  graphHeight = +ms[1];
+}
 
 // voronoi graph extension, cannot be changed after generation
 let graphWidth = +ms[0];
@@ -258,9 +317,9 @@ const onZoom = debounce(function () {
 
   handleZoom(isScaleChanged, isPositionChanged);
 }, 50);
-const zoomMin = (( rs[1] / (69 + rs[0]) ) + ( ms[1] / (69 + ms[0]) ))/2;
-const zoomMax = +zoomExtentMax.value;
-const zoom = d3.zoom().scaleExtent([zoomMin, zoomMax]).on("zoom", onZoom);
+let zoomMin = (( rs[1] / (69 + rs[0]) ) + ( ms[1] / (69 + ms[0]) ))/2;
+let zoomMax = 40;
+let zoom = d3.zoom().scaleExtent([zoomMin, zoomMax]).on("zoom", onZoom);
 
 const translateExtent = zoom.translateExtent([
     [(-10), 0],
@@ -560,7 +619,7 @@ async function generateMapOnLoad() {
   await generate(); // generate map
   applyLayersPreset(); // apply saved layers preset and reder layers
   drawLayers();
-  fitMapToScreen();
+  setResolution;
   focusOn(); // based on searchParams focus on point, cell or burg from MFCG
 }
 
@@ -1615,7 +1674,7 @@ const regenerateMap = debounce(async function (options) {
   if (ThreeD.options.isOn) ThreeD.redraw();
   if ($("#worldConfigurator").is(":visible")) editWorld();
 
-  fitMapToScreen();
+  setResolution;
   handleLayersPresetChange("political");
   byId("optionsContainer").style.display = "block";
   byId("optionsTrigger").style.display = "block";

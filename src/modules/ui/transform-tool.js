@@ -133,7 +133,7 @@ async function openTransformTool() {
     const [projection, inverse] = getProjection();
 
     applyGraphSize();
-    fitMapToScreen();
+    setResolution;
     resetZoom(0);
     undraw();
     Resample.process({projection, inverse, scale: 1});

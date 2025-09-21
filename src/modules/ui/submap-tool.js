@@ -50,7 +50,7 @@ function openSubmapTool() {
     const inverse = (x, y) => [x / scale + x0, y / scale + y0];
 
     applyGraphSize();
-    fitMapToScreen();
+    setResolution;
     resetZoom(0);
     undraw();
     Resample.process({projection, inverse, scale});

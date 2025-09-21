@@ -6,7 +6,7 @@ window.addEventListener("resize", function (e) {
   if (stored("mapWidth") && stored("mapHeight")) return;
   mapWidthInput.value = window.innerWidth;
   mapHeightInput.value = window.innerHeight;
-  fitMapToScreen();
+  setResolution;
 });
 
 if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
