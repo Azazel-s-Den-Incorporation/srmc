@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Az Map</title>
+<<<<<<< HEAD
     <meta name="application-name" content="Azmap" />
     <meta name="author" content="Azazel Mango" />
     <meta
       name="description"
       content="Experimental Map game in dev; fork of Azgaar's Fantasy Map Generator."
-    />
-    <meta property="og:url" content="https://azgaar.github.io/Fantasy-Map-Generator" />
-
-    <meta property="og:title" content="Azgaar's Fantasy Map Generator" />
+=======
+    <meta name="application-name" content="Azazel Mango's Sovereignty Rises" />
+    <meta name="author" content="Azazel Mango" />
     <meta
-      property="og:description"
-      content="Free web app that helps fantasy writers, game masters, and cartographers create and edit fantasy maps"
+      name="description"
+      content="A cell based Map game"
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
     />
-    <meta property="og:image" content="images/preview.png" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta property="twitter:domain" content="azgaar.github.io" />
-    <meta property="twitter:url" content="https://azgaar.github.io/Fantasy-Map-Generator/" />
-    <meta name="twitter:title" content="Azgaar's Fantasy Map Generator" />
-    <meta
-      name="twitter:description"
-      content="Free web app that helps fantasy writers, game masters, and cartographers create and edit fantasy maps"
-    />
-    <meta name="twitter:image" content="images/preview.png" />
-
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VJL3J26W7R"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -39,19 +29,22 @@
       gtag("js", new Date());
       gtag("config", "G-VJL3J26W7R");
     </script>
-
-    <link rel="icon" type="image/png" href="images/icons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="images/icons/favicon-16x16.png" sizes="16x16" />
-    <link rel="apple-touch-icon" href="images/icons/maskable_icon_x192.png" />
+<!-- 
+    <link rel="icon" type="image/png" href="/srmc/frontend/src/assets/images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/srmc/frontend/src/assets/images/icons/favicon-16x16.png" sizes="16x16" /> -->
+    <link rel="icon" type="image/png" href="favicon.png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/srmc/frontend/src/assets/images/icons/maskable_icon_x192.png" />
     <link rel="canonical" href="https://azgaar.github.io/Fantasy-Map-Generator/" />
-    <link rel="manifest" href="manifest.webmanifest" />
-
+    <link rel="manifest" href="/srmc/frontend/src/assets/manifest.webmanifest" />
+    
     <!-- inline css for loading screen -->
     <style type="text/css">
+      html,
       body {
         margin: 0;
         top: 0 !important;
         font-size: 10px;
+<<<<<<< HEAD
         overflow: hidden;
         display: flex;
         flex-direction: row;
@@ -139,6 +132,14 @@
         100% {
           transform: rotate(359deg);
         }
+=======
+        overflow: clip;
+        position: fixed !important;
+        z-index: 0;
+        align-self: center;
+        -webkit-user-select: none;
+        user-select: none;
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
       }
       /* #map {
         data-filter: null;
@@ -645,25 +646,711 @@
       } */ 
     </style>
 
-    <link rel="preload" href="index.css?v=1.108.6" as="style" onload="this.onload=null; this.rel='stylesheet'" />
-    <link rel="preload" href="icons.css" as="style" onload="this.onload=null; this.rel='stylesheet'" />
-    <link
-      rel="preload"
-      href="libs/jquery-ui.css?v=1.106.5"
-      as="style"
-      onload="this.onload=null; this.rel='stylesheet'"
-    />
+    <link rel="preload" href="/srmc/frontend/src/assets/index.css" as="style" onload="this.onload=null; this.rel='stylesheet'" />
+    <link rel="preload" href="/srmc/frontend/src/assets/icons.css" as="style" onload="this.onload=null; this.rel='stylesheet'" />
+    <link rel="preload" href="/srmc/frontend/src/assets/libs/jquery-ui.css" as="style" onload="this.onload=null; this.rel='stylesheet'"/>
   </head>
   <body>
+<<<<<<< HEAD
     <div width="50px" height="100%" display >
        <div id="options" style="display: none">
+=======
+  <div id="main-ui">
+
+    <div style="display: flex; flex-flow: column; height: 100%; width: 100%;">
+      <div id="dashbar-top">
+        <div id="nationbar">
+          <div id="selected-nation" onclick="openOPS()"></div>
+          <form id="nation-stats">
+            <div id="stat-col"><span id="stat-title">POPULATION</span><span id="population"></span></div>
+            <div id="stat-col"><span id="stat-title">POPULARITY</span><span id="popularity"></span></div>
+            <div id="stat-col"><span id="stat-title">ECONOMY</span><span id="economy"></span></div>
+            <div id="stat-col"><span id="stat-title">PIETY</span><span id="piety"></span></div>
+            <div id="stat-col"><span id="stat-title">ARMY</span><span id="army"></span></div>
+            <div id="stat-col"><span id="stat-title">NAVY</span><span id="navy"></span></div>
+            <div id="stat-col"><span id="stat-title">AIRFORCE</span><span id="airforce"></span></div>
+            <div id="stat-col"><span id="stat-title">SATELITES</span><span id="satelites"></span></div>
+          </form>
+        </div>
+
+        <div id="music-box">
+          <audio id="menu-music" name="menu-music" autoplay loop src="/srmc/frontend/src/assets/audio/music/azmaptheme.mp3" style="display: none;"></audio>
+          <audio id="music" name="ambient-theme-1" loop src="/srmc/frontend/src/assets/audio/music/azmaptheme.mp3" style="display: none;"></audio>
+          <audio id="sfx" name="clicksound" src="/srmc/frontend/src/assets/audio/sfx/click.mp3" style="display: none;"></audio>
+        </div>
+
+        <div id="time-box">
+          <div id="date-box">
+            <form id="date">
+              <input type="integer" title="day" id="day" disabled>
+              <input type="integer" title="month" id="month" disabled>
+              <input type="integer" title="year"  id="year" disabled>
+            </form>
+            <div id="speeds">
+              <button title="1speed" id="1speed">1</button>  
+              <button title="2speed" id="2speed">2</button>
+              <button title="3speed" id="3speed">3</button>
+              <button title="4speed" id="4speed">4</button>
+              <button title="5speed" id="5speed">5</button>
+            </div>
+          </div>
+          <button id="playpause">⏯</button>
+        </div>
+      </div>
+
+      <div id="map-box">
+        <svg
+          id="map"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+          xmlns:svg="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <g id="filters">
+              <filter id="blurFilter" name="Blur 0.2" x="-1" y="-1" width="100" height="100">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" />
+              </filter>
+              <filter id="blur1" name="Blur 1" x="-1" y="-1" width="100" height="100">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+              </filter>
+              <filter id="blur3" name="Blur 3" x="-1" y="-1" width="100" height="100">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+              </filter>
+              <filter id="blur5" name="Blur 5" x="-1" y="-1" width="100" height="100">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+              </filter>
+              <filter id="blur7" name="Blur 7" x="-1" y="-1" width="100" height="100">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
+              </filter>
+              <filter id="blur10" name="Blur 10" x="-1" y="-1" width="100" height="100">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+              </filter>
+              <filter id="splotch" name="Splotch">
+                <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="4" />
+                <feColorMatrix values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 -0.9 1.2" result="texture" />
+                <feComposite in="SourceGraphic" in2="texture" operator="in" />
+              </filter>
+              <filter id="bluredSplotch" name="Blurred Splotch">
+                <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="4" />
+                <feColorMatrix values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 -0.9 1.2" result="texture" />
+                <feComposite in="SourceGraphic" in2="texture" operator="in" />
+                <feGaussianBlur stdDeviation="4" />
+              </filter>
+              <filter id="dropShadow" name="Shadow 2">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+                <feOffset dx="1" dy="2" />
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="dropShadow01" name="Shadow 0.1">
+                <feGaussianBlur in="SourceAlpha" stdDeviation=".1" />
+                <feOffset dx=".2" dy=".3" />
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="dropShadow05" name="Shadow 0.5">
+                <feGaussianBlur in="SourceAlpha" stdDeviation=".5" />
+                <feOffset dx=".5" dy=".7" />
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="outline" name="Outline">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="pencil" name="Pencil">
+                <feTurbulence baseFrequency="0.03" numOctaves="6" type="fractalNoise" />
+                <feDisplacementMap scale="3" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+              <filter id="turbulence" name="Turbulence">
+                <feTurbulence baseFrequency="0.1" numOctaves="3" type="fractalNoise" />
+                <feDisplacementMap scale="10" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+
+              <filter
+                id="paper"
+                name="Paper"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="140%"
+                filterUnits="objectBoundingBox"
+                primitiveUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feGaussianBlur
+                  stdDeviation="1 1"
+                  x="0%"
+                  y="0%"
+                  width="100%"
+                  height="100%"
+                  in="SourceGraphic"
+                  edgeMode="none"
+                  result="blur"
+                />
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.05 0.05"
+                  numOctaves="4"
+                  seed="1"
+                  stitchTiles="stitch"
+                  result="turbulence"
+                />
+                <feDiffuseLighting
+                  surfaceScale="2"
+                  diffuseConstant="1"
+                  lighting-color="#707070"
+                  in="turbulence"
+                  result="diffuseLighting"
+                >
+                  <feDistantLight azimuth="45" elevation="20" />
+                </feDiffuseLighting>
+                <feComposite in="diffuseLighting" in2="blur" operator="lighter" result="composite" />
+                <feComposite
+                  in="composite"
+                  in2="SourceGraphic"
+                  operator="in"
+                  x="0%"
+                  y="0%"
+                  width="100%"
+                  height="100%"
+                  result="composite1"
+                />
+              </filter>
+
+              <filter
+                id="crumpled"
+                name="Crumpled"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="140%"
+                filterUnits="objectBoundingBox"
+                primitiveUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feGaussianBlur
+                  stdDeviation="2 2"
+                  x="0%"
+                  y="0%"
+                  width="100%"
+                  height="100%"
+                  in="SourceGraphic"
+                  edgeMode="none"
+                  result="blur"
+                />
+                <feTurbulence
+                  type="turbulence"
+                  baseFrequency="0.05 0.05"
+                  numOctaves="4"
+                  seed="1"
+                  stitchTiles="stitch"
+                  result="turbulence"
+                />
+                <feDiffuseLighting
+                  surfaceScale="2"
+                  diffuseConstant="1"
+                  lighting-color="#828282"
+                  in="turbulence"
+                  result="diffuseLighting"
+                >
+                  <feDistantLight azimuth="320" elevation="10" />
+                </feDiffuseLighting>
+                <feComposite in="diffuseLighting" in2="blur" operator="lighter" result="composite" />
+                <feComposite
+                  in="composite"
+                  in2="SourceGraphic"
+                  operator="in"
+                  x="0%"
+                  y="0%"
+                  width="100%"
+                  height="100%"
+                  result="composite1"
+                />
+              </filter>
+
+              <filter id="filter-grayscale" name="Grayscale">
+                <feColorMatrix
+                  values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"
+                />
+              </filter>
+              <filter id="filter-sepia" name="Sepia">
+                <feColorMatrix values="0.393 0.769 0.189 0 0 0.349 0.686 0.168 0 0 0.272 0.534 0.131 0 0 0 0 0 1 0" />
+              </filter>
+              <filter id="filter-dingy" name="Dingy">
+                <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0.3 0.3 0 0 0 0 0 1 0"></feColorMatrix>
+              </filter>
+              <filter id="filter-tint" name="Tint">
+                <feColorMatrix values="1.1 0 0 0 0  0 1.1 0 0 0  0 0 0.9 0 0  0 0 0 1 0"></feColorMatrix>
+              </filter>
+            </g>
+
+            <g id="deftemp">
+              <g id="featurePaths"></g>
+              <g id="textPaths"></g>
+              <g id="statePaths"></g>
+              <g id="defs-emblems"></g>
+              <mask id="land"></mask>
+              <mask id="water"></mask>
+              <mask id="fog" style="stroke-width: 10; stroke: black; stroke-linejoin: round; stroke-opacity: 0.1">
+                <rect x="0" y="0" width="100%" height="100%" fill="white" stroke="none" />
+              </mask>
+            </g>
+
+            <pattern id="oceanic" width="100" height="100" patternUnits="userSpaceOnUse">
+              <image id="oceanicPattern" href="/srmc/frontend/src/assets/images/pattern1.png" opacity="0.2"></image>
+            </pattern>
+
+            <mask id="vignette-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
+              <rect id="vignette-rect" fill="black"></rect>
+            </mask>
+          </defs>
+          <g id="viewbox"></g>
+          <g id="scaleBar">
+            <rect id="scaleBarBack"></rect>
+          </g>
+          <g id="vignette" mask="url(#vignette-mask)">
+            <rect x="0" y="0" width="100%" height="100%" />
+          </g>
+        </svg>
+      </div>
+    
+      <div id="dashbar-bottom">
+        <div id="toolbar">
+          <div id="addFeature" class="grid">
+            <button
+              id="addBurgTool"
+              data-tip="Click on map to place a burg. Hold Shift to add multiple"
+              data-shortcut="Shift + 1"
+              onclick="toggleAddBurg()"
+            >
+              Burg
+            </button>
+            <button
+              id="addLabel"
+              data-tip="Click on map to place label. Hold Shift to add multiple"
+              data-shortcut="Shift + 2"
+              onclick="toggleAddLabel()"
+            >
+              Label
+            </button>
+            <button
+              id="addMarker"
+              data-tip="Click on map to place a marker. Hold Shift to add multiple"
+              data-shortcut="Shift + 5"
+              onclick="toggleAddMarker()"
+            >
+              Marker
+            </button>
+            <button
+              id="addRiver"
+              data-tip="Click on map to place a river. Hold Shift to add multiple"
+              data-shortcut="Shift + 3"
+              onclick="toggleAddRiver()"
+            >
+              River
+            </button>
+            <button id="addRoute" data-tip="Open route creation dialog" data-shortcut="Shift + 4" onclick="createRoute()">Route</button>
+          </div>
+          
+          <div class="grid">
+            <button id="editBiomesButton" data-tip="Click to open Biomes Editor" data-shortcut="Shift + B" onclick="editBiomes()">
+              Biomes
+            </button>
+            <button id="overviewBurgsButton" data-tip="Click to open Burgs Overview" data-shortcut="Shift + T" onclick="overviewBurgs()">
+              Burgs
+            </button>
+            <button id="editCulturesButton" data-tip="Click to open Cultures Editor" data-shortcut="Shift + C" onclick="editCultures()">
+              Cultures
+            </button>
+            <button
+              id="editDiplomacyButton"
+              data-tip="Click to open Diplomatical relationships Editor"
+              data-shortcut="Shift + D" onclick="editDiplomacy()"
+            >
+              Diplomacy
+            </button>
+            <button id="editEmblemButton" data-tip="Click to open Emblem Editor" data-shortcut="Shift + Y" onclick="openEmblemEditor()">
+              Emblems
+            </button>
+            <button
+              id="editHeightmapButton"
+              data-tip="Click to open Heightmap customization menu"
+              data-shortcut="Shift + H" onclick="editHeightmap()"
+            >
+              Heightmap
+            </button>
+            <button id="overviewMarkersButton" data-tip="Click to open Markers Overview" data-shortcut="Shift + K" onclick="overviewMarkers()">
+              Markers
+            </button>
+            <button
+              id="overviewMilitaryButton"
+              data-tip="Click to open Military Forces Overview"
+              data-shortcut="Shift + M" onclick="overviewMilitary()"
+            >
+              Military
+            </button>
+            <button id="editNamesBaseButton" data-tip="Click to open Namesbase Editor" data-shortcut="Shift + N" onclick="editNamebase()">
+              Namesbase
+            </button>
+            <button id="editNotesButton" data-tip="Click to open Notes Editor" data-shortcut="Shift + O" onclick="editNotes()">Notes</button>
+            <button id="editProvincesButton" data-tip="Click to open Provinces Editor" data-shortcut="Shift + P" onclick="editProvinces()">
+              Provinces
+            </button>
+            <button id="editReligions" data-tip="Click to open Religions Editor" data-shortcut="Shift + R" onclick="editReligions()">
+              Religions
+            </button>
+            <button id="overviewRiversButton" data-tip="Click to open Rivers Overview" data-shortcut="Shift + V" onclick="overviewRivers()">
+              Rivers
+            </button>
+            <button id="overviewRoutesButton" data-tip="Click to open Routes Overview" data-shortcut="Shift + U" onclick="overviewRoutes()">
+              Routes
+            </button>
+            <button id="editStatesButton" data-tip="Click to open States Editor" data-shortcut="Shift + S" onclick="editStates()">
+              States
+            </button>
+            <button id="editUnitsButton" data-tip="Click to open Units Editor" data-shortcut="Shift + Q" onclick="editUnits()">Units</button>
+            <button id="editZonesButton" data-tip="Click to open Zones Editor" data-shortcut="Shift + Z" onclick="editZones()">Zones</button>
+          </div>
+        </div>
+
+        <div id="layersContent">
+          <div>
+            <ul
+              data-tip="Click to toggle a layer, drag to raise or lower a layer. Ctrl + click to edit layer style"
+              id="mapLayers"
+            >
+              
+              <li
+                id="toggleTexture"
+                data-tip="Texture overlay: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="X"
+                onclick="toggleTexture(event)"
+                style="display: none;"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/textures.png">
+              </li>
+              <li
+                id="toggleHeight"
+                data-tip="Heightmap: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="H"
+                onclick="toggleHeight(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/heightmap.png">
+              </li>
+              <li
+                id="toggleBiomes"
+                data-tip="Biomes: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="B"
+                onclick="toggleBiomes(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/biomes.png">
+              </li>
+              <li
+                id="toggleCells"
+                data-tip="Cells structure: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="E"
+                onclick="toggleCells(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/cells.png">
+              </li>
+              <li
+                id="toggleGrid"
+                data-tip="Grid: click to toggle, drag to raise or lower. Ctrl + click to edit layer style and select type"
+                data-shortcut="G"
+                onclick="toggleGrid(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/grid.png">
+              </li>
+              <li
+                id="toggleCoordinates"
+                data-tip="Coordinate grid: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="O"
+                onclick="toggleCoordinates(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/coords.png">
+              </li>
+              <li
+                id="toggleCompass"
+                data-tip="Wind (Compass) Rose: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="W"
+                onclick="toggleCompass(event)"
+                style="display: none;"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/windrose.png">
+              </li>
+              <li
+                id="toggleRivers"
+                data-tip="Rivers: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="V"
+                onclick="toggleRivers(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/rivers.png">
+              </li>
+              <li
+                id="toggleRelief"
+                data-tip="Relief and biome icons: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="F"
+                onclick="toggleRelief(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/relief.png">
+              </li>
+              <li
+                id="toggleReligions"
+                data-tip="Religions: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="R"
+                onclick="toggleReligions(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/religion.png">
+              </li>
+              <li
+                id="toggleCultures"
+                data-tip="Cultures: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="C"
+                onclick="toggleCultures(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/cultures.png">
+              </li>
+              <li
+                id="toggleStates"
+                data-tip="States: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="S"
+                onclick="toggleStates(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/states.png">
+              </li>
+              <li
+                id="toggleProvinces"
+                data-tip="Provinces: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="P"
+                onclick="toggleProvinces(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/provinces.png">
+              </li>
+              <li
+                id="toggleZones"
+                data-tip="Zones: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="Z"
+                onclick="toggleZones(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/zones.png">
+              </li>
+              <li
+                id="toggleBorders"
+                data-tip="State borders: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="D"
+                onclick="toggleBorders(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/borders.png">
+              </li>
+              <li
+                id="toggleRoutes"
+                data-tip="Trade routes: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="U"
+                onclick="toggleRoutes(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/routes.png">
+              </li>
+              <li
+                id="toggleTemperature"
+                data-tip="Temperature map: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="T"
+                onclick="toggleTemperature(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/temperature.png">
+              </li>
+              <li
+                id="togglePopulation"
+                data-tip="Population map: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="N"
+                onclick="togglePopulation(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/population.png">
+              </li>
+              <li
+                id="toggleIce"
+                data-tip="Icebergs and glaciers: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="J"
+                onclick="toggleIce(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/ice.png">
+              </li>
+              <li
+                id="togglePrecipitation"
+                data-tip="Precipitation map: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="A"
+                onclick="togglePrecipitation(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/precipitation.png">
+              </li>
+              <li
+                id="toggleEmblems"
+                data-tip="Emblems: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="Y"
+                onclick="toggleEmblems(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/emblems.png">
+              </li>
+              <li
+                id="toggleLabels"
+                data-tip="Labels: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="L"
+                onclick="toggleLabels(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/labels.png">
+              </li>
+              <li
+                id="toggleBurgIcons"
+                data-tip="Burg icons: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="I"
+                onclick="toggleBurgIcons(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/icons.png">
+              </li>
+              <li
+                id="toggleMilitary"
+                data-tip="Military forces: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="M"
+                onclick="toggleMilitary(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/military.png">
+              </li>
+              <li
+                id="toggleMarkers"
+                data-tip="Markers: click to toggle, drag to raise or lower the layer. Ctrl + click to edit layer style"
+                data-shortcut="K"
+                onclick="toggleMarkers(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/markers.png">
+              </li>
+              <li
+                id="toggleRulers"
+                data-tip="Rulers: click to toggle, drag to move, click on label to delete. Ctrl + click to edit layer style"
+                data-shortcut="= (equal sign)"
+                onclick="toggleRulers(event)"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/rulers.png">
+              </li>
+              <li
+                id="toggleScaleBar"
+                data-tip="Scale Bar: click to toggle. Ctrl + click to edit style"
+                data-shortcut="/ (slash sign)"
+                onclick="toggleScaleBar(event)"
+                class="solid"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/scalebar.png">
+              </li>
+              <li
+                id="toggleVignette"
+                data-tip="Vignette (border fading): click to toggle. Ctrl + click to edit style"
+                data-shortcut="[ (left square bracket)"
+                onclick="toggleVignette(event)"
+                class="solid"
+                style="display: none;"
+              >
+              <img loading="eager" src="/srmc/frontend/src/assets/images/icons/vignette.png">
+              </li>
+            </ul>
+          </div>
+          <div>
+            <select
+              data-tip="Select a map layers preset"
+              id="layersPreset"
+              onchange="handleLayersPresetChange(this.value)"
+              style="width: 80%"
+            >
+              <option value="political">Political map</option>
+              <option value="cultural">Cultural map</option>
+              <option value="religions">Religions map</option>
+              <option value="provinces">Provinces map</option>
+              <option value="biomes">Biomes map</option>
+              <option value="heightmap">Heightmap</option>
+              <option value="physical">Physical map</option>
+              <option value="poi">Places of interest</option>
+              <option value="military">Military map</option>
+              <option value="emblems">Emblems</option>
+              <option value="landmass">Pure landmass</option>
+              <option value="blank">Blank</option>
+              <option hidden value="custom" selected>Custom (not saved)</option>
+            </select>
+            <button
+              id="savePresetButton"
+              data-tip="Click to save displayed layers as a new preset"
+              class="icon-plus sideButton"
+              onclick="savePreset()"
+            ></button>
+            <button
+              id="removePresetButton"
+              data-tip="Click to remove current custom preset"
+              class="icon-minus sideButton"
+              onclick="removePreset()"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="loading">
+      <svg width="100%" height="100%">
+        <rect x="-1%" y="-1%" width="102%" height="102%" fill="#a02020" />
+        <rect x="-1%" y="-1%" width="102%" height="102%" fill="url(#oceanic)" />
+      </svg>
+      <svg id="loading-rose" width="100%" height="100%" viewBox="0 0 700 700">
+        <use href="#defs-compass-rose" x="50%" y="50%" />
+      </svg>
+      <div id="loading-typography">
+        <div id="titleName">Azazel Mango's</div>
+        <div id="title">SOVEREIGNTY RISES</div>
+        <div id="subtitle">MAKING CIVILIZATIONS</div>
+        <div id="versionText">‎ ‎</div>
+        <p id="loading-text">LOADING<span>.</span><span>.</span><span>.</span></p>
+      </div>
+    </div>
+
+    <div id="optionsContainer" style="display: none"> 
+      <div id="collapsible">
+        <button
+          id="optionsTrigger"
+          data-tip="Click to show the Menu"
+          data-shortcut="Tab"
+          class="options glow"
+          onclick="showOptions(event)"
+        >
+          ►
+        </button>
+        <button
+          id="azazelsden"
+          data-tip="Click to go back to the Main Menu"
+          data-shortcut="Esc"
+          onclick="menuScreen()"
+          class="options glow"
+        >
+          Main Menu
+        </button>
+      </div>
+
+      <div id="options" style="display: none">
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
         <div class="drag-trigger" data-tip="Drag to move the Menu"></div>
 
         <div class="tab">
           <button
             id="optionsHide"
             data-tip="Click to hide the Menu"
-            data-shortcut="Tab or Esc"
+            data-shortcut="Tab"
             class="options"
             onclick="hideOptions(event)"
           >
@@ -671,48 +1358,14 @@
           </button>
           <button id="layersTab" data-tip="Click to change map layers" class="options active">Layers</button>
           <button id="styleTab" data-tip="Click to open style editor" class="options">Style</button>
-          <button id="optionsTab" data-tip="Click to change generation and UI options" class="options">Options</button>
           <button id="regenTab" data-tip="Click to open tools menu" class="options">Regen</button>
           <button id="toolsTab" data-tip="Click to open tools menu" class="options">Tools</button>
           <button id="aboutTab" data-tip="Click to see Generator info" class="options">About</button>
         </div>
 
-        <div id="layersContent" class="tabcontent" style="display: block">
-          <p data-tip="Select a map layers preset" style="display: inline-block">Layers preset:</p>
-          <select
-            data-tip="Select a map layers preset"
-            id="layersPreset"
-            onchange="handleLayersPresetChange(this.value)"
-            style="width: 45%"
-          >
-            <option value="political">Political map</option>
-            <option value="cultural">Cultural map</option>
-            <option value="religions">Religions map</option>
-            <option value="provinces">Provinces map</option>
-            <option value="biomes">Biomes map</option>
-            <option value="heightmap">Heightmap</option>
-            <option value="physical">Physical map</option>
-            <option value="poi">Places of interest</option>
-            <option value="military">Military map</option>
-            <option value="emblems">Emblems</option>
-            <option value="landmass">Pure landmass</option>
-            <option hidden value="custom" selected>Custom (not saved)</option>
-          </select>
-          <button
-            id="savePresetButton"
-            data-tip="Click to save displayed layers as a new preset"
-            class="icon-plus sideButton"
-            style="display: none"
-            onclick="savePreset()"
-          ></button>
-          <button
-            id="removePresetButton"
-            data-tip="Click to remove current custom preset"
-            class="icon-minus sideButton"
-            style="display: none"
-            onclick="removePreset()"
-          ></button>
+        
 
+<<<<<<< HEAD
           <p>Displayed layers and layers order:</p>
           <ul
             data-tip="Click to toggle a layer, drag to raise or lower a layer. Ctrl + click to edit layer style"
@@ -2230,6 +2883,11 @@
         </div>
 
         <div id="regenContent" class="tabcontent">
+=======
+        
+
+        <div id="regenContent">
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
           <div class="separator">Regenerate</div>
           <div id="regenerateFeature" class="grid">
             <button
@@ -2291,8 +2949,9 @@
           </div>
         </div>
 
-        <div id="toolsContent" class="tabcontent">
+        <div id="toolsContent">
           <div class="separator">Edit</div>
+<<<<<<< HEAD
           <div class="grid">
             <button id="editBiomesButton" data-tip="Click to open Biomes Editor" data-shortcut="Shift + B">
               Biomes
@@ -2395,6 +3054,12 @@
             </button>
             <button id="addRoute" data-tip="Open route creation dialog" data-shortcut="Shift + 4">Route</button>
           </div>
+=======
+          
+
+          <div class="separator">Add</div>
+          
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
 
           <div class="separator">Show</div>
           <div class="grid">
@@ -2500,7 +3165,6 @@
 
         <div id="aboutContent" class="tabcontent">
           <p>
-            Spinoff map by Azazel and Ztereo!<br>
             <a href="https://azazelsden.xyz">Back to Azazel's Den</a><br>
             <a href="https://github.com/AzazelMango/azmap">Azmap GitHub</a>
           </p>
@@ -2804,214 +3468,6 @@
     </div>
 
     <div id="dialogs">
-      <div id="worldConfigurator" class="dialog stable" style="display: none">
-        <div style="display: flex">
-          <div id="worldControls">
-            <div>
-              <i data-locked="0" id="lock_temperatureEquator" class="icon-lock-open"></i>
-              <label data-tip="Set temperature at equator">
-                <i>Equator:</i>
-                <input id="temperatureEquatorInput" data-stored="temperatureEquator" type="number" min="-50" max="50" />
-                <span>°C = <span id="temperatureEquatorF"></span></span>
-                <input id="temperatureEquatorOutput" data-stored="temperatureEquator" type="range" min="-50" max="50" />
-              </label>
-            </div>
-            <div>
-              <label data-tip="Set the North Pole average yearly temperature">
-                <i data-locked="0" id="lock_temperatureNorthPole" class="icon-lock-open"></i>
-                <i>North Pole:</i>
-                <input
-                  id="temperatureNorthPoleInput"
-                  data-stored="temperatureNorthPole"
-                  type="number"
-                  min="-50"
-                  max="50"
-                />
-                <span>°C = <span id="temperatureNorthPoleF"></span></span>
-                <input
-                  id="temperatureNorthPoleOutput"
-                  data-stored="temperatureNorthPole"
-                  type="range"
-                  min="-50"
-                  max="50"
-                />
-              </label>
-            </div>
-
-            <div>
-              <label data-tip="Set the South Pole average yearly temperature">
-                <i data-locked="0" id="lock_temperatureSouthPole" class="icon-lock-open"></i>
-                <i>South Pole:</i>
-                <input
-                  id="temperatureSouthPoleInput"
-                  data-stored="temperatureSouthPole"
-                  type="number"
-                  min="-50"
-                  max="50"
-                />
-                <span>°C = <span id="temperatureSouthPoleF"></span></span>
-                <input
-                  id="temperatureSouthPoleOutput"
-                  data-stored="temperatureSouthPole"
-                  type="range"
-                  min="-50"
-                  max="50"
-                />
-              </label>
-            </div>
-            <div>
-              <i data-locked="0" id="lock_mapSize" class="icon-lock-open"></i>
-              <label data-tip="Set map size relative to the world size">
-                <i>Map size:</i>
-                <input id="mapSizeInput" data-stored="mapSize" type="number" min="1" max="100" step="0.1" />%
-                <input id="mapSizeOutput" data-stored="mapSize" type="range" min="1" max="100" step="0.1" />
-              </label>
-            </div>
-            <div>
-              <i data-locked="0" id="lock_latitude" class="icon-lock-open"></i>
-              <label data-tip="Set a North-South map shift, set to 50 to make map center lie on Equator">
-                <i>Latitudes:</i>
-                <input id="latitudeInput" data-stored="latitude" type="number" min="0" max="100" step="0.1" />
-                <br /><i>N</i
-                ><input
-                  id="latitudeOutput"
-                  data-stored="latitude"
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="0.1"
-                  style="width: 10.3em"
-                /><i>S</i>
-              </label>
-            </div>
-
-            <div>
-              <i data-locked="0" id="lock_longitude" class="icon-lock-open"></i>
-              <label data-tip="Set a West-East map shift, set to 50 to make map center lie on Prime meridian">
-                <i>Longitudes:</i>
-                <input
-                  id="longitudeInput"
-                  data-stored="longitude"
-                  type="number"
-                  min="0"
-                  max="100"
-                  value="50"
-                  step="0.1"
-                />
-                <br /><i>W</i
-                ><input
-                  id="longitudeOutput"
-                  data-stored="longitude"
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="0.1"
-                  style="width: 10.3em"
-                /><i>E</i>
-              </label>
-            </div>
-
-            <div>
-              <label
-                data-tip="Set precipitation - water amount clouds can bring. Defines rivers and biomes generation. Keep around 100% for default generation"
-              >
-                <i data-locked="0" id="lock_prec" class="icon-lock-open"></i>
-                <i>Precipitation:</i>
-                <input id="precInput" data-stored="prec" type="number" />%
-                <input id="precOutput" data-stored="prec" type="range" min="0" max="500" value="50" />
-              </label>
-            </div>
-            <div data-tip="Canvas size. Can be changed in general options on new map generation">
-              <i>Canvas size:</i><br />
-              <span id="mapSize"></span> px = <span id="mapSizeFriendly"></span>
-            </div>
-            <div>
-              <i data-tip="Length of Meridian. Almost half of the equator length">Meridian length:</i><br />
-              <span id="meridianLength" data-tip="Length of Meridian in pixels"></span> px =
-              <span
-                id="meridianLengthFriendly"
-                data-tip="Length of Meridian is friendly units (depends on user configuration)"
-              ></span>
-              <span
-                id="meridianLengthEarth"
-                data-tip="Fantasy world Meridian length relative to real-world Earth (20k km)"
-              ></span>
-            </div>
-            <div data-tip="Map coordinates on globe"><i>Coords:</i> <span id="mapCoordinates"></span></div>
-          </div>
-
-          <div style="display: flex; flex-direction: column; align-items: flex-end">
-            <svg id="globe" width="22em" viewBox="-20 -25 240 240">
-              <defs>
-                <linearGradient id="temperatureGradient" x1="0" x2="0" y1="0" y2="1">
-                  <stop id="grad90" offset="0%" stop-color="blue" />
-                  <stop id="grad60" offset="16.6%" stop-color="green" />
-                  <stop id="grad30" offset="33.3%" stop-color="yellow" />
-                  <stop id="grad0" offset="50%" stop-color="red" />
-                  <stop id="grad-30" offset="66.6%" stop-color="yellow" />
-                  <stop id="grad-60" offset="83.3%" stop-color="green" />
-                  <stop id="grad-90" offset="100%" stop-color="blue" />
-                </linearGradient>
-              </defs>
-              <g id="globeNoteLines">
-                <line x1="5" x2="220" y1="0" y2="0" />
-                <line x1="5" x2="220" y1="13" y2="13" />
-                <line x1="5" x2="220" y1="49.5" y2="49.5" />
-                <line x1="-5" x2="220" y1="100" y2="100" />
-                <line x1="5" x2="220" y1="150.5" y2="150.5" />
-                <line x1="5" x2="220" y1="187" y2="187" />
-                <line x1="5" x2="220" y1="200" y2="200" />
-              </g>
-              <g id="globeWindArrows" data-tip="Click to change wind direction" stroke-linejoin="round">
-                <circle cx="210" cy="6" r="12" />
-                <path data-tier="0" d="M210,11 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(225 210 6)" />
-                <circle cx="210" cy="30" r="12" />
-                <path data-tier="1" d="M210,35 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(45 210 30)" />
-                <circle cx="210" cy="75" r="12" />
-                <path data-tier="2" d="M210,80 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(225 210 75)" />
-                <circle cx="210" cy="130" r="12" />
-                <path data-tier="3" d="M210,135 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(315 210 130)" />
-                <circle cx="210" cy="173" r="12" />
-                <path data-tier="4" d="M210,178 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(135 210 173)" />
-                <circle cx="210" cy="194" r="12" />
-                <path data-tier="5" d="M210,199 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(315 210 194)" />
-              </g>
-              <g id="globaAxisLabels">
-                <text x="82%" y="-4%">wind</text>
-                <text x="-8%" y="-4%">latitude</text>
-              </g>
-              <g id="globeLatLabels">
-                <text x="-15" y="5">90°</text>
-                <text x="-15" y="18">60°</text>
-                <text x="-15" y="53">30°</text>
-                <text x="-15" y="103">0°</text>
-                <text x="-15" y="153">30°</text>
-                <text x="-15" y="190">60°</text>
-                <text x="-15" y="204">90°</text>
-              </g>
-              <circle id="globeGradient" cx="100" cy="100" r="100" fill="url(#temperatureGradient)" stroke="none" />
-              <line id="globePrimeMeridian" x1="100" x2="100" y1="0" y2="200" />
-              <line id="globeEquator" x1="1" x2="200" y1="100" y2="100" />
-              <circle id="globeOutline" cx="100" cy="100" r="100" fill="none" />
-              <path id="globeGraticule" />
-              <path id="globeArea" />
-            </svg>
-
-            <button id="restoreWinds" data-tip="Click to restore default (Earth-based) wind directions">
-              Restore winds
-            </button>
-          </div>
-        </div>
-
-        <div style="margin-top: 0.3em">
-          <i>Presets:</i>
-          <button id="wcWholeWorld" data-tip="Click to set map size to cover the whole world">Whole world</button>
-          <button id="wcNorthern" data-tip="Click to set map size to cover the Northern latitudes">Northern</button>
-          <button id="wcTropical" data-tip="Click to set map size to cover the Tropical latitudes">Tropical</button>
-          <button id="wcSouthern" data-tip="Click to set map size to cover the Southern latitudes">Southern</button>
-        </div>
-      </div>
-
       <div id="labelEditor" class="dialog" style="display: none">
         <button id="labelGroupShow" data-tip="Show the group selection" class="icon-tags"></button>
         <div id="labelGroupSection" style="display: none">
@@ -3616,6 +4072,7 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- <div id="buildingEditor" class="dialog" style="display: none">
         <div id="buildingBody" style="padding-bottom: 0.3em">
           <div style="display: flex; align-items: center">
@@ -3743,6 +4200,78 @@
           ></button>
         </div>
       </div> -->
+=======
+      <div id="overviewPlayerState" class="dialog" style="display: none">
+        <div id="opsBody" style="padding-bottom: 0.3em">
+          <div style="display: flex; align-items: center">
+            <div id="opsStats" style="display: grid; grid-auto-rows: minmax(1.6em, auto)">
+              <span data-tip="State ID" width="1em" height="1em"  class="stateID"></span>
+              <fill-box fill=""></fill-box>
+              <svg data-tip="State emblem. Click to edit" class="pointer" viewBox="0 0 200 200" width="13em" height="13em"><use id="opsEmblem"></use></svg>
+              <input data-tip="State name. Click to change" class="stateName name pointer" value="" readonly />
+              <input data-tip="State form name. Click to change" class="stateForm name pointer" value="" readonly />
+              <span data-tip="State capital. Click to zoom into view" class="icon-star-empty pointer"></span>
+              <input data-tip="Capital name. Click and type to rename" class="stateCapital" value="" autocorrect="off" spellcheck="false" />
+              <div data-tip="Dominant culture. Click to change" class="stateCulture hide"></div>
+              <span data-tip="Click to overview state burgs" style="padding-right: 1px" class="icon-dot-circled pointer hide"></span>
+              <div data-tip="Burgs count" class="stateBurgs hide"></div>
+              <span data-tip="State area" style="padding-right: 4px" class="icon-map-o hide"></span>
+              <div data-tip="State area" class="stateArea hide" style="width: 6em"></div>
+              <span data-tip="" class="icon-male"></span>
+              <div data-tip="" class="statePopulation" style="width: 5em"></div>
+              <div data-tip="" class="stateWealth" style="width: 6em"></div>
+              <div data-tip="" class="stateWages" style="width: 3em"></div>
+              <div data-tip="State type. Defines growth model. Click to change" class="cultureType"></div>
+              <span data-tip="State expansionism" class="icon-resize-full"></span>
+              <input data-tip="Expansionism (defines competitive size). Change to re-calculate states based on new value"
+                class="statePower" type="number" min="0" max="99" step=".1" value=""/>
+              <span data-tip="Cells count" class="icon-check-empty"></span>
+              <div data-tip="Cells count" class="stateCells"></div>
+              <span data-tip="Toggle state focus" class="icon-pin"></span>
+              <span data-tip="Lock the state to protect it from re-generation" class="icon-lock"></span>
+              <span data-tip="Remove the state" class="icon-trash-empty hide"></span>
+            </div>
+          </div>
+        </div>
+        <div id="opsBottom">
+          <button id="opsGroupShow" data-tip="Show group change section" class="icon-tags"></button>
+          <div id="opsGroupSection" style="display: none">
+            <button id="opsGroupHide" data-tip="Hide group change section" class="icon-tags"></button>
+            <select id="opsSelectGroup" data-tip="Select a group for this ops" style="width: 10em"></select>
+            <input
+              id="opsInputGroup"
+              placeholder="new group name"
+              data-tip="Create a new Group for the State"
+              style="display: none; width: 10em"
+            />
+            <i id="opsAddGroup" data-tip="Create a new group for the ops" class="icon-plus pointer"></i>
+            <i id="opsRemoveGroup" data-tip="Remove selected ops group" class="icon-trash pointer"></i>
+          </div>
+
+          <button id="opsStyleShow" data-tip="Show style edit section" class="icon-brush"></button>
+          <div id="opsStyleSection" style="display: none">
+            <button id="opsStyleHide" data-tip="Hide style edit section" class="icon-brush"></button>
+            <button
+              id="opsEditLabelStyle"
+              data-tip="Edit label style for ops group in Style Editor"
+              class="icon-font"
+            ></button>
+            <button
+              id="opsEditIconStyle"
+              data-tip="Edit icon style for ops group in Style Editor"
+              class="icon-dot-circled"
+            ></button>
+            <button
+              id="opsEditAnchorStyle"
+              data-tip="Edit port icon (anchor) style for ops group in Style Editor"
+              class="icon-anchor"
+            ></button>
+          </div>
+
+          <button id="opsEditEmblem" data-tip="Edit emblem" class="icon-shield-alt"></button>
+        </div>
+      </div>
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
 
       <div id="markerEditor" class="dialog" style="display: none">
         <div id="markerBody" style="padding-bottom: 0.3em">
@@ -6038,12 +6567,17 @@
         <p><b>Depth:</b> <span id="infoDepth">0</span></p>
         <p><b>Temperature:</b> <span id="infoTemp">0</span></p>
         <p><b>Biome:</b> <span id="infoBiome">n/a</span></p>
+        <p><b>Habitability:</b> <span id="infoHabitability">n/a</span></p>
         <p><b>State:</b> <span id="infoState">n/a</span></p>
         <p><b>Province:</b> <span id="infoProvince">n/a</span></p>
         <p><b>Culture:</b> <span id="infoCulture">n/a</span></p>
         <p><b>Religion:</b> <span id="infoReligion">n/a</span></p>
         <p><b>Burg:</b> <span id="infoBurg">n/a</span></p>
+<<<<<<< HEAD
         <p><b>Building:</b> <span id="infoBuilding">n/a</span></p>
+=======
+        <p><b>Wealth:</b> <span id="infoWealth">n/a</span></p>
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
       </div>
 
       <div id="iconSelector" style="display: none" class="dialog">
@@ -6078,7 +6612,7 @@
           <div data-tip="Set points (cells) number of the submap" style="display: flex; gap: 1em">
             <div>Points number</div>
             <div>
-              <input id="submapPointsInput" type="range" min="1" max="13" value="4" />
+              <input id="submapPointsInput" type="range" min="1" max="23" value="8" />
               <output id="submapPointsFormatted" style="color: #053305">10K</output>
             </div>
           </div>
@@ -6109,7 +6643,7 @@
         >
           <div>Points number</div>
           <div>
-            <input id="transformPointsInput" type="range" min="1" max="13" value="4" />
+            <input id="transformPointsInput" type="range" min="1" max="23" value="8" />
             <output id="transformPointsFormatted" style="color: #053305">10K</output>
           </div>
 
@@ -6351,18 +6885,10 @@
       <div id="saveMapData" style="display: none" class="dialog">
         <div style="margin-top: 0.3em">
           <strong>Save map to</strong>
-          <button onclick="saveMap('server')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + Alt + S">
-            server
-          </button>
-          <button onclick="saveMap('machine')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + S">
-            machine
-          </button>
-          <button onclick="saveMap('dropbox')" data-tip="Save map file to your Dropbox" data-shortcut="Ctrl + C">
-            dropbox
-          </button>
-          <button onclick="saveMap('storage')" data-tip="Save the project to browser storage only" data-shortcut="F6">
-            browser
-          </button>
+          <button onclick="saveMap('server')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + Alt + S">server</button>
+          <button onclick="saveMap('machine')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + S">machine</button>
+          <button onclick="saveMap('dropbox')" data-tip="Save map file to your Dropbox" data-shortcut="Ctrl + C">dropbox</button>
+          <button onclick="saveMap('storage')" data-tip="Save the project to browser storage only" data-shortcut="F6"> browser</button>
         </div>
         <p>
           Maps are saved in <i>.map</i> format, that can be loaded back via the <i>Load</i> in menu. There is no way to
@@ -6373,9 +6899,7 @@
       <div id="loadMapData" style="display: none" class="dialog">
         <div>
           <strong>Load map from</strong>
-          <button onclick="mapToLoad.click()" data-tip="Load map file (.map or .gz) from your local disk">
-            machine
-          </button>
+          <button onclick="mapToLoad.click()" data-tip="Load map file (.map or .gz) from your local disk">Local</button>
           <button
             onclick="loadURL()"
             data-tip="Load map file (.map or .gz) file from URL. Note that the server should allow CORS"
@@ -6480,18 +7004,13 @@
           <button type="button" id="promptCancel" formnovalidate>Cancel</button>
         </form>
       </div>
+
     </div>
 
     <div id="notes">
       <div id="notesHeader"></div>
       <div id="notesBody"></div>
     </div>
-
-    <div
-      id="tooltip"
-      style="opacity: 0"
-      data-main="Сlick the arrow button for options. Zoom in to see the map in details"
-    ></div>
 
     <div id="mapOverlay" style="display: none">Drop a map file to open</div>
 
@@ -6508,7 +7027,1607 @@
       <input type="file" accept=".json" id="styleToLoad" />
       <input type="file" accept=".csv" id="culturesCSVToLoad" />
     </div>
+    
+    <div
+      id="tooltip"
+      style="opacity: 0"
+      data-main="Сlick the arrow button for options. Zoom in to see the map in details"
+    ></div>
+    
 
+    <div id="menu-screen" style="display: none;">
+      <div id="main-menu-container">
+        <div id="main-menu-title-container">
+          <div id="titleName">Azazel Mango's</div>
+          <img src="/srmc/frontend/src/assets/title.png"/>
+          <div id="versionText">‎ ‎</div>
+        </div>
+        <div id="menu">
+
+          <div id="main-menu" style="display: flex;">
+            <button id="newMapButton" onclick="newMapButton()" data-tip="Generate a new map based on the selected options">New Map</button>
+            <button id="saveMapButton" onclick="saveMapButton()" data-tip="Save a fully-functional map (.map or .gz formats)">Save</button>
+            <button id="loadMapButton" onclick="loadMapButton()" data-tip="Load a fully-functional map (.map or .gz formats)">Load</button>
+            <button id="optionsButton" onclick="optionsButton()" data-tip="Set the generation options of the Map">Map Options</button>
+            <button id="settingsButton" onclick="settingsButton()" data-tip="Set the settings of the game">Game Settings</button>
+            <button id="hideMenuButton" onclick="menuScreen()" data-tip="Hide Main Menu">Back to Game</button>
+            <button id="exitButton" onclick="exitButton()" data-tip="Go to Azazel's Den xyz">Exit</button>
+          </div>
+
+          <div id="new-map-menu" style="display: none;">
+            <button id="genNewMapButton" onclick="genNewMapButton()" data-tip="Generate a new map based on the selected options">New Map</button>
+            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>
+          </div>
+      
+          <div id="options-menu" style="display: none;">
+            <p data-tip="Map generation settings. Generate a new map to apply the settings">
+              Map settings (new map to apply):
+            </p>
+            <p data-tip="Tool settings that don't affect maps. Changes are getting applied immediately">
+              Generator settings:
+            </p>
+            <table>
+              <tr
+                data-tip="Set original map size on generation. It cannot be changed later. Always keep canvas size equal to your screen size or less. The best option is to use the default value. For full-globe maps use aspect ratio 2:1"
+              >
+                <td id="tdi">
+                  <i data-tip="Restore default canvas size" id="restoreDefaultCanvasSize" class="icon-ccw"></i>
+                </td>
+                <td>Canvas size</td>
+                <td id="tdi">
+                  <select id="mapSizeInput" class="paired" data-stored="mapSize">
+                    <option id="giantSize" data-tip=" x  pixels">Giant</option>
+                    <option id="hugeSize" data-tip=" x  pixels">Huge</option>
+                    <option id="largeSize" data-tip=" x  pixels">Large</option>
+                    <option id="standardSize" data-tip=" x  pixels">Standard</option>
+                    <option id="mediumSize" data-tip=" x  pixels">Medium</option>
+                    <option id="smallSize" data-tip=" x  pixels">Small</option>
+                    <option id="tinySize" data-tip=" x  pixels">Tiny</option>
+                    <option id="customSize" data-tip="Define your own Map size.">Custom</option>  
+                  </select>
+                  <div>
+                    <input id="mapWidthInputCustom" class="paired" type="number" min="240"/>
+                    <span>x</span>
+                    <input id="mapHeightInputCustom" class="paired" type="number" min="240"/>
+                    <span>px</span>
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr
+                data-tip="Map seed number. Press 'Enter' to apply. Seed produces the same map only if canvas size and options are the same"
+              >
+                <td id="tdi">
+                  <i
+                    data-tip="Show seed history to apply a previous seed"
+                    id="optionsMapHistory"
+                    class="icon-hourglass-1"
+                  ></i>
+                </td>
+                <td>Map seed</td>
+                <td id="tdi">
+                  <input id="optionsSeed" class="long" type="number" min="1" max="999999999" step="1" />
+                </td>
+                <td id="tdi">
+                  <i
+                    data-tip="Copy map seed as URL. It will produce the same map only if options are default or the same"
+                    id="optionsCopySeed"
+                    class="icon-docs"
+                  ></i>
+                </td>
+              </tr>
+
+              <tr
+                data-tip="Set number of points to be used for graph generation. Highly affects performance. 10K is the only recommended value"
+              >
+                <td id="tdi">
+                  <i data-locked="0" id="lock_points" class="icon-lock-open"></i>
+                </td>
+                <td>Points number</td>
+                <td id="tdi">
+                  <input
+                    id="pointsInput"
+                    data-stored="points"
+                    type="range"
+                    min="1"
+                    max="23"
+                    value="8"
+                    data-cells="10000"
+                  />
+                </td>
+                <td>
+                  <output id="pointsOutputFormatted" style="color: #053305">10K</output>
+                </td>
+              </tr>
+
+              <tr data-tip="Define map name (will be used to name downloaded files)">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_mapName" class="icon-lock-open"></i>
+                </td>
+                <td>Map name</td>
+                <td id="tdi">
+                  <input
+                    id="mapName"
+                    data-stored="mapName"
+                    class="long"
+                    autocorrect="off"
+                    spellcheck="false"
+                    type="text"
+                  />
+                </td>
+                <td id="tdi">
+                  <i data-tip="Regenerate map name" onclick="Names.getMapName(true)" class="icon-arrows-cw"></i>
+                </td>
+              </tr>
+
+              <tr data-tip="Define current year and era name">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_year" data-ids="day,month,year,era" class="icon-lock-open"></i>
+                </td>
+                <td>Date and era</td>
+                <td id="tdi">
+                  <input
+                    id="dayInput"
+                    data-stored="day"
+                    type="number"
+                    step="1"
+                    class="paired"
+                  />
+                  <input
+                    id="monthInput"
+                    data-stored="month"
+                    type="number"
+                    step="1"
+                    class="paired"
+                  />
+                  <input
+                    id="yearInput"
+                    data-stored="year"
+                    type="number"
+                    step="1"
+                    class="paired"
+                  />
+                  <input
+                    id="eraInput"
+                    data-stored="era"
+                    autocorrect="off"
+                    spellcheck="false"
+                    type="text"
+                    style="width: 75%; float: right"
+                    class="long"
+                  />
+                </td>
+                <td id="tdi">
+                  <i id="optionsEraRegenerate" data-tip="Regenerate era" class="icon-arrows-cw"></i>
+                </td>
+              </tr>
+
+              <tr data-tip="Select template or precreated heightmap to be used on generation">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_template" class="icon-lock-open"></i>
+                </td>
+                <td>Heightmap</td>
+                <td id="templateInputContainer" class="pointer">
+                  <select id="templateInput" data-stored="template" style="pointer-events: none"></select>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr data-tip="Define how many Cultures should be generated">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_cultures" class="icon-lock-open"></i>
+                </td>
+                <td>Cultures number</td>
+                <td id="tdi">
+                  <input id="culturesInput" data-stored="cultures" type="range" min="1" />
+                </td>
+                <td id="tdi">
+                  <input id="culturesOutput" data-stored="cultures" type="number" min="1" />
+                </td>
+              </tr>
+
+              <tr data-tip="Select a set of cultures to be used for names and cultures generation">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_culturesSet" class="icon-lock-open"></i>
+                </td>
+                <td>Cultures set</td>
+                <td>
+                  <select id="culturesSet" data-stored="culturesSet">
+                    <option value="world" data-max="32" selected>All-world</option>
+                    <option value="european" data-max="15">European</option>
+                    <option value="oriental" data-max="13">Oriental</option>
+                    <option value="english" data-max="10">English</option>
+                    <option value="antique" data-max="10">Antique</option>
+                    <option value="highFantasy" data-max="17">High Fantasy</option>
+                    <option value="darkFantasy" data-max="18">Dark Fantasy</option>
+                    <option value="random" data-max="100">Random</option>
+                  </select>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr data-tip="Define how many states and capitals should be generated">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_statesNumber" class="icon-lock-open"></i>
+                </td>
+                <td>States number</td>
+                <td colspan="2">
+                  <slider-input id="statesNumber" data-stored="statesNumber" min="0" max="200"></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Define burgs percentage to form a separate province">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_provincesRatio" class="icon-lock-open"></i>
+                </td>
+                <td>Provinces ratio</td>
+                <td colspan="2">
+                  <slider-input id="provincesRatio" data-stored="provincesRatio" min="0" max="100"></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Define how much states and cultures can vary in size. Defines expansionism value">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_sizeVariety" class="icon-lock-open"></i>
+                </td>
+                <td>Size variety</td>
+                <td colspan="2">
+                  <slider-input id="sizeVariety" data-stored="sizeVariety" min="0" max="10" step=".1"></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Set state and cultures growth rate. Defines how many lands will stay neutral">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_growthRate" class="icon-lock-open"></i>
+                </td>
+                <td>Growth rate</td>
+                <td colspan="2">
+                  <slider-input id="growthRate" data-stored="growthRate" min=".1" max="2" step=".1"></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Define a number of towns to be placed (if enough suitable land exists)">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_manors" class="icon-lock-open"></i>
+                </td>
+                <td>Towns number</td>
+                <td id="tdi">
+                  <input id="manorsInput" data-stored="manors" type="range" min="0" max="1201" step="1" value="1000" />
+                </td>
+                <td>
+                  <output id="manorsOutput" data-stored="manors" value="auto"></output>
+                </td>
+              </tr>
+
+              <tr
+                data-tip="Define how many organized religions and cults should be generated. Cultures will have their own folk religions in any case"
+              >
+                <td id="tdi">
+                  <i data-locked="0" id="lock_religionsNumber" class="icon-lock-open"></i>
+                </td>
+                <td>Religions number</td>
+                <td colspan="2">
+                  <slider-input
+                    id="religionsNumber"
+                    data-stored="religionsNumber"
+                    min="0"
+                    max="50"
+                    step="1"
+                  ></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Select state labels mode: display short or full names">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_stateLabelsMode" class="icon-lock-open"></i>
+                </td>
+                <td>State labels</td>
+                <td>
+                  <select id="stateLabelsModeInput" data-stored="stateLabelsMode">
+                    <option value="auto">Auto</option>
+                    <option value="short">Short names</option>
+                    <option value="full">Full names</option>
+                  </select>
+                </td>
+                <td></td>
+              </tr>
+            </table>
+              <button id="configureWorld"  data-tip="Click to open world configurator to setup map position on Globe and World climate" onclick="editWorld()">Configure World</button>
+              <button id="optionsReset" data-tip="Click to restore default options and reload the page" onclick="cleanupData()">Reset to defaults</button>
+              <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>
+          </div>
+
+          <div id="styles-menu" style="display: none;">
+            <div id="styleContent">
+              <p
+                data-tip="Select a style preset. State labels may required regeneration if font is changed"
+                style="display: inline-block"
+              >
+                Style preset:
+              </p>
+              <select
+                data-tip="Select a style preset"
+                id="stylePreset"
+                onchange="requestStylePresetChange(this.value)"
+                style="width: 45%; text-transform: capitalize"
+              ></select>
+              <button
+                id="addStyleButton"
+                data-tip="Click to save current style as a new preset"
+                class="icon-plus sideButton"
+                style="display: inline-block"
+                onclick="addStylePreset()"
+              ></button>
+              <button
+                id="removeStyleButton"
+                data-tip="Click to remove current custom style preset"
+                class="icon-minus sideButton"
+                style="display: none"
+                onclick="requestRemoveStylePreset()"
+              ></button>
+
+              <p data-tip="Select an element to edit its style" style="display: inline-block">Select element:</p>
+              <select
+                data-tip="Select an element to edit its style (list is ordered alphabetically)"
+                id="styleElementSelect"
+                style="width: 42%"
+              >
+                <option value="anchors">Anchor Icons</option>
+                <option value="biomes">Biomes</option>
+                <option value="borders">Borders</option>
+                <option value="burgIcons">Burg Icons</option>
+                <option value="cells">Cells</option>
+                <option value="coastline">Coastline</option>
+                <option value="coordinates">Coordinates</option>
+                <option value="cults">Cultures</option>
+                <option value="emblems">Emblems</option>
+                <option value="fogging">Fogging</option>
+                <option value="gridOverlay">Grid</option>
+                <option value="terrs">Heightmap</option>
+                <option value="ice">Ice</option>
+                <option value="labels">Labels</option>
+                <option value="lakes">Lakes</option>
+                <option value="landmass">Landmass</option>
+                <option value="legend">Legend</option>
+                <option value="markers">Markers</option>
+                <option value="armies">Military</option>
+                <option value="ocean">Ocean</option>
+                <option value="population">Population</option>
+                <option value="prec">Precipitation</option>
+                <option value="provs">Provinces</option>
+                <option value="terrain">Relief Icons</option>
+                <option value="relig">Religions</option>
+                <option value="rivers">Rivers</option>
+                <option value="routes">Routes</option>
+                <option value="ruler">Rulers</option>
+                <option value="scaleBar">Scale Bar</option>
+                <option value="regions" selected>States</option>
+                <option value="temperature">Temperature</option>
+                <option value="texture">Texture</option>
+                <option value="vignette">Vignette</option>
+                <option value="compass">Wind Rose</option>
+                <option value="zones">Zones</option>
+              </select>
+
+              <table id="styleElements">
+                <caption
+                  id="styleIsOff"
+                  data-tip="The selected layer is not visible. Toogle it on to see style changes effect"
+                >
+                  Ensure the element visibility is toggled on!
+                </caption>
+
+                <tbody id="styleGroup">
+                  <tr data-tip="Select element group">
+                    <td><b>Group</b></td>
+                    <td>
+                      <select id="styleGroupSelect"></select>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleHeightmap">
+                  <tr id="styleHeightmapRenderOceanOption" data-tip="Check to render ocean heights">
+                    <td colspan="2">
+                      <input id="styleHeightmapRenderOcean" class="checkbox" type="checkbox" />
+                      <label for="styleHeightmapRenderOcean" class="checkbox-label">Render ocean heights</label>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Terracing power. Set to 0 to toggle off">
+                    <td>Terracing</td>
+                    <td>
+                      <slider-input id="styleHeightmapTerracing" min="0" max="20" step="1"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Layers reduction rate. Increase to improve performance">
+                    <td>Reduce layers</td>
+                    <td>
+                      <slider-input id="styleHeightmapSkip" min="0" max="10" step="1"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Line simplification rate. Increase to slightly improve performance">
+                    <td>Simplify line</td>
+                    <td>
+                      <slider-input id="styleHeightmapSimplification" min="0" max="10" step="1"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Select line interpolation type">
+                    <td>Line style</td>
+                    <td>
+                      <select id="styleHeightmapCurve">
+                        <option value="curveBasisClosed" selected>Curved</option>
+                        <option value="curveLinear">Linear</option>
+                        <option value="curveStep">Rectangular</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Select color scheme for the element">
+                    <td>Color scheme</td>
+                    <td>
+                      <select id="styleHeightmapScheme" style="width: 86%"></select>
+                      <button
+                        id="openCreateHeightmapSchemeButton"
+                        data-tip="Click to add a custom heightmap color scheme"
+                        data-stops="#ffffff,#EEEECC,#D2B48C,#008000,#008080"
+                        class="icon-plus sideButton"
+                      ></button>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleOpacity" style="display: none">
+                  <tr data-tip="Set opacity. 0: transparent, 1: solid">
+                    <td>Opacity</td>
+                    <td>
+                      <slider-input id="styleOpacityInput" min="0" max="1" step="0.01"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleLegend">
+                  <tr data-tip="Set maximum number of items in one column">
+                    <td>Column items</td>
+                    <td>
+                      <slider-input id="styleLegendColItems" min="1" max="30" step="1"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set background color">
+                    <td>Background</td>
+                    <td>
+                      <input id="styleLegendBack" type="color" value="#ffffff" />
+                      <output id="styleLegendBackOutput">#ffffff</output>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set background opacity">
+                    <td>Opacity</td>
+                    <td>
+                      <slider-input id="styleLegendOpacity" min="0" max="1" step=".01"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="stylePopulation">
+                  <tr data-tip="Set bar color for rural population">
+                    <td>Rural color</td>
+                    <td>
+                      <input id="stylePopulationRuralStrokeInput" type="color" value="#0000ff" />
+                      <output id="stylePopulationRuralStrokeOutput">#0000ff</output>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set bar color for urban population">
+                    <td>Urban color</td>
+                    <td>
+                      <input id="stylePopulationUrbanStrokeInput" type="color" value="#ff0000" />
+                      <output id="stylePopulationUrbanStrokeOutput">#ff0000</output>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleTexture">
+                  <tr data-tip="Select texture image. Big textures can highly affect performance">
+                    <td>Image</td>
+                    <td>
+                      <select id="styleTextureInput" style="width: 86%">
+                        <option value="">No texture</option>
+                        <option value="./images/textures/folded-paper-big.jpg">Folded paper big</option>
+                        <option value="./images/textures/folded-paper-small.jpg">Folded paper small</option>
+                        <option value="./images/textures/gray-paper.jpg">Gray paper</option>
+                        <option value="./images/textures/soiled-paper.jpg">Soiled paper horizontal</option>
+                        <option value="./images/textures/soiled-paper-vertical.jpg">Soided paper vertical</option>
+                        <option value="./images/textures/plaster.jpg">Plaster</option>
+                        <option value="./images/textures/ocean.jpg">Ocean</option>
+                        <option value="./images/textures/antique-small.jpg">Antique small</option>
+                        <option value="./images/textures/antique-big.jpg">Antique big</option>
+                        <option value="./images/textures/pergamena-small.jpg">Pergamena small</option>
+                        <option value="./images/textures/marble-big.jpg" selected>Marble big</option>
+                        <option value="./images/textures/marble-small.jpg">Marble small</option>
+                        <option value="./images/textures/marble-blue-small.jpg">Marble Blue</option>
+                        <option value="./images/textures/marble-blue-big.jpg">Marble Blue big</option>
+                        <option value="./images/textures/stone-small.jpg">Stone small</option>
+                        <option value="./images/textures/stone-big.jpg">Stone big</option>
+                        <option value="./images/textures/timbercut-small.jpg">Timber Cut small</option>
+                        <option value="./images/textures/timbercut-big.jpg">Timber Cut big</option>
+                        <option value="./images/textures/mars-small.jpg">Mars small</option>
+                        <option value="./images/textures/mars-big.jpg">Mars big</option>
+                        <option value="./images/textures/mercury-small.jpg">Mercury small</option>
+                        <option value="./images/textures/mercury-big.jpg">Mercury big</option>
+                        <option value="./images/textures/mauritania-small.jpg">Mauritania small</option>
+                        <option value="./images/textures/iran-small.jpg">Iran small</option>
+                        <option value="./images/textures/spain-small.jpg">Spain small</option>
+                      </select>
+                      <button
+                        data-tip="Click and provide a URL to image to be set as a texture"
+                        class="icon-plus sideButton"
+                        onclick="textureProvideURL()"
+                      ></button>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Shift the texture by axes">
+                    <td>Shift by axes</td>
+                    <td>
+                      <input id="styleTextureShiftX" type="number" value="0" data-tip="Shift texture by x axis in pixels" />
+                      <input id="styleTextureShiftY" type="number" value="0" data-tip="Shift texture by y axis in pixels" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleVignette">
+                  <tr data-tip="Select precreated vignette">
+                    <td>Preset</td>
+                    <td>
+                      <select id="styleVignettePreset"></select>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Vignette rectangle position (in percents)">
+                    <td>Position</td>
+                    <td style="display: flex; flex-direction: column; gap: 2px">
+                      <div>
+                        <span>x </span>
+                        <input id="styleVignetteX" type="number" min="0" max="100" step="0.1" style="width: 5em" />
+                        <span>width&nbsp; </span>
+                        <input id="styleVignetteWidth" type="number" min="0" max="100" step="0.1" style="width: 5em" />
+                      </div>
+                      <div>
+                        <span>y </span>
+                        <input id="styleVignetteY" type="number" min="0" max="100" step="0.1" style="width: 5em" />
+                        <span>height </span>
+                        <input id="styleVignetteHeight" type="number" min="0" max="100" step="0.1" style="width: 5em" />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set vignette X and Y radius (in percents)">
+                    <td>Radius</td>
+                    <td>
+                      <span>x </span>
+                      <input id="styleVignetteRx" type="number" min="0" max="50" style="width: 5em" />
+                      <span>y </span>
+                      <input id="styleVignetteRy" type="number" min="0" max="50" style="width: 5em" />
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set vignette blue propagation (in pixels)">
+                    <td>Blur</td>
+                    <td>
+                      <slider-input id="styleVignetteBlur" min="0" max="400" step="1"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleOcean">
+                  <tr data-tip="Select ocean pattern">
+                    <td>Pattern</td>
+                    <td>
+                      <select id="styleOceanPattern">
+                        <option value="">No pattern</option>
+                        <option value="./images/pattern1.png">Pattern 1</option>
+                        <option value="./images/pattern2.png">Pattern 2</option>
+                        <option value="./images/pattern3.png">Pattern 3</option>
+                        <option value="./images/pattern4.png">Pattern 4</option>
+                        <option value="./images/pattern5.png">Pattern 5</option>
+                        <option value="./images/pattern6.png">Pattern 6</option>
+                        <option value="./images/kiwiroo.png">Kiwiroo</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set ocean pattern opacity">
+                    <td>Pattern opacity</td>
+                    <td>
+                      <slider-input id="styleOceanPatternOpacity" min="0" max="1" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Define the coast outline contours scheme">
+                    <td>Ocean layers</td>
+                    <td>
+                      <select id="outlineLayers">
+                        <option value="none">No outline</option>
+                        <option value="random">Random</option>
+                        <option value="-6,-3,-1" selected>Standard 3</option>
+                        <option value="-6,-4,-2">Indented 3</option>
+                        <option value="-9,-6,-3,-1">Standard 4</option>
+                        <option value="-6,-5,-4,-3,-2,-1">Smooth 6</option>
+                        <option value="-9,-8,-7,-6,-5,-4,-3,-2,-1">Smooth 9</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set ocean color">
+                    <td>Color</td>
+                    <td>
+                      <input id="styleOceanFill" type="color" value="#466eab" />
+                      <output id="styleOceanFillOutput">#466eab</output>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleGrid">
+                  <tr data-tip="Select grid overlay type">
+                    <td>Type</td>
+                    <td>
+                      <select id="styleGridType">
+                        <option value="pointyHex">Hex grid (pointy)</option>
+                        <option value="flatHex">Hex grid (flat)</option>
+                        <option value="square">Square grid</option>
+                        <option value="square45deg">Square 45 degrees grid</option>
+                        <option value="squareTruncated">Truncated square grid</option>
+                        <option value="squareTetrakis">Tetrakis square grid</option>
+                        <option value="triangleHorizontal">Triangle grid (horizontal)</option>
+                        <option value="triangleVertical">Triangle grid (vertical)</option>
+                        <option value="trihexagonal">Trihexagonal grid</option>
+                        <option value="rhombille">Rhombille grid</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set grid cells scale multiplier">
+                    <td>Scale</td>
+                    <td>
+                      <input id="styleGridScale" type="number" min=".1" max="10" step=".01" />
+                      <output
+                        id="styleGridSizeFriendly"
+                        data-tip="Distance between grid cell centers (in map scale)"
+                      ></output>
+                      <a
+                        href="https://github.com/Azgaar/Fantasy-Map-Generator/wiki/Scale-and-distance#grids"
+                        target="_blank"
+                      >
+                        <span
+                          data-tip="Open wiki article scale and distance to know about grid scale"
+                          class="icon-info-circled pointer"
+                        ></span>
+                      </a>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Shift the element by axes">
+                    <td>Shift by axes</td>
+                    <td>
+                      <input id="styleGridShiftX" type="number" data-tip="Shift by x axis in pixels" />
+                      <input id="styleGridShiftY" type="number" data-tip="Shift by y axis in pixels" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleCompass">
+                  <tr data-tip="Set wind (compass) rose size">
+                    <td>Size</td>
+                    <td>
+                      <slider-input id="styleCompassSizeInput" min=".02" max="1" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Shift wind (compass) rose by axes">
+                    <td>Shift by axes</td>
+                    <td>
+                      <input id="styleCompassShiftX" type="number" value="80" data-tip="Shift by x axis in pixels" />
+                      <input id="styleCompassShiftY" type="number" value="80" data-tip="Shift by y axis in pixels" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleRelief">
+                  <tr data-tip="Select set of relief icons. All relief icons will be regenerated">
+                    <td>Style</td>
+                    <td>
+                      <select id="styleReliefSet">
+                        <option value="simple" selected>Simple</option>
+                        <option value="gray">Gray</option>
+                        <option value="colored">Colored</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Define the size of relief icons. All relief icons will be regenerated">
+                    <td>Size</td>
+                    <td>
+                      <slider-input id="styleReliefSize" min=".2" max="4" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr
+                    data-tip="Define the density of relief icons. All relief icons will be regenerated. Highly affects performance!"
+                  >
+                    <td>Density</td>
+                    <td>
+                      <slider-input id="styleReliefDensity" min=".3" max=".8" step=".01"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleFill">
+                  <tr data-tip="Set fill color">
+                    <td>Fill color</td>
+                    <td>
+                      <input id="styleFillInput" type="color" value="#5E4FA2" />
+                      <output id="styleFillOutput">#5E4FA2</output>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleStroke">
+                  <tr data-tip="Set stroke color">
+                    <td>Stroke color</td>
+                    <td>
+                      <input id="styleStrokeInput" type="color" value="#5E4FA2" />
+                      <output id="styleStrokeOutput">#5E4FA2</output>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleStrokeWidth">
+                  <tr data-tip="Set stroke width">
+                    <td>Stroke width</td>
+                    <td>
+                      <slider-input id="styleStrokeWidthInput" min="0" max="5" step=".01"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleLetterSpacing">
+                  <tr data-tip="Set letter spacing">
+                    <td>Letter spacing</td>
+                    <td>
+                      <slider-input id="styleLetterSpacingInput" min="0" max="20" step=".01"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleStrokeDash">
+                  <tr data-tip="Set stroke dash array (e.g. 5 2) and linecap">
+                    <td>Stroke dash</td>
+                    <td>
+                      <input id="styleStrokeDasharrayInput" type="text" value="1 2" style="width: 26%" />
+                      <select id="styleStrokeLinecapInput" style="width: 32%">
+                        <option value="inherit" selected>Inherit</option>
+                        <option value="butt">Butt</option>
+                        <option value="round">Round</option>
+                        <option value="square">Square</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleShadow">
+                  <tr data-tip="Set text shadow">
+                    <td>Text shadow</td>
+                    <td>
+                      <input id="styleShadowInput" type="text" value="0 0 4px white" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleFont">
+                  <tr data-tip="Select font">
+                    <td>Font</td>
+                    <td>
+                      <select id="styleSelectFont" style="width: 85%"></select>
+                      <button id="styleFontAdd" data-tip="Add a font" class="icon-plus sideButton"></button>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleSize">
+                  <tr data-tip="Set font size">
+                    <td>Font size</td>
+                    <td>
+                      <button id="styleFontPlus" data-tip="Increase font" class="whiteButton">+</button>
+                      <button id="styleFontMinus" data-tip="Descrease font" class="whiteButton">-</button>
+                      <input id="styleFontSize" type="number" min=".5" max="100" step=".1" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleRadius">
+                  <tr data-tip="Set icon size">
+                    <td>Radius</td>
+                    <td>
+                      <button id="styleRadiusPlus" data-tip="Multiply radius by 1.1" class="whiteButton">+</button>
+                      <button id="styleRadiusMinus" data-tip="Multiply radius by 1.1" class="whiteButton">-</button>
+                      <input id="styleRadiusInput" type="number" min=".2" max="10" step=".02" value="1" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleIconSize">
+                  <tr data-tip="Set icon size">
+                    <td>Size</td>
+                    <td>
+                      <button id="styleIconSizePlus" data-tip="Multiply size by 1.1" class="whiteButton">+</button>
+                      <button id="styleIconSizeMinus" data-tip="Multiply size by 1.1" class="whiteButton">-</button>
+                      <input id="styleIconSizeInput" type="number" min=".2" max="10" step=".02" value="1" />
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleCoastline">
+                  <tr data-tip="Allow system to apply filter automatically based on zoom level">
+                    <td colspan="2">
+                      <input id="styleCoastlineAuto" class="checkbox" type="checkbox" />
+                      <label for="styleCoastlineAuto" class="checkbox-label">Automatically change filter on zoom</label>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleTemperature">
+                  <tr data-tip="Define transparency of temperature leyer. Set to 0 to make it fully transparent">
+                    <td>Fill opacity</td>
+                    <td>
+                      <slider-input id="styleTemperatureFillOpacityInput" min="0" max="1" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set labels size">
+                    <td>Labels size</td>
+                    <td>
+                      <slider-input id="styleTemperatureFontSizeInput" min="0" max="30" step="1"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set labels color">
+                    <td>Labels color</td>
+                    <td>
+                      <input id="styleTemperatureFillInput" type="color" />
+                      <output id="styleTemperatureFillOutput">#000</output>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleStates" style="display: block">
+                  <tr data-tip="Set states fill opacity. 0: invisible, 1: solid">
+                    <td>Body opacity</td>
+                    <td>
+                      <slider-input id="styleStatesBodyOpacity" min="0" max="1" step="0.01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Select filter for states fill. Please note filters may cause performance issues!">
+                    <td>Body filter</td>
+                    <td><select id="styleStatesBodyFilter" /></td>
+                  </tr>
+
+                  <tr style="margin-top: 0.8em">
+                    <td style="font-style: italic">
+                      Halo is only rendered if "Rendering" option is set to "Best quality"!
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set states halo effect width">
+                    <td>Halo width</td>
+                    <td>
+                      <slider-input id="styleStatesHaloWidth" min="0" max="30" step="0.1"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set states halo effect opacity. 0: invisible, 1: solid">
+                    <td>Halo opacity</td>
+                    <td>
+                      <slider-input id="styleStatesHaloOpacity" min="0" max="1" step="0.01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Select halo effect power (blur). Set to 0 to make it solid line" style="margin-bottom: 1em">
+                    <td>Halo blur</td>
+                    <td>
+                      <slider-input id="styleStatesHaloBlur" min="0" max="10" step="0.01"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleArmies">
+                  <tr data-tip="Set fill transparency. Set to 0 to make it fully transparent">
+                    <td>Fill opacity</td>
+                    <td>
+                      <slider-input id="styleArmiesFillOpacity" min="0" max="1" step=".01"></slider-input>
+                    </td>
+                  </tr>
+                  <tr data-tip="Set regiment box size. All regiments will be redrawn on change (position will defaulted)">
+                    <td>Box Size</td>
+                    <td>
+                      <slider-input id="styleArmiesSize" min="0" max="10" step=".1"></slider-input>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleEmblems">
+                  <tr data-tip="Set state emblems size multiplier">
+                    <td>State size</td>
+                    <td>
+                      <slider-input id="emblemsStateSizeInput" min="0" max="5" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set province emblems size multiplier">
+                    <td>Province size</td>
+                    <td>
+                      <slider-input id="emblemsProvinceSizeInput" min="0" max="5" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set burg emblems size multiplier">
+                    <td>Burg size</td>
+                    <td>
+                      <slider-input id="emblemsBurgSizeInput" min="0" max="5" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Allow system to hide emblem groups if their size in too small or too big on that scale">
+                    <td colspan="2">
+                      <input id="hideEmblems" class="checkbox" type="checkbox" onchange="invokeActiveZooming()" checked />
+                      <label for="hideEmblems" class="checkbox-label">Toggle visibility automatically</label>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleFilter" style="display: block">
+                  <tr data-tip="Select filter for element. Please note filters may cause performance issues!">
+                    <td>Filter</td>
+                    <td><select id="styleFilterInput" /></td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleClipping">
+                  <tr data-tip="Set clipping. Only non-clipped part will be visible">
+                    <td>Clipping</td>
+                    <td>
+                      <select id="styleClippingInput">
+                        <option value="" selected>No clipping</option>
+                        <option value="url(#land)">Clip water</option>
+                        <option value="url(#water)">Clip land</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleMarkers">
+                  <tr data-tip="Try to keep the same size on any map scale, turn off to get size change depending on scale">
+                    <td colspan="2">
+                      <input id="styleRescaleMarkers" class="checkbox" type="checkbox" />
+                      <label for="styleRescaleMarkers" class="checkbox-label">Keep initial size on zoom change</label>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleVisibility">
+                  <tr data-tip="Allow system to hide labels if their size in too small or too big on that scale">
+                    <td colspan="2">
+                      <input id="hideLabels" class="checkbox" type="checkbox" onchange="invokeActiveZooming()" checked />
+                      <label for="hideLabels" class="checkbox-label">Toggle visibility automatically</label>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Allow system to rescale labels on zoom">
+                    <td colspan="2">
+                      <input id="rescaleLabels" class="checkbox" type="checkbox" onchange="invokeActiveZooming()" checked />
+                      <label for="rescaleLabels" class="checkbox-label">Rescale on zoom</label>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tbody id="styleScaleBar">
+                  <tr data-tip="Set bar and font size">
+                    <td>Size</td>
+                    <td>
+                      <span>Bar </span>
+                      <input id="styleScaleBarSize" type="number" min=".5" max="5" step=".1" />
+                      <span>Font </span>
+                      <input id="styleScaleBarFontSize" type="number" min="1" max="100" step=".1" />
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set position of the Scale bar bottom right corner (in percents)">
+                    <td>Position</td>
+                    <td>
+                      <span>x </span>
+                      <input id="styleScaleBarPositionX" type="number" min="0" max="100" step="0.1" style="width: 5em" />
+                      <span>y </span>
+                      <input id="styleScaleBarPositionY" type="number" min="0" max="100" step="0.1" style="width: 5em" />
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Type scale bar label, leave blank to hide label">
+                    <td>Label</td>
+                    <td>
+                      <input id="styleScaleBarLabel" type="text" />
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set background opacity. 0: transparent, 1: solid">
+                    <td>Back opacity</td>
+                    <td>
+                      <slider-input id="styleScaleBarBackgroundOpacity" min="0" max="1" step=".01"></slider-input>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set background fill color">
+                    <td>Back fill</td>
+                    <td>
+                      <input id="styleScaleBarBackgroundFill" type="color" />
+                      <output id="styleScaleBarBackgroundFillOutput"></output>
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set background stroke color and width">
+                    <td>Back stroke</td>
+                    <td>
+                      <input id="styleScaleBarBackgroundStroke" type="color" />
+                      <output id="styleScaleBarBackgroundStrokeOutput"></output>
+
+                      <span>Width </span>
+                      <input
+                        id="styleScaleBarBackgroundStrokeWidth"
+                        type="number"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                        style="width: 5em"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Set background element padding: top, right, bottom, left (in pixels)">
+                    <td>Back padding</td>
+                    <td style="display: flex; gap: 4px">
+                      <input id="styleScaleBarBackgroundPaddingTop" type="number" min="0" max="100" style="width: 5em" />
+                      <input id="styleScaleBarBackgroundPaddingRight" type="number" min="0" max="100" style="width: 5em" />
+                      <input id="styleScaleBarBackgroundPaddingBottom" type="number" min="0" max="100" style="width: 5em" />
+                      <input id="styleScaleBarBackgroundPaddingLeft" type="number" min="0" max="100" style="width: 5em" />
+                    </td>
+                  </tr>
+
+                  <tr data-tip="Select background filter">
+                    <td>Back filter</td>
+                    <td><select id="styleScaleBarBackgroundFilter" /></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div id="mapFilters" data-tip="Set a filter to be applied to the map in general">
+                <p>Toggle global filters:</p>
+                <button id="grayscale" class="radio">Grayscale</button>
+                <button id="sepia" class="radio">Sepia</button>
+                <button id="dingy" class="radio">Dingy</button>
+                <button id="tint" class="radio">Tint</button>
+              </div>
+            </div>
+            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>
+          </div>
+
+          <div id="settings-menu" style="display: none;">
+            <span class="menuspan">
+              <h1>Audio Settings</h1>
+              <label for="musicVolume">Music</label>
+              <span><input id="musicVolume" type="range" min="0" max="1" step="0.01" value="1" oninput="setMusicVolume(this.value)"><p id="musicVol">100</p><p>%</p></span>
+              <label for="sfxVolume">Sound Effects</label>
+              <span><input id="sfxVolume" type="range" min="0" max="1" step="0.01" value="1" oninput="setSFXVolume(this.value)"><p id="sfxVol">100</p><p>%</p></span>
+            </span>
+            <table>
+              <tr
+                data-tip="Set user interface size. Please note browser zoom also affects interface size (Ctrl + or Ctrl - to change)"
+              >
+                <td></td>
+                <td>Interface size</td>
+                <tr colspan="2">
+                  <select id="resolutionInput" class="paired" data-stored="resolutionSize" onchange="setResolution()">
+                    <option id="ultraRes" data-tip="3840 x 2160 pixels">4K (3840p)</option>
+                    <option id="superRes" data-tip="2880 x 1620 pixels">2K (2880p)</option>
+                    <option id="highRes" data-tip="1920 x 960 pixels">1920p</option>
+                    <option id="medRes" data-tip="1080 x 720 pixels">1080p</option>
+                    <option id="lowRes" data-tip="720 x 480 pixels">720p</option>
+                    <option id="shtRes" data-tip="480 x 360 pixels">480p</option>
+                    <option id="customRes" data-tip="Define your own Resolution size.">Custom</option>
+                  </select>
+                  <slider-input id="uiSize" data-stored="uiSize" min=".6" max="3" step=".1"></slider-input>
+                </tr>
+              </tr>
+
+              <tr data-tip="Set tooltip size">
+                <td></td>
+                <td>Tooltip size</td>
+                <td colspan="2">
+                  <slider-input id="tooltipSize" data-stored="tooltipSize" min="1" max="32" value="14"></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Set theme hue for dialogs and tool windows">
+                <td id="tdi">
+                  <i data-tip="Restore default theme color: pale magenta" id="themeColorRestore" class="icon-ccw"></i>
+                </td>
+                <td>Theme color</td>
+                <td id="tdi">
+                  <input id="themeHueInput" type="range" min="0" max="359" />
+                </td>
+                <td id="tdi">
+                  <input id="themeColorInput" data-stored="themeColor" type="color" />
+                </td>
+              </tr>
+
+              <tr data-tip="Set dialog and tool windows transparency">
+                <td></td>
+                <td>Transparency</td>
+                <td colspan="2">
+                  <slider-input id="transparencyInput" data-stored="transparency" min="0" max="100"></slider-input>
+                </td>
+              </tr>
+
+              <tr data-tip="Set autosave interval in minutes. Set 0 to disable autosave. Map is saved to browser memory">
+                <td></td>
+                <td>Autosave interval</td>
+                <td id="tdi">
+                  <input
+                    id="autosaveIntervalInput"
+                    data-stored="autosaveInterval"
+                    type="range"
+                    min="0"
+                    max="60"
+                    step="1"
+                    value="0"
+                  />
+                </td>
+                <td id="tdi">
+                  <input
+                    id="autosaveIntervalOutput"
+                    data-stored="autosaveInterval"
+                    type="number"
+                    min="0"
+                    max="60"
+                    step="1"
+                    value="0"
+                  />
+                </td>
+              </tr>
+
+              <tr data-tip="Select speech synthesis voice to pronounce generated names">
+                <td></td>
+                <td>Speaker voice</td>
+                <td>
+                  <select id="speakerVoice" data-stored="speakerVoice"></select>
+                </td>
+                <td>
+                  <span id="speakerTest" data-tip="Click to test the voice" style="cursor: pointer">🔊</span>
+                </td>
+              </tr>
+
+              <tr data-tip="Set minimum and maximum possible zoom level">
+                <td id="tdi">
+                  <i data-tip="Restore default zoom extent: [1, 20]" id="zoomExtentDefault" class="icon-ccw"></i>
+                </td>
+                <td>Zoom extent</td>
+                <td>
+                  <span data-tip="Mimimal possible zoom level (should be > 0)">min</span>
+                  <input
+                    data-tip="Mimimal possible zoom level (should be > 0)"
+                    id="zoomExtentMin"
+                    class="paired"
+                    type="number"
+                    min=".2"
+                    step=".1"
+                    max="20"
+                    value=".9"
+                  />
+                  <span data-tip="Maximal possible zoom level (should be > 1)">max</span>
+                  <input
+                    data-tip="Maximal possible zoom level (should be > 1)"
+                    id="zoomExtentMax"
+                    class="paired"
+                    type="number"
+                    min="1"
+                    max="50"
+                    value="20"
+                  />
+                </td>
+                <td id="tdi">
+                  <i
+                    data-tip="Allow to drag map beyond canvas borders"
+                    id="translateExtent"
+                    data-on="0"
+                    class="icon-hand-paper-o"
+                  ></i>
+                </td>
+              </tr>
+
+              <tr data-tip="Select rendering model. Try to set to 'optimized' if you face performance issues">
+                <td></td>
+                <td>Rendering</td>
+                <td>
+                  <select id="shapeRendering" data-stored="shapeRendering">
+                    <option value="geometricPrecision">Best quality</option>
+                    <option value="optimizeSpeed" selected>Best performance</option>
+                  </select>
+                </td>
+                <td></td>
+              </tr>
+
+              <tr
+                data-tip="Load Google Translate and select language. Note that automatic translation can break some page functional. In this case reset the language back to English or refresh the page"
+              >
+                <td id="tdi">
+                  <i data-tip="Reset language to English" id="resetLanguage" class="icon-ccw"></i>
+                </td>
+                <td>Language</td>
+                <td>
+                  <button id="loadGoogleTranslateButton">Init Google Translate</button>
+                  <div id="google_translate_element"></div>
+                </td>
+                <td></td>
+              </tr>
+            </table>
+              <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>
+          
+            <table>
+              <tr data-tip="Select emblem shape. Can be changed indivudually in Emblem editor">
+                <td id="tdi">
+                  <i data-locked="0" id="lock_emblemShape" class="icon-lock"></i>
+                </td>
+                <td>Emblem shape</td>
+                <td>
+                  <select id="emblemShape" data-stored="emblemShape">
+                    <optgroup label="Diversiform">
+                      <option value="culture" selected>Culture-specific</option>
+                      <option value="random">Culture-random</option>
+                      <option value="state">State-specific</option>
+                    </optgroup>
+                    <optgroup label="Basic">
+                      <option value="heater">Heater</option>
+                      <option value="spanish">Spanish</option>
+                      <option value="french">French</option>
+                    </optgroup>
+                    <optgroup label="Regional">
+                      <option value="horsehead">Horsehead</option>
+                      <option value="horsehead2">Horsehead Edgy</option>
+                      <option value="polish">Polish</option>
+                      <option value="hessen">Hessen</option>
+                      <option value="swiss">Swiss</option>
+                    </optgroup>
+                    <optgroup label="Historical">
+                      <option value="boeotian">Boeotian</option>
+                      <option value="roman">Roman</option>
+                      <option value="kite">Kite</option>
+                      <option value="oldFrench">Old French</option>
+                      <option value="renaissance">Renaissance</option>
+                      <option value="baroque">Baroque</option>
+                    </optgroup>
+                    <optgroup label="Specific">
+                      <option value="targe">Targe</option>
+                      <option value="targe2">Targe2</option>
+                      <option value="pavise">Pavise</option>
+                      <option value="wedged">Wedged</option>
+                    </optgroup>
+                    <optgroup label="Banner">
+                      <option value="flag">Flag</option>
+                      <option value="pennon">Pennon</option>
+                      <option value="guidon">Guidon</option>
+                      <option value="banner">Banner</option>
+                      <option value="dovetail">Dovetail</option>
+                      <option value="gonfalon">Gonfalon</option>
+                      <option value="pennant">Pennant</option>
+                    </optgroup>
+                    <optgroup label="Simple">
+                      <option value="round">Round</option>
+                      <option value="oval">Oval</option>
+                      <option value="vesicaPiscis">Vesica Piscis</option>
+                      <option value="square">Square</option>
+                      <option value="diamond">Diamond</option>
+                    </optgroup>
+                    <optgroup label="Fantasy">
+                      <option value="fantasy1">Fantasy1</option>
+                      <option value="fantasy2">Fantasy2</option>
+                      <option value="fantasy3">Fantasy3</option>
+                      <option value="fantasy4">Fantasy4</option>
+                      <option value="fantasy5">Fantasy5</option>
+                    </optgroup>
+                    <optgroup label="Middle Earth">
+                      <option value="noldor">Noldor</option>
+                      <option value="gondor">Gondor</option>
+                      <option value="easterling">Easterling</option>
+                      <option value="erebor">Erebor</option>
+                      <option value="ironHills">Iron Hills</option>
+                      <option value="urukHai">UrukHai</option>
+                      <option value="moriaOrc">Moria Orc</option>
+                    </optgroup>
+                  </select>
+                </td>
+                <td>
+                  <svg class="emblemShapePreview" viewBox="0 0 200 210"><path id="emblemShapeImage" /></svg>
+                </td>
+              </tr>
+            </table>
+            <div id="viewMode" data-tip="Set view node">
+              <p>View mode:</p>
+              <button data-tip="Standard view mode that allows to edit the map" id="viewStandard" class="pressed">
+                Standard
+              </button>
+              <button
+                data-tip="Map presentation in 3D scene. Works best for heightmap. Cannot be used for editing"
+                id="viewMesh"
+              >
+                3D scene
+              </button>
+              <button data-tip="Project map on globe. Cannot be used for editing" id="viewGlobe">Globe</button>
+            </div>
+            <button id="settingsApplyButton" onclick="stylesButton()" data-tip="Change style settings">Styles</button>  
+            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>  
+          </div> 
+
+          <div id="worldConfigurator" style="display: none" >
+            <div style="display: flex">
+              <div id="worldControls">
+                <div>
+                  <i data-locked="0" id="lock_temperatureEquator" class="icon-lock-open"></i>
+                  <label data-tip="Set temperature at equator">
+                    <i>Equator:</i>
+                    <input id="temperatureEquatorInput" data-stored="temperatureEquator" type="number" min="-50" max="50" />
+                    <span>°C = <span id="temperatureEquatorF"></span></span>
+                    <input id="temperatureEquatorOutput" data-stored="temperatureEquator" type="range" min="-50" max="50" />
+                  </label>
+                </div>
+                <div>
+                  <label data-tip="Set the North Pole average yearly temperature">
+                    <i data-locked="0" id="lock_temperatureNorthPole" class="icon-lock-open"></i>
+                    <i>North Pole:</i>
+                    <input
+                      id="temperatureNorthPoleInput"
+                      data-stored="temperatureNorthPole"
+                      type="number"
+                      min="-50"
+                      max="50"
+                    />
+                    <span>°C = <span id="temperatureNorthPoleF"></span></span>
+                    <input
+                      id="temperatureNorthPoleOutput"
+                      data-stored="temperatureNorthPole"
+                      type="range"
+                      min="-50"
+                      max="50"
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <label data-tip="Set the South Pole average yearly temperature">
+                    <i data-locked="0" id="lock_temperatureSouthPole" class="icon-lock-open"></i>
+                    <i>South Pole:</i>
+                    <input
+                      id="temperatureSouthPoleInput"
+                      data-stored="temperatureSouthPole"
+                      type="number"
+                      min="-50"
+                      max="50"
+                    />
+                    <span>°C = <span id="temperatureSouthPoleF"></span></span>
+                    <input
+                      id="temperatureSouthPoleOutput"
+                      data-stored="temperatureSouthPole"
+                      type="range"
+                      min="-50"
+                      max="50"
+                    />
+                  </label>
+                </div>
+                <div>
+                  <i data-locked="0" id="lock_mapSize" class="icon-lock-open"></i>
+                  <label data-tip="Set map size relative to the world size">
+                    <i>Map size:</i>
+                    <input id="mapSizeInput" data-stored="mapSize" type="number" min="1" max="100" step="0.1" />%
+                    <input id="mapSizeOutput" data-stored="mapSize" type="range" min="1" max="100" step="0.1" />
+                  </label>
+                </div>
+                <div>
+                  <i data-locked="0" id="lock_latitude" class="icon-lock-open"></i>
+                  <label data-tip="Set a North-South map shift, set to 50 to make map center lie on Equator">
+                    <i>Latitudes:</i>
+                    <input id="latitudeInput" data-stored="latitude" type="number" min="0" max="100" step="0.1" />
+                    <br /><i>N</i
+                    ><input
+                      id="latitudeOutput"
+                      data-stored="latitude"
+                      type="range"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                      style="width: 10.3em"
+                    /><i>S</i>
+                  </label>
+                </div>
+
+                <div>
+                  <i data-locked="0" id="lock_longitude" class="icon-lock-open"></i>
+                  <label data-tip="Set a West-East map shift, set to 50 to make map center lie on Prime meridian">
+                    <i>Longitudes:</i>
+                    <input
+                      id="longitudeInput"
+                      data-stored="longitude"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value="50"
+                      step="0.1"
+                    />
+                    <br /><i>W</i
+                    ><input
+                      id="longitudeOutput"
+                      data-stored="longitude"
+                      type="range"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                      style="width: 10.3em"
+                    /><i>E</i>
+                  </label>
+                </div>
+
+                <div>
+                  <label
+                    data-tip="Set precipitation - water amount clouds can bring. Defines rivers and biomes generation. Keep around 100% for default generation"
+                  >
+                    <i data-locked="0" id="lock_prec" class="icon-lock-open"></i>
+                    <i>Precipitation:</i>
+                    <input id="precInput" data-stored="prec" type="number" />%
+                    <input id="precOutput" data-stored="prec" type="range" min="0" max="500" value="50" />
+                  </label>
+                </div>
+                <div data-tip="Canvas size. Can be changed in general options on new map generation">
+                  <i>Canvas size:</i><br />
+                  <span id="mapSize"></span> px = <span id="mapSizeFriendly"></span>
+                </div>
+                <div>
+                  <i data-tip="Length of Meridian. Almost half of the equator length">Meridian length:</i><br />
+                  <span id="meridianLength" data-tip="Length of Meridian in pixels"></span> px =
+                  <span
+                    id="meridianLengthFriendly"
+                    data-tip="Length of Meridian is friendly units (depends on user configuration)"
+                  ></span>
+                  <span
+                    id="meridianLengthEarth"
+                    data-tip="Fantasy world Meridian length relative to real-world Earth (20k km)"
+                  ></span>
+                </div>
+                <div data-tip="Map coordinates on globe"><i>Coords:</i> <span id="mapCoordinates"></span></div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; align-items: flex-end; width: 50%">
+                <svg id="globe" width="100%" viewBox="-20 -25 240 240">
+                  <defs>
+                    <linearGradient id="temperatureGradient" x1="0" x2="0" y1="0" y2="1">
+                      <stop id="grad90" offset="0%" stop-color="blue" />
+                      <stop id="grad60" offset="16.6%" stop-color="green" />
+                      <stop id="grad30" offset="33.3%" stop-color="yellow" />
+                      <stop id="grad0" offset="50%" stop-color="red" />
+                      <stop id="grad-30" offset="66.6%" stop-color="yellow" />
+                      <stop id="grad-60" offset="83.3%" stop-color="green" />
+                      <stop id="grad-90" offset="100%" stop-color="blue" />
+                    </linearGradient>
+                  </defs>
+                  <g id="globeNoteLines">
+                    <line x1="5" x2="220" y1="0" y2="0" />
+                    <line x1="5" x2="220" y1="13" y2="13" />
+                    <line x1="5" x2="220" y1="49.5" y2="49.5" />
+                    <line x1="-5" x2="220" y1="100" y2="100" />
+                    <line x1="5" x2="220" y1="150.5" y2="150.5" />
+                    <line x1="5" x2="220" y1="187" y2="187" />
+                    <line x1="5" x2="220" y1="200" y2="200" />
+                  </g>
+                  <g id="globeWindArrows" data-tip="Click to change wind direction" stroke-linejoin="round">
+                    <circle cx="210" cy="6" r="12" />
+                    <path data-tier="0" d="M210,11 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(225 210 6)" />
+                    <circle cx="210" cy="30" r="12" />
+                    <path data-tier="1" d="M210,35 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(45 210 30)" />
+                    <circle cx="210" cy="75" r="12" />
+                    <path data-tier="2" d="M210,80 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(225 210 75)" />
+                    <circle cx="210" cy="130" r="12" />
+                    <path data-tier="3" d="M210,135 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(315 210 130)" />
+                    <circle cx="210" cy="173" r="12" />
+                    <path data-tier="4" d="M210,178 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(135 210 173)" />
+                    <circle cx="210" cy="194" r="12" />
+                    <path data-tier="5" d="M210,199 v-10 l-3,3 m6,0 l-3,-3" transform="rotate(315 210 194)" />
+                  </g>
+                  <g id="globaAxisLabels">
+                    <text x="82%" y="-4%">wind</text>
+                    <text x="-8%" y="-4%">latitude</text>
+                  </g>
+                  <g id="globeLatLabels">
+                    <text x="-15" y="5">90°</text>
+                    <text x="-15" y="18">60°</text>
+                    <text x="-15" y="53">30°</text>
+                    <text x="-15" y="103">0°</text>
+                    <text x="-15" y="153">30°</text>
+                    <text x="-15" y="190">60°</text>
+                    <text x="-15" y="204">90°</text>
+                  </g>
+                  <circle id="globeGradient" cx="100" cy="100" r="100" fill="url(#temperatureGradient)" stroke="none" />
+                  <line id="globePrimeMeridian" x1="100" x2="100" y1="0" y2="200" />
+                  <line id="globeEquator" x1="1" x2="200" y1="100" y2="100" />
+                  <circle id="globeOutline" cx="100" cy="100" r="100" fill="none" />
+                  <path id="globeGraticule" />
+                  <path id="globeArea" />
+                </svg>
+
+                <button id="restoreWinds" data-tip="Click to restore default (Earth-based) wind directions">
+                  Restore winds
+                </button>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.3em">
+              <i>Presets:</i>
+              <button id="wcWholeWorld" data-tip="Click to set map size to cover the whole world">Whole world</button>
+              <button id="wcNorthern" data-tip="Click to set map size to cover the Northern latitudes">Northern</button>
+              <button id="wcTropical" data-tip="Click to set map size to cover the Tropical latitudes">Tropical</button>
+              <button id="wcSouthern" data-tip="Click to set map size to cover the Southern latitudes">Southern</button>
+            </div>
+            <div class="dontAsk" data-tip="Automatically update world on input changes and button clicks">
+              <input id="wcAutoChange" class="checkbox" type="checkbox" checked />
+              <label for="wcAutoChange" class="checkbox-label"><i>auto-apply changes</i></label> 
+            </div>
+            <button id="optionsButton" onclick="optionsButton()" data-tip="Go Back.">Back</button>
+            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button> 
+          </div>
+
+          <div id="save-menu" style="display: none;">
+            <strong>Save map to</strong>
+            <button onclick="saveMap('server')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + Alt + S">server</button>
+            <button onclick="saveMap('machine')" data-tip="Download map file to your local disk" data-shortcut="Ctrl + S">machine</button>
+            <button onclick="saveMap('dropbox')" data-tip="Save map file to your Dropbox" data-shortcut="Ctrl + C">dropbox</button>
+            <button onclick="saveMap('storage')" data-tip="Save the project to browser storage only" data-shortcut="F6"> browser</button>
+            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>  
+          </div>
+
+          <div id="load-menu" style="display: none;">
+              <button id="loadLocalButton" onclick="mapToLoad.click()" data-tip="Load map file (.map or .gz) from your local disk">Local File</button>
+              <button onclick="loadMapFromServer()" data-tip="Load map from browser storage (if saved before)">Server</button>
+              <button onclick="quickLoad()" data-tip="Load map from browser storage (if saved before)">Storage</button>
+              <button onclick="dropboxButton()" data-tip="Load map from Dropbox (if saved before)">Dropbox</button>
+              <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>  
+          </div>
+
+          <div id="dropbox-menu" style="display: none;">
+            <button id="dropboxConnectButton" onclick="connectToDropbox()" data-tip="Connect your Dropbox account to be able to load maps from it">Connect</button>
+            <select id="loadFromDropboxSelect" style="width: 22em"></select>
+            <button onclick="loadFromDropbox()" data-tip="Load map file (.map or .gz) from your Dropbox">Load</button>
+            <button id="loadMapButton" onclick="loadMapButton()" data-tip="Go Back.">Back</button>
+            <button id="mainMenuButton" onclick="mainMenuButton()" data-tip="Go to Main Menu">Main Menu</button>  
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  
+  <div> 
     <!-- svg elements not required for map display -->
     <svg id="defElements" width="0" height="0" style="position: absolute">
       <defs>
@@ -6798,34 +8917,72 @@
         </g>
       </defs>
     </svg>
+    
+    <script src="/srmc/frontend/src/assets/components/fill-box.js"></script>
+    <script src="/srmc/frontend/src/assets/components/slider-input.js"></script>
 
-    <script src="components/fill-box.js"></script>
-    <script src="components/slider-input.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/jquery-3.1.1.min.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/jquery-ui.min.js"></script>
+    <script src="/srmc/frontend/src/assets/versioning.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/d3.min.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/flatqueue.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/delaunator.min.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/indexedDB.js"></script>
 
-    <script src="libs/jquery-3.1.1.min.js"></script>
-    <script src="libs/jquery-ui.min.js"></script>
-    <script src="versioning.js"></script>
-    <script src="libs/d3.min.js"></script>
-    <script src="libs/flatqueue.js"></script>
-    <script src="libs/delaunator.min.js"></script>
-    <script src="libs/indexedDB.js?v=1.99.00"></script>
+    <script src="/srmc/frontend/src/assets/utils/shorthands.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/commonUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/arrayUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/functionUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/colorUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/graphUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/nodeUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/numberUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/polyfills.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/probabilityUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/stringUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/languageUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/unitUtils.js"></script>
+    <script src="/srmc/frontend/src/assets/utils/pathUtils.js"></script>
+    <script defer src="/srmc/frontend/src/assets/utils/debugUtils.js"></script>
 
-    <script src="utils/shorthands.js?v=1.106.0"></script>
-    <script src="utils/commonUtils.js?v=1.103.0"></script>
-    <script src="utils/arrayUtils.js?v=1.99.00"></script>
-    <script src="utils/functionUtils.js?v=1.99.00"></script>
-    <script src="utils/colorUtils.js?v=1.99.00"></script>
-    <script src="utils/graphUtils.js?v=1.106.0"></script>
-    <script src="utils/nodeUtils.js?v=1.99.00"></script>
-    <script src="utils/numberUtils.js?v=1.99.00"></script>
-    <script src="utils/polyfills.js?v=1.99.00"></script>
-    <script src="utils/probabilityUtils.js?v=1.99.05"></script>
-    <script src="utils/stringUtils.js?v=1.106.0"></script>
-    <script src="utils/languageUtils.js?v=1.99.00"></script>
-    <script src="utils/unitUtils.js?v=1.99.00"></script>
-    <script src="utils/pathUtils.js?v=1.106.0"></script>
-    <script defer src="utils/debugUtils.js?v=1.106.0"></script>
+    <script src="/srmc/frontend/src/assets/modules/time.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/players.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/states.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/burgs.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/audio.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/voronoi.js"></script>
+    <script src="/srmc/frontend/src/assets/config/heightmap-templates.js"></script>
+    <script src="/srmc/frontend/src/assets/config/precreated-heightmaps.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/heightmap-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/features.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/ocean-layers.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/river-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/lakes.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/biomes.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/names-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/cultures-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/burgs-and-states.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/provinces-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/routes-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/religions-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/military-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/markers-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/zones-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/coa-generator.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/resample.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/alea.min.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/polylabel.min.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/lineclip.min.js"></script>
+    <script src="/srmc/frontend/src/assets/libs/simplify.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/fonts.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/ui/layers.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/ui/measurers.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/ui/style-presets.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/ui/general.js"></script>
+    <script src="/srmc/frontend/src/assets/modules/ui/options.js"></script>
+    <script src="/srmc/frontend/src/assets/main.js"></script>
 
+<<<<<<< HEAD
     <script src="modules/voronoi.js"></script>
     <script src="config/heightmap-templates.js"></script>
     <script src="config/precreated-heightmaps.js"></script>
@@ -6921,5 +9078,68 @@
     <script defer src="modules/renderers/draw-burg-icons.js?v=1.104.0"></script>
     <!-- <script defer src="modules/renderers/draw-building-labels.js"></script>
     <script defer src="modules/renderers/draw-building-icons.js"></script> -->
+=======
+    <script defer src="/srmc/frontend/src/assets/modules/ui/style.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/editors.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/tools.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/world-configurator.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/heightmap-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/provinces-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/biomes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/namesbase-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/elevation-profile.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/temperature-graph.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/routes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/routes-creator.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/route-group-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/ice-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/lakes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/coastline-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/labels-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/rivers-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/rivers-creator.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/relief-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/burg-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/units-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/notes-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/ai-generator.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/diplomacy-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/zones-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/burgs-overview.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/routes-overview.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/rivers-overview.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/military-overview.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/regiments-overview.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/markers-overview.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/regiment-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/battle-screen.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/emblems-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/markers-editor.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/3d.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/submap-tool.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/transform-tool.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/ui/hotkeys.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/coa-renderer.js"></script>
+    <script defer src="/srmc/frontend/src/assets/libs/rgbquant.min.js"></script>
+    <script defer src="/srmc/frontend/src/assets/libs/jquery.ui.touch-punch.min.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/io/save.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/io/load.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/io/cloud.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/io/export.js"></script>
+
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-features.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-borders.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-heightmap.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-markers.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-scalebar.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-temperature.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-emblems.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-military.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-state-labels.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-burg-labels.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-burg-icons.js"></script>
+    <script defer src="/srmc/frontend/src/assets/modules/renderers/draw-relief-icons.js"></script>
+  </div>
+>>>>>>> a3549c6f8c0131bffb916343273945dbe61ccc33
   </body>
 </html>

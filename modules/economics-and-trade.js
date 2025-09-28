@@ -1,2 +1,0 @@
-"use strict";
-// Global Variables
