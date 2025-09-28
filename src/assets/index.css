@@ -1,14 +1,3 @@
-html,
-body {
-  margin: 0;
-  top: 0 !important;
-  font-size: 10px;
-  overflow: hidden;
-  position: absolute !important;
-  z-index: 0;
-  align-self: center;
-}
-
 #map {
   display: flex;
   background-color: #000000;
@@ -48,12 +37,104 @@ html {
 }
 
 #main-ui {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
   position: fixed;
   z-index: 0;
   overflow: hidden;
   vertical-align: middle;
+}
+
+#loading {
+  position: absolute;
+  z-index: 1000000;
+}
+
+#loading > * {
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#loading > #loading-rose > use {
+  fill: none;
+  stroke: black;
+  opacity: 0.7;
+  transform-origin: center;
+  animation: 20s linear 0s infinite spin;
+}
+
+#loading > #loading-typography {
+  opacity: 1;
+  font-size: 11px;
+  color: #fff5da;
+  text-align: center;
+  text-shadow: 0px 1px 4px #4c3a35;
+  width: 80vw;
+  max-width: 540px;
+}
+@media screen and (max-width: 600px) {
+  #loading > #loading-typography {
+    font-size: 8px;
+  }
+}
+#titleName {
+  text-align: left;
+  font-size: 2dvb;
+}
+#title {
+  text-align: center;
+  font-size: 5dvb;
+}
+#subtitle {
+  text-align: center;
+  font-size: 3dvb;
+}
+#versionText {
+  text-align: right;
+  font-size: 2dvb;
+}
+#loading-text {
+  font-size: 2dvb;
+  margin: 0.2dvb;
+}
+#loading-text > span {
+  font-size: 1.3dvb;
+  padding-left: 1px;
+  line-height: 0px;
+}
+#loading-text > span,
+#mapOverlay > span {
+  animation: 3s infinite both blink;
+}
+#loading-text span:nth-child(2),
+#mapOverlay > span:nth-child(2) {
+  animation-delay: 1s;
+}
+#loading-text span:nth-child(3),
+#mapOverlay > span:nth-child(3) {
+  animation-delay: 2s;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }
 
 #menu-screen {
@@ -85,14 +166,14 @@ html {
   flex-flow: column;
   position: absolute;
   z-index: 1000;
-  width: 50%;
+  width: 60%;
   height: fit-content;
   min-height: 50%;
   max-height: 80%;
   align-self: center;
   justify-content: space-evenly;
   color: black;
-  font-size: 2dvi;
+  font-size: 2dvb;
   vertical-align: middle;
 }
 
@@ -127,7 +208,7 @@ html {
   border: thick groove #ccab1e;
   background-color: #e9dd9d73;
   padding: 8px;
-  font-size: 2.5dvh;
+  font-size: 2.5dvb;
 }
 
 #settings-menu p {
@@ -149,7 +230,7 @@ html {
   width: 60%;
   color: #e2d2c2;
   font-weight: bold;
-  font-size: 1dvi;
+  font-size: 1dvb;
   border: 0;
   margin: 2px;
   border-radius: 5px;
@@ -164,7 +245,7 @@ html {
 #menu * span {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: fit-content;
   height: fit-content;
 }
 
@@ -183,7 +264,7 @@ html {
   width: 100%;
   color: #e2d2c2;
   font-weight: bold;
-  font-size: 1dvi;
+  font-size: 1dvb;
   border: 0;
   margin: 2px;
   border-radius: 5px;
@@ -195,8 +276,9 @@ html {
   color: white;
 }
 
-#menu * table {
+#menu * > table {
   border-spacing: 0;
+  width: 100%;
 }
 
 #menu * table td:nth-of-type(1) {
@@ -215,7 +297,7 @@ html {
 #menu * tr {
   display: flex;
   flex-flow: row nowrap;
-  width: 100%;
+  width: fit-content;
   height: fit-content;
   padding: 1px;
 }
@@ -223,41 +305,41 @@ html {
 #menu * td {
   display: flex;
   flex-flow: row nowrap;
-  width: 100%;
+  width: fit-content;
   height: fit-content;
   padding: 1px;
   justify-content: space-between;
 }
 
-#tdi{
+#tdi {
   padding: 5px;
-  width: 1.5dvi;
+  width: fit-content;
 }
 
 #menu * input[type="color"] {
-  width: 4dvh;
-  height: 4dvh;
+  width: 2dvb;
+  height: 2dvb;
   border: 0;
 }
 
 #menu * input[type="text"] {
   border: 0px;
-  width: 62%;
-  font-size: 2.5dvh;
+  width: 50dvb;
+  font-size: 1dvb;
 }
 
 #menu * output {
   text-align: right;
-  font-size: 2.5dvh;
+  font-size: 1dvb;
 }
 
 #menu * input[type="number"] {
-  font-size: 2.5dvh;
+  font-size: 1dvb;
   border: 0;
   text-align: right;
   background-color: transparent;
-  width: 30%;
-  height: 4dvh;
+  width: 50dvb;
+  height: 3dvb;
   padding: 0 2px 0 2px;
 }
 
@@ -291,8 +373,8 @@ html {
 #menu * input[type="range"] {
   display: flex;
   align-self: center;
-  width: 100%;
-  height: 1dvi;
+  width: 50dvb;
+  height: 1dvb;
   background: 0;
   appearance: auto;
   margin-left: 0;
@@ -304,20 +386,20 @@ html {
 #menu * input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border-radius: 15%;
-  width: 1.3dvi;
-  height: 1.3dvi;
+  width: 1.3dvb;
+  height: 1.3dvb;
   background: #1e1e1e;
   border: 1px solid black;
   cursor: pointer;
-  margin-top: -0.4em;
+  margin-top: -0.4dvb;
   box-shadow: 0.5px 0.5px 0px black;
 }
 
 #menu * input[type="range"]::-moz-range-thumb {
   -moz-appearance: none;
   border-radius: 15%;
-  width: 1.3dvi;
-  height: 1.3dvi;
+  width: 1.3dvb;
+  height: 1.3dvb;
   background: #1e1e1e;
   border: 1px solid black;
   cursor: pointer;
@@ -325,19 +407,19 @@ html {
 }
 
 #menu * input[type="range"]::-webkit-slider-runnable-track {
-  height: 1dvi;
+  height: 1dvb;
   background: #666666;
 }
 
 #menu * input[type="range"]::-moz-range-track {
   -moz-appearance: none;
   background-color: #ffffff;
-  height: 1dvi;
+  height: 1dvb;
 }
 
 #settings-menu * input[type="range"] {
-  width: 85%;
-  height: 1dvi;
+  width: 50dvb;
+  height: 1dvb;
   background: 0;
   appearance: auto;
   margin-left: 0;
@@ -348,20 +430,20 @@ html {
 #settings-menu * input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border-radius: 15%;
-  width: 1.3dvi;
-  height: 1.3dvi;
+  width: 1.3dvb;
+  height: 1.3dvb;
   background: #1e1e1e;
   border: 1px solid black;
   cursor: pointer;
-  margin-top: -0.4em;
+  margin-top: -0.4dvb;
   box-shadow: 0.5px 0.5px 0px black;
 }
 
 #settings-menu * input[type="range"]::-moz-range-thumb {
   -moz-appearance: none;
   border-radius: 15%;
-  width: 1.3dvi;
-  height: 1.3dvi;
+  width: 1.3dvb;
+  height: 1.3dvb;
   background: #1e1e1e;
   border: 1px solid black;
   cursor: pointer;
@@ -369,14 +451,14 @@ html {
 }
 
 #settings-menu * input[type="range"]::-webkit-slider-runnable-track {
-  height: 1dvi;
+  height: 1dvb;
   background: #666666;
 }
 
 #settings-menu * input[type="range"]::-moz-range-track {
   -moz-appearance: none;
   background-color: #ffffff;
-  height: 1dvi;
+  height: 1dvb;
 }
 
 #dashbar-top {
@@ -418,7 +500,7 @@ html {
   background-color: #8d7a3e;
   border: solid 1px #1e1e1e;
   text-align: center;
-  font-size: 0.9vi;
+  font-size: 1.2dvb;
   color: black;
   -moz-appearance: textfield;
   appearance: textfield;
@@ -426,15 +508,15 @@ html {
 
 #nation-stats {
   border: groove #ccab1e;
-  height: 2.5dvi;
+  height: fit-content;
   width: fit-content;
 }
 
 #stat-col {
   display: flex;
   height: 100%;
+  width: 8dvb;
   flex-direction: column;
-  width: 6.2dvi;
   margin: -1px;
 }
 
@@ -442,6 +524,7 @@ html {
   background-color: #1e1e1e;
   color: white;
   font-weight: bold;
+  padding: 3px;
 }
 
 #stat-col > * span {
@@ -452,8 +535,8 @@ html {
 
 #selected-nation {
   border: thick groove #ccab1e;
-  width: 5dvi;
-  height: 5dvi;
+  width: 8dvb;
+  height: 8dvb;
   background-color: #1e1e1e;
 }
 #selected-nation-emblem {
@@ -467,8 +550,8 @@ html {
 }
 
 .stateID {
-  width: 1em;
-  height: 1em;
+  width: 1dvb;
+  height: 1dvb;
 }
 
 #nationbar * > span:hover {
@@ -477,7 +560,7 @@ html {
 }
 
 #time-box {
-  height: 4dvi;
+  height: 8dvb;
   width: fit-content;
   display: flex;
   position: absolute;
@@ -500,10 +583,11 @@ html {
 #date-box input[type="integer"],
 #timebox input[type="text"] {
   height: 100%;
-  font-size: 1dvi;
-  width: 4dvi;
-  color: #000;
+  font-size: 2dvb;
+  width: 6dvb;
+  color: #000000;
   text-align: center;
+  background-color: #ffffff;
   vertical-align: middle;
   -moz-appearance: textfield;
   appearance: textfield;
@@ -517,7 +601,7 @@ html {
 }
 #speeds button {
   height: 100%;
-  width: 2.4dvi;
+  width: 3.5dvb;
   text-align: center;
   vertical-align: middle;
   -moz-appearance: textfield;
@@ -531,7 +615,7 @@ html {
 
 button#playpause {
   height: 90%;
-  font-size: 3dvi;
+  font-size: 3dvb;
   vertical-align: middle;
   text-align: center;
 }
@@ -549,8 +633,8 @@ button#playpause {
 
 #toolbar * > button {
   height: 100%;
-  width: 2dvi;
-  font-size: 1dvi;
+  width: 2dvb;
+  font-size: 1dvb;
   background-color: #c6c2c2;
   border: groove #ccab1e;
 }
@@ -565,7 +649,7 @@ button#playpause {
   width: fit-content;
   height: fit-content;
   padding: 5px 2px 2px 8px;
-  background-color: #ccab1e42;
+  background-color: #4d4523ca;
 }
 
 #layersContent div {
@@ -580,13 +664,13 @@ button#playpause {
 #removePresetButton {
   display: inline-block;
   width: 20px;
-  font-size: 1dvh;
+  font-size: 1dvb;
 }
 
 #layersPreset {
   display: inline;
   max-width: 120px;
-  font-size: 1.25dvh;
+  font-size: 1.25dvb;
 }
 
 #layersContent * li {
@@ -610,7 +694,7 @@ button#playpause {
 #layersContent * li img {
   height: 100%;
   width: auto;
-  max-width: 3dvi;
+  max-width: 3dvb;
 }
 .tabcontent button:hover {
   background-color: var(--header);
@@ -619,7 +703,7 @@ button#playpause {
 input,
 select,
 button {
-  font-size: 1em;
+  font-size: 1dvb;
 }
 
 input,
@@ -631,7 +715,7 @@ textarea {
 }
 
 select {
-  height: 1.6em;
+  height: 1.6dvb;
   border-top-color: #abadb3;
   padding: 0;
   text-indent: 0px;
@@ -683,10 +767,10 @@ audio#sfx {
   pointer-events: none;
 }
 
-#preview {
+#predvbew {
   position: absolute;
-  bottom: 1em;
-  left: 1em;
+  bottom: 1dvb;
+  left: 1dvb;
   cursor: pointer;
 }
 
@@ -764,13 +848,13 @@ t,
 #cults,
 #relig,
 #biomes,
-#provincesBody,
+#prodvbncesBody,
 #terrs,
 #tooltip,
 #temperature,
 #texture,
 #landmass,
-#vignette,
+#dvbgnette,
 #gridOverlay,
 #fogging {
   pointer-events: none;
@@ -790,7 +874,7 @@ t,
 }
 
 #armies text.regimentIcon {
-  font-size: 0.8em;
+  font-size: 0.8dvb;
 }
 
 #statesHalo {
@@ -800,7 +884,7 @@ t,
 }
 
 #statesBody,
-#provincesBody,
+#prodvbncesBody,
 #relig,
 #biomes,
 #cults {
@@ -809,7 +893,7 @@ t,
 }
 
 #statesBody,
-#provincesBody,
+#prodvbncesBody,
 #relig,
 #cults {
   mask: url(#land);
@@ -871,7 +955,7 @@ i.icon-lock {
 }
 
 #statesTree text,
-#provincesTree text {
+#prodvbncesTree text {
   pointer-events: none;
   -webkit-user-select: none;
   user-select: none;
@@ -886,7 +970,7 @@ i.icon-lock {
 }
 
 #statesTree circle.selected,
-#provincesTree .selected {
+#prodvbncesTree .selected {
   stroke: #c13119;
   stroke-width: 2;
 }
@@ -911,7 +995,7 @@ i.icon-lock {
   }
 }
 
-#provinceLabels,
+#prodvbnceLabels,
 #burgLabels {
   dominant-baseline: alphabetic;
   text-anchor: middle;
@@ -921,7 +1005,7 @@ i.icon-lock {
 #coastlineArea {
   background-color: #eeeeee;
   border: 1px solid #a5a5a5;
-  line-height: 1.3em;
+  line-height: 1.3dvb;
   cursor: default;
 }
 
@@ -937,8 +1021,10 @@ text.drag {
   text-shadow: 0 0 1px red;
 }
 
-#dialogs {
+#dialogs >div {
   background-color: #c6c2c2;
+  font-size: 1.5dvb;
+  height: 80%;
 }
 
 .draggable {
@@ -961,21 +1047,27 @@ button.ui-button:disabled:hover {
 }
 
 .ui-dialog {
+  height: 80%;
   -webkit-user-select: none;
   user-select: none;
   align-self: center;
+  top: 0;
+  left: 0;
+  outline: 0;
+  padding: 0;
+  background-color: inherit;
 }
 
 #optionsTrigger {
-  padding: 0.6em 0.45em;
+  padding: 0.6dvb 0.45dvb;
 }
 
 @media (max-width: 600px) {
   #optionsTrigger {
-    font-size: 2em;
+    font-size: 2dvb;
     padding: 0;
-    width: 1.3em;
-    height: 1.6em;
+    width: 1.3dvb;
+    height: 1.6dvb;
     border: solid 1px #5e4fa2;
   }
 }
@@ -985,7 +1077,7 @@ button.ui-button:disabled:hover {
   font-family: monospace;
   border: solid 1px #5e4fa2;
   margin: 10px;
-  padding-bottom: 0.3em;
+  padding-bottom: 0.3dvb;
   background: var(--bg-light);
 }
 
@@ -1006,7 +1098,7 @@ button.ui-button:disabled:hover {
 
 .tab {
   border-bottom: 1px solid var(--dark-solid);
-  height: 2.2em;
+  height: 2.2dvb;
   display: flex;
   justify-content: space-between;
 }
@@ -1014,7 +1106,7 @@ button.ui-button:disabled:hover {
 div.tab > button#optionsHide {
   width: auto;
   font-family: monospace;
-  padding: 0.6em 0.45em;
+  padding: 0.6dvb 0.45dvb;
 }
 
 button.options {
@@ -1038,15 +1130,15 @@ button.options:hover {
 #options p {
   font-style: italic;
   font-weight: bold;
-  margin: 0.8em 0 0 0;
+  margin: 0.8dvb 0 0 0;
 }
 
 #options .tip {
   color: #444;
-  font-size: 1em;
+  font-size: 1dvb;
   font-family: monospace;
   font-style: italic;
-  margin-left: 0.5em;
+  margin-left: 0.5dvb;
 }
 
 #aboutContent {
@@ -1065,21 +1157,21 @@ button.options:hover {
 }
 
 #optionsContent span {
-  font-size: 0.3em;
+  font-size: 0.3dvb;
 }
 
 #options i {
   color: #31272c;
-  font-size: 0.5em;
+  font-size: 0.5dvb;
   cursor: pointer;
 }
 
 #options button i.icon-cog {
   position: absolute;
-  padding: 0.1em 0.3em;
+  padding: 0.1dvb 0.3dvb;
   background-color: var(--bg-lighter);
   border-radius: 50%;
-  visibility: hidden;
+  dvbsibility: hidden;
   opacity: 0;
   transition: 0.4s ease-in-out;
 }
@@ -1095,7 +1187,7 @@ button.options:hover {
 }
 
 #options button:hover i.icon-cog {
-  visibility: visible;
+  dvbsibility: dvbsible;
   opacity: 1;
 }
 
@@ -1111,8 +1203,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 
 #options input[type="color"] {
-  width: 4.5em;
-  height: 1em;
+  width: 4.5dvb;
+  height: 1dvb;
   border: 0;
 }
 
@@ -1125,7 +1217,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 
 #options select {
-  height: 1.5em;
+  height: 1.5dvb;
   border: 0;
   cursor: pointer;
   font-size: smaller;
@@ -1143,11 +1235,11 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 
 #options input[type="number"] {
-  font-size: 0.8em;
+  font-size: 0.8dvb;
   border: 0;
   text-align: right;
   background-color: transparent;
-  width: 3.3em;
+  width: 3.3dvb;
 }
 
 #options input[type="number"]::-webkit-inner-spin-button,
@@ -1194,20 +1286,20 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 15%;
-  width: 0.91em;
-  height: 0.91em;
+  width: 0.91dvb;
+  height: 0.91dvb;
   background: var(--light-solid);
   border: 1px solid var(--dark-solid);
   cursor: pointer;
-  margin-top: -0.4em;
+  margin-top: -0.4dvb;
   box-shadow: 0.5px 0.5px 0px var(--dark-solid);
 }
 
 #options input[type="range"]::-moz-range-thumb {
   -moz-appearance: none;
   border-radius: 15%;
-  width: 0.73em;
-  height: 0.73em;
+  width: 0.73dvb;
+  height: 0.73dvb;
   background: var(--light-solid);
   border: 1px solid var(--dark-solid);
   cursor: pointer;
@@ -1231,18 +1323,18 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 #loadGoogleTranslateButton {
   font-size: smaller;
-  padding: 0.4em 0.5em;
+  padding: 0.4dvb 0.5dvb;
 }
 
 #options input[type="color"] {
-  width: 2em;
+  width: 2dvb;
   padding: 1px;
 }
 
 .tabcontent button.sideButton {
   border-radius: 15%;
-  font-size: 0.8em;
-  margin-block: -1em;
+  font-size: 0.8dvb;
+  margin-block: -1dvb;
 }
 
 #layersContent button.active,
@@ -1251,7 +1343,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 
 #styleSelectFont > option {
-  font-size: 2em;
+  font-size: 2dvb;
 }
 
 #sticked {
@@ -1278,7 +1370,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 
 #exitCustomization > div {
-  width: 12em;
+  width: 12dvb;
   background: var(--dark-solid);
   cursor: move;
 }
@@ -1286,8 +1378,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 #finalizeHeightmap {
   width: 100%;
   border: none;
-  padding: 0.45em 0.75em;
-  margin: 0.4em 0;
+  padding: 0.45dvb 0.75dvb;
+  margin: 0.4dvb 0;
   white-space: nowrap;
   font-family: monospace;
   animation: glowing 2s infinite;
@@ -1318,8 +1410,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 .tabcontent button {
   background-color: var(--bg-lighter);
   border: none;
-  padding: 0.45em 0.75em;
-  margin: 0.35em 0;
+  padding: 0.45dvb 0.75dvb;
+  margin: 0.35dvb 0;
   transition: 0.1s;
   overflow: hidden;
   white-space: nowrap;
@@ -1338,13 +1430,12 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 #toolsContent > .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: 0.2em 0;
+  margin: 0.2dvb 0;
 }
 
 #toolsContent button {
-  padding: 0.35em 0;
-  margin: 0.16em 0.12em;
-}
+  padding: 0.35dvb 0;
+  margin: 0.16dvb 0.12dvb;dvb
 
 #mapLayers {
   display: block;
@@ -1357,9 +1448,9 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 4px 0;
 }
 
-#viewMode > button {
-  padding: 0.35em;
-  margin: 0.3em 0.3em 0.6em 0.3em;
+#dvbewMode > button {
+  padding: 0.35dvb;
+  margin: 0.3dvb 0.3dvb 0.6dvb 0.6dvb;
   float: left;
   width: 30.7%;
 }
@@ -1379,7 +1470,9 @@ fieldset {
 }
 
 #tooltip {
+  display: flex;
   position: absolute;
+  z-index: 1000;
   text-align: center;
   width: fit-content;
   height: fit-content;
@@ -1389,16 +1482,15 @@ fieldset {
   border: thick groove #ccab1e;
   text-shadow: 1px 1px 2px #1d0e0f;
   color: #ffffff;
-  font-size: calc(10px + 0.5vh);
+  font-size: 1dvb;
   font-weight: bold;
   white-space: pre-line;
-  z-index: 10000000;
   background: linear-gradient(0.1turn, #1e1e1e, #c71d1d, #1e1e1e);
 }
 
 #optionsContent table {
   border-spacing: 0;
-  line-height: 1.2em;
+  line-height: 1.2dvb;
 }
 
 #optionsContent table td:nth-of-type(1) {
@@ -1414,10 +1506,10 @@ fieldset {
   width: 6%;
 }
 
-.emblemShapePreview {
-  width: 1.5em;
-  height: 1.5em;
-  margin: -0.4em 0.1em;
+.emblemShapePredvbew {
+  width: 1.5dvb;
+  height: 1.5dvb;
+  margin: -0.4dvb 0.1dvb;
   fill: #fff;
   stroke: #000;
   stroke-width: 5px;
@@ -1425,7 +1517,7 @@ fieldset {
 
 #styleContent table {
   border-spacing: 0;
-  margin-left: 0.2em;
+  margin-left: 0.2dvb;
   width: 100%;
 }
 
@@ -1450,7 +1542,7 @@ fieldset {
 }
 
 #styleElements .whiteButton {
-  padding: 0 0.8em;
+  padding: 0 0.8dvb;
   border: 0;
   background-color: #ffffff !important;
 }
@@ -1478,8 +1570,8 @@ fieldset {
 .matrix-table > table th,
 .matrix-table > table td {
   border: 1px solid var(--dark-solid);
-  height: 2em;
-  padding: 0.2em;
+  height: 2dvb;
+  padding: 0.2dvb;
   position: relative;
 }
 
@@ -1547,17 +1639,17 @@ fieldset {
 }
 
 #templateTools > button {
-  width: 1.8em;
-  height: 1.6em;
+  width: 1.8dvb;
+  height: 1.6dvb;
   margin: 1px;
-  padding: 0.1em 0.5em;
+  padding: 0.1dvb 0.5dvb;
   float: left;
-  font-size: 1.2em;
+  font-size: 1.2dvb;
   font-family: monospace;
 }
 
 #brushesButtons > button {
-  padding: 0.3em;
+  padding: 0.3dvb;
 }
 
 #brushesButtons svg {
@@ -1574,7 +1666,7 @@ fieldset {
 
 #templateEditor #templateTools {
   display: inline-block;
-  margin-bottom: -0.3em;
+  margin-bottom: -0.3dvb;
 }
 
 #templateBody > div {
@@ -1582,8 +1674,8 @@ fieldset {
   border-radius: 1px;
   background-image: linear-gradient(to right, #ffffff 0%, #fafafa 51%, #ebebeb 100%);
   margin: 1px 1px;
-  padding: 0.1em 0.2em;
-  height: 1.2em;
+  padding: 0.1dvb 0.2dvb;
+  height: 1.2dvb;
 }
 
 #templateBody > div:hover {
@@ -1606,8 +1698,8 @@ fieldset {
 
 #templateBody input,
 #templateBody select {
-  width: 4.5em;
-  height: 1em;
+  width: 4.5dvb;
+  height: 1dvb;
   border: 0;
   background-color: #ffffff95;
   color: #05044d;
@@ -1616,25 +1708,25 @@ fieldset {
 }
 
 #templateBody select {
-  width: 8em;
-  height: 1.4em;
+  width: 8dvb;
+  height: 1.4dvb;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
 }
 
 #templateBody .icon-resize-vertical {
   cursor: row-resize;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   color: #555555;
   margin: 1px 1px;
 }
 
 #templateBody .icon-check-empty,
 #templateBody .icon-check {
-  width: 1.1em;
+  width: 1.1dvb;
   cursor: pointer;
   color: #575957;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
 }
 
 #controlPoints {
@@ -1679,9 +1771,9 @@ fieldset {
 }
 
 #battleBody > table {
-  padding: 0.2em 0.6em 0.2em 0.6em;
+  padding: 0.2dvb 0.6dvb 0.2dvb 0.6dvb;
   border: 1px solid #ccc;
-  margin: 0.2em 0 0.4em 0;
+  margin: 0.2dvb 0 0.4dvb 0;
   display: block;
   overflow: auto;
   max-height: 34vh;
@@ -1689,14 +1781,14 @@ fieldset {
 }
 
 #battleBody > table .regiment {
-  width: 13em;
+  width: 13dvb;
   font-weight: bold;
 }
 
 tr.battleCasualties,
-tr.battleSurvivors {
+tr.battleSurdvbvors {
   font-style: italic;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
 }
 
 #battleBottom div.battleTypes {
@@ -1711,18 +1803,18 @@ tr.battleSurvivors {
 
 #battleBody div.battlePhases > button,
 #battleBottom div.battleTypes > button {
-  width: 3.2em;
+  width: 3.2dvb;
   display: block;
-  margin: 0.2em 0;
+  margin: 0.2dvb 0;
 }
 
 div#regimentSelectorBody {
   max-height: 50vh;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
 }
 
 div#regimentSelectorBody > div {
-  padding: 0.1em;
+  padding: 0.1dvb;
   border: 1px solid #fff;
 }
 
@@ -1745,9 +1837,9 @@ div#regimentSelectorBody > div > div {
 }
 
 .drag-trigger {
-  border-left: 1em solid transparent;
-  border-right: 1em solid #000;
-  border-top: 1em solid transparent;
+  border-left: 1dvb solid transparent;
+  border-right: 1dvb solid #000;
+  border-top: 1dvb solid transparent;
   position: absolute;
   right: -1px;
   bottom: -1px;
@@ -1766,19 +1858,19 @@ div#regimentSelectorBody > div > div {
 .colorsContainer {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-column-gap: 0.3em;
-  grid-row-gap: 0.2em;
+  grid-column-gap: 0.3dvb;
+  grid-row-gap: 0.2dvb;
 }
 
 .color-div {
-  width: 3em;
-  height: 1.5em;
+  width: 3dvb;
+  height: 1.5dvb;
   border: 1px #999 solid;
   cursor: pointer;
 }
 
 #colorsSelect div {
-  height: 1.7em;
+  height: 1.7dvb;
   display: inline-block;
   cursor: pointer;
 }
@@ -1818,9 +1910,9 @@ div#regimentSelectorBody > div > div {
 
 i.resetButton {
   float: left;
-  padding-right: 0.4em;
-  font-size: 0.8em;
-  margin-top: 0.25em;
+  padding-right: 0.4dvb;
+  font-size: 0.8dvb;
+  margin-top: 0.25dvb;
   color: #ffffff;
   cursor: pointer;
 }
@@ -1850,8 +1942,8 @@ i.resetButton:active {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 15%;
-  width: 1em;
-  height: 1em;
+  width: 1dvb;
+  height: 1dvb;
   background: #e9e9e9;
   border: 1px solid #9b9b9b;
   cursor: pointer;
@@ -1860,15 +1952,15 @@ i.resetButton:active {
 .ui-dialog input[type="range"]::-moz-range-thumb {
   appearance: none;
   border-radius: 15%;
-  width: 1em;
-  height: 1em;
+  width: 1dvb;
+  height: 1dvb;
   background: #e9e9e9;
   border: 1px solid #9b9b9b;
   cursor: pointer;
 }
 
 .ui-dialog input[type="number"] {
-  width: 4.5em;
+  width: 4.5dvb;
 }
 
 .ui-dialog .disabled {
@@ -1880,17 +1972,17 @@ i.resetButton:active {
 }
 
 div.slider {
-  width: 40em;
-  margin-top: 0.2em;
+  width: 40dvb;
+  margin-top: 0.2dvb;
 }
 
 div.slider .ui-slider-handle {
-  width: 3em;
-  height: 1.6em;
+  width: 3dvb;
+  height: 1.6dvb;
   top: 50%;
-  margin-top: -0.8em;
+  margin-top: -0.8dvb;
   text-align: center;
-  line-height: 1.6em;
+  line-height: 1.6dvb;
 }
 
 #saveDropdown {
@@ -1900,7 +1992,7 @@ div.slider .ui-slider-handle {
   top: 100%;
   border: 1px solid #5e4fa2;
   background-color: #a4879b;
-  width: 5em;
+  width: 5dvb;
 }
 
 #loadDropdown {
@@ -1910,7 +2002,7 @@ div.slider .ui-slider-handle {
   top: 100%;
   border: 1px solid #5e4fa2;
   background-color: #a4879b;
-  width: 9em;
+  width: 9dvb;
 }
 
 #loadDropdown > div,
@@ -1927,7 +2019,7 @@ div.slider .ui-slider-handle {
 #rescaleHigher,
 #rescaleLower,
 #rescaleModifier {
-  width: 3.7em;
+  width: 3.7dvb;
 }
 
 .italic {
@@ -1939,8 +2031,6 @@ div.slider .ui-slider-handle {
 }
 
 .table {
-  max-height: 75vh;
-  max-width: 100vw;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-scrollbar-width: thin;
@@ -1978,25 +2068,23 @@ div.slider .ui-slider-handle {
   background: #666;
 }
 
-.dialog {
-  max-width: 60%;
-  max-height: 60%;
-}
-
-.dialog > div {
-  width: max-content;
-  height: max-content;
+.ui-dialog {
+  height: 80%;
+  overflow-y: scroll;
 }
 
 div.header {
   display: grid;
   width: 0;
   font-weight: bold;
-  font-size: 0.9em;
+  font-size: 1.5dvb;
+  top: 0;
+  position: relative;
+  z-index: +1;
 }
 
 div.header > div:first-child {
-  margin-left: 1.8em;
+  margin-left: 1.8dvb;
 }
 
 .sortable {
@@ -2006,7 +2094,7 @@ div.header > div:first-child {
 .totalLine {
   color: #666666;
   font-style: italic;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   margin-bottom: 3px;
 }
 
@@ -2014,13 +2102,22 @@ div.header > div:first-child {
   display: inline-block;
 }
 
+div#statesBodySection {
+  display: flex;
+  flex-direction: column nowrap;
+  overflow-y: auto;
+}
+
 div.states {
   border: 1px solid #ffffff;
   background-image: linear-gradient(to right, #fafafa80 0%, #f0f0f080 50%, #c8c8c880 100%);
-  margin: 0.1em 0;
-  padding: 0 0.2em;
-  font-size: 0.9em;
-  line-height: 1.5em;
+  margin: 0.1dvb 0;
+  padding: 0 0.2dvb;
+  font-size: 0.9dvb;
+  line-height: 1.5dvb;
+  max-height: 3dvb;
+  display: inline-block;
+  flex-direction: row nowrap;
 }
 
 div.states:hover,
@@ -2029,43 +2126,44 @@ div.states.hovered {
   background-image: linear-gradient(to right, #dddddd 100%, #ececec 50%, #fcfcfc 0%);
 }
 
-div.states > *,
+div.states *,
 div.states sup,
 div.totalLine > div {
   display: inline-block;
+  max-height: 3dvb;
 }
 
 div.states > input {
-  width: 7em;
+  width: 7dvb;
   background: none;
   border: 0;
 }
 
 div.states div {
-  width: 3.2em;
+  width: 3.2dvb;
 }
 
 div.states .biomeHabitability {
-  width: 4em;
+  width: 4dvb;
   -moz-appearance: textfield;
   appearance: textfield;
   appearance: textfield;
 }
 
 div.states > .statePopulation {
-  width: 3em;
+  width: 3dvb;
 }
 
 div.states > .stateWealth {
-  width: 6em;
+  width: 6dvb;
 }
 
 div.states > .stateWages {
-  width: 3em;
+  width: 3dvb;
 }
 
 div.states:hover > .hiddenIcon {
-  visibility: visible !important;
+  dvbsibility: dvbsible !important;
 }
 
 div.states .icon-pencil,
@@ -2081,7 +2179,7 @@ div.states .icon-lock-open {
 
 div.states .icon-resize-vertical {
   cursor: row-resize;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
 }
 
 div.states > [class^="icon-"] {
@@ -2091,7 +2189,7 @@ div.states > [class^="icon-"] {
 
 div.states > .icon-arrows-cw {
   color: #67575c;
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   cursor: pointer;
 }
 
@@ -2101,11 +2199,11 @@ div.states > .before {
 }
 
 div.states > .small {
-  font-size: 0.9em;
+  font-size: 0.9dvb;
 }
 
 div.states > select {
-  width: 7em;
+  width: 7dvb;
   cursor: pointer;
   border: 0;
   background-color: transparent;
@@ -2118,7 +2216,7 @@ div.states > select {
 div.states > .burgName,
 div.states > .burgState,
 div.states > .burgCulture {
-  width: 6em;
+  width: 6dvb;
 }
 
 div.states span.inactive {
@@ -2130,18 +2228,18 @@ div.states span.inactive:hover {
 }
 
 div.states > .riverName {
-  width: 7em;
+  width: 7dvb;
 }
 
 div.states > .riverType {
-  width: 5em;
+  width: 5dvb;
 }
 
-.coaIcon {
+svg.coaIcon {
   stroke-width: 3;
-  width: 1.4em;
-  height: 1.4em;
-  margin: -0.3em 0;
+  width: 1.4dvb;
+  height: 1.4dvb;
+  margin: -0.3dvb 0;
 }
 
 .coaIcon > use {
@@ -2158,8 +2256,8 @@ div.states > .riverType {
 }
 
 #diplomacySelect {
-  width: 5em;
-  margin: 0.1em 0 0 -0.3em;
+  width: 5dvb;
+  margin: 0.1dvb 0 0 -0.3dvb;
   position: fixed;
   background-color: #ffffff;
   border: 1px solid #1891ff;
@@ -2167,13 +2265,13 @@ div.states > .riverType {
 
 #diplomacySelect > div {
   width: 100%;
-  padding-left: 0.3em;
+  padding-left: 0.3dvb;
 }
 
 #diplomacySelect > div:hover {
   background-color: #1891ff;
   color: #ffffff;
-  width: calc(100% - 0.3em);
+  width: calc(100% - 0.3dvb);
 }
 
 #burgsFooterPopulation {
@@ -2181,19 +2279,19 @@ div.states > .riverType {
   width: 50px;
   color: #666666;
   font-style: italic;
-  line-height: 1.4em;
+  line-height: 1.4dvb;
 }
 
 #burgBody div.label {
   display: inline-block;
-  width: 6em;
+  width: 6dvb;
 }
 
 #burgBody > div > div,
 #riverBody > div,
 #routeBody > div,
 #lakeBody > div {
-  padding: 0.1em;
+  padding: 0.1dvb;
 }
 
 #riverBody div.label,
@@ -2204,31 +2302,31 @@ div.states > .riverType {
 #lakeBody input,
 #lakeBody select {
   display: inline-block;
-  width: 7em;
+  width: 7dvb;
 }
 
 #routeBody input,
 #routeBody select {
   display: inline-block;
-  width: 10em;
+  width: 10dvb;
 }
 
 #stateNameEditor div.label,
-#provinceNameEditor div.label,
+#prodvbnceNameEditor div.label,
 #regimentBody div.label,
 #markerEditor div.label {
   display: inline-block;
-  width: 5.5em;
-  padding: 0.3em 0;
+  width: 5.5dvb;
+  padding: 0.3dvb 0;
 }
 
 #exportToPngTilesScreen div.label {
   display: inline-block;
-  width: 5em;
+  width: 5dvb;
 }
 
 #regimentBody input[type="number"] {
-  width: 5em;
+  width: 5dvb;
 }
 
 .burgFeature {
@@ -2261,9 +2359,9 @@ div.states.active {
 }
 
 div.states.Self {
-  margin-bottom: 0.2em;
+  margin-bottom: 0.2dvb;
   cursor: default !important;
-  padding: 0.2em 0 0 0.5em;
+  padding: 0.2dvb 0 0 0.5dvb;
   font-weight: bold;
 }
 
@@ -2273,11 +2371,11 @@ div.states button.selectCapital {
 }
 
 div.states > input.biomeName {
-  width: 12em;
+  width: 12dvb;
 }
 
 div.states > div.biomeArea {
-  width: 5em;
+  width: 5dvb;
 }
 
 #militaryBody div.states > input {
@@ -2288,7 +2386,7 @@ div.states > div.biomeArea {
 #militaryBody div.states > input,
 #militaryBody div.states > div,
 #regimentsBody div.states > div {
-  width: 5em;
+  width: 5dvb;
 }
 
 #emblemBody > div {
@@ -2306,12 +2404,12 @@ div.states > div.biomeArea {
 }
 
 #emblemBody .label {
-  width: 6em;
+  width: 6dvb;
   display: inline-block;
 }
 
 #emblemBody select {
-  width: 9em;
+  width: 9dvb;
 }
 
 #emblemsBottom {
@@ -2321,18 +2419,18 @@ div.states > div.biomeArea {
 
 #emblemUploadControl,
 #emblemDownloadControl {
-  margin-top: 0.3em;
+  margin-top: 0.3dvb;
   width: 100%;
 }
 
 div.editorLine {
-  margin: 0.2em 0;
-  padding: 0 0.2em;
-  font-size: 0.9em;
+  margin: 0.2dvb 0;
+  padding: 0 0.2dvb;
+  font-size: 0.9dvb;
 }
 
 #emblemDownloadControl > input {
-  width: 4.1em;
+  width: 4.1dvb;
 }
 
 #picker text {
@@ -2413,7 +2511,7 @@ div.editorLine {
 
 .hoverButton {
   position: sticky;
-  margin-left: -1.8em;
+  margin-left: -1.8dvb;
   margin-top: 1px;
   background-color: #dedede;
   font-size: 8px;
@@ -2422,7 +2520,7 @@ div.editorLine {
 }
 
 .unitsHeader {
-  margin: 0.8em 0 0 -1.1em;
+  margin: 0.8dvb 0 0 -1.1dvb;
   font-weight: bold;
   font-style: italic;
 }
@@ -2434,26 +2532,26 @@ div.editorLine {
 
 #unitsBody label {
   display: inline-block;
-  width: 9em;
+  width: 9dvb;
 }
 
 #unitsBody > div > select,
 #unitsBody > div > input[type="text"] {
-  width: 14.4em;
+  width: 14.4dvb;
   border: 1px solid #e9e9e9;
 }
 
 #unitsBody input[type="range"] {
-  width: 9em;
+  width: 9dvb;
 }
 
 #unitsEditor i.icon-lock-open,
 #unitsEditor i.icon-lock {
   color: #626573;
-  font-size: 0.8em;
+  font-size: 0.8dvb;
   cursor: pointer;
   position: fixed;
-  margin: 0.4em 0 0 -0.9em;
+  margin: 0.4dvb 0 0 -0.9dvb;
 }
 
 #ruler {
@@ -2500,12 +2598,12 @@ div.editorLine {
 }
 
 #militaryOptionsTable input {
-  width: 9em;
+  width: 9dvb;
   border: 1px solid #d4d4d4;
 }
 
 #militaryOptionsTable input[type="number"] {
-  width: 4em;
+  width: 4dvb;
 }
 
 #militaryOptionsTable button {
@@ -2538,7 +2636,7 @@ ul.share-buttons li {
 }
 
 ul.share-buttons img {
-  width: 2em;
+  width: 2dvb;
 }
 
 input[type="checkbox"] {
@@ -2554,10 +2652,10 @@ input[type="checkbox"] {
   content: "";
   display: inline-block;
   vertical-align: bottom;
-  width: 0.6em;
-  height: 0.6em;
-  padding: 0.2em;
-  margin-right: 0.2em;
+  width: 0.6dvb;
+  height: 0.6dvb;
+  padding: 0.2dvb;
+  margin-right: 0.2dvb;
   border: 1px solid darkgrey;
   border-radius: 15%;
   background: white;
@@ -2565,7 +2663,7 @@ input[type="checkbox"] {
 }
 
 .checkbox:checked + .checkbox-label:before {
-  line-height: 0.8em;
+  line-height: 0.8dvb;
   font-weight: bold;
   content: "✓";
   color: #333333;
@@ -2584,7 +2682,7 @@ div.textual fieldset {
 
 div.textual span,
 .textual legend {
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   font-weight: bold;
 }
 
@@ -2616,7 +2714,7 @@ div.textual span,
   width: 28vw;
   right: 1vw;
   top: 1vw;
-  font-size: 1.2em;
+  font-size: 1.2dvb;
   border: 1px solid #5e4fa2;
   background: rgba(255, 250, 228, 0.7);
   box-shadow: 2px 2px 5px -3px #3a2804;
@@ -2630,7 +2728,7 @@ div.textual span,
 
 #notesHeader {
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1.3dvb;
   padding: 16px 0 4px 12px;
   border-bottom: 1px solid #5e4fa2;
 }
@@ -2655,7 +2753,7 @@ div.textual span,
   height: 87%;
   outline: 0;
   overflow-y: auto;
-  padding: 0.6em;
+  padding: 0.6dvb;
   font-family: monospace;
   background-color: #fff;
   border: 1px solid #dedede;
@@ -2675,11 +2773,11 @@ svg.button {
 }
 
 #reliefEditor div.reliefEditorLabel {
-  width: 4em;
+  width: 4dvb;
 }
 
 #reliefEditor input[type="range"] {
-  width: 16em;
+  width: 16dvb;
 }
 
 #reliefIconsDiv {
@@ -2723,8 +2821,8 @@ svg.button {
 }
 
 #alertMessage ul {
-  padding-left: 1.2em;
-  margin: 1em 0;
+  padding-left: 1.2dvb;
+  margin: 1dvb 0;
 }
 
 .pseudoLink {
@@ -2733,7 +2831,7 @@ svg.button {
 }
 
 .info-line {
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   font-style: italic;
   color: gray;
   -webkit-user-select: none;
@@ -2754,7 +2852,7 @@ svg.button {
   align-self: flex-start;
   width: 100%;
   height: 100%;
-  font-size: 2dvh;
+  font-size: 2dvb;
 }
 
 #worldControls {
@@ -2772,13 +2870,13 @@ svg.button {
 #worldControls input[type="number"] {
   border: 1px solid #e5e5e5;
   padding: 0px;
-  width: 4em;
+  width: 4dvb;
 }
 
 #worldControls i.icon-lock-open,
 #worldControls i.icon-lock {
   color: #626573;
-  font-size: 2dvh;
+  font-size: 2dvb;
   cursor: pointer;
 }
 
@@ -2858,13 +2956,13 @@ svg.button {
 }
 
 .dontAsk {
-  margin: 0.9em 0 0 0.6em;
+  margin: 0.9dvb 0 0 0.6dvb;
   display: inline-flex;
   align-items: center;
 }
 
 #errorBox {
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   font-family: monospace;
   color: #920303;
   background-color: #dabdbd91;
@@ -2875,12 +2973,12 @@ svg.button {
 .announcement {
   background-color: #a18888;
   color: white;
-  padding: 0.4em 0.5em;
+  padding: 0.4dvb 0.5dvb;
   border: dashed 1px var(--dark-solid);
 }
 
 .speaker {
-  font-size: 0.9em;
+  font-size: 0.9dvb;
   cursor: pointer;
 }
 
@@ -2889,16 +2987,16 @@ svg.button {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  max-width: 23em;
-  padding: 1.2em;
+  max-width: 23dvb;
+  padding: 1.2dvb;
   background-color: var(--bg-dialogs);
   border: solid 1px var(--dark-solid);
-  font-size: 1.2em;
+  font-size: 1.2dvb;
   z-index: 10000;
 }
 
 #promptText {
-  padding: 0 0 0.6em 0;
+  padding: 0 0 0.6dvb 0;
   font-weight: bold;
   font-family: monospace;
 }
@@ -2913,7 +3011,7 @@ svg.button {
   pointer-events: none;
   text-align: center;
   background: rgba(0, 0, 0, 0.5);
-  font-size: 2.4em;
+  font-size: 2.4dvb;
   color: #fff5da;
   text-shadow: 0px 1px 4px #4c3a35;
 }
@@ -2934,7 +3032,7 @@ svg.button {
 }
 
 #markerTypeSelector {
-  font-size: 0.85em;
+  font-size: 0.85dvb;
 }
 
 #markerTypeSelectorWrapper {
@@ -2945,7 +3043,7 @@ svg.button {
   display: none;
 }
 
-#markerTypeSelectMenu.visible {
+#markerTypeSelectMenu.dvbsible {
   display: block;
   position: absolute;
   height: 250px;
@@ -2976,7 +3074,7 @@ svg.button {
   font-style: italic;
   font-weight: bold;
   color: #222;
-  margin: 0.8em 0 0 0;
+  margin: 0.8dvb 0 0 0;
 }
 .separator::before,
 .separator::after {
@@ -2985,10 +3083,10 @@ svg.button {
   border-bottom: 1px solid #333;
 }
 .separator:not(:empty)::before {
-  margin-right: 0.25em;
+  margin-right: 0.25dvb;
 }
 .separator:not(:empty)::after {
-  margin-left: 0.25em;
+  margin-left: 0.25dvb;
 }
 
 @keyframes clockwiseBorderPulse {

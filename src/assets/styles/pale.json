@@ -292,7 +292,7 @@
     "fill": "#7ca4b6"
   },
   "#oceanicPattern": {
-    "href": "/srmc/frontend/src/images/kiwiroo.png",
+    "href": "/srmc/frontend/src/assets/images/kiwiroo.png",
     "opacity": 0.3
   },
   "#terrs > #oceanHeights": {

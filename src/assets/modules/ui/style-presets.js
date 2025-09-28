@@ -64,7 +64,7 @@ async function getStylePreset(desiredPreset) {
 
 async function fetchSystemPreset(preset) {
   try {
-    const res = await fetch(`/srmc/frontend/src/styles/${preset}.json?v=${VERSION}`);
+    const res = await fetch(`/srmc/frontend/src/assets/styles/${preset}.json?v=${VERSION}`);
     return await res.json();
   } catch (err) {
     throw new Error("Cannot fetch style preset", preset);

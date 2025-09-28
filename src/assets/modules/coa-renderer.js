@@ -1953,7 +1953,7 @@ window.COArenderer = (function () {
     return fetchedCharges.join("");
   }
 
-  const PATH = "/srmc/frontend/src/charges/";
+  const PATH = "/srmc/frontend/src/assets/charges/";
   async function fetchCharge(charge, id) {
     const fetched = fetch(PATH + charge + ".svg")
       .then(res => {

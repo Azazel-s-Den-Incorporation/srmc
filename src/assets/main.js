@@ -28,7 +28,7 @@ const UINT32_MAX = 4294967295;
 
 if (PRODUCTION && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/srmc/frontend/src/sw.js").catch(err => {
+    navigator.serviceWorker.register("/srmc/frontend/src/assets/sw.js").catch(err => {
       console.error("ServiceWorker registration failed: ", err);
     });
   });
@@ -37,7 +37,7 @@ if (PRODUCTION && "serviceWorker" in navigator) {
     "beforeinstallprompt",
     async event => {
       event.preventDefault();
-      const Installation = await import("/srmc/frontend/src/modules/dynamic/installation.js");
+      const Installation = await import("/srmc/frontend/src/assets/modules/dynamic/installation.js");
       Installation.init(event);
     },
     {once: true}
@@ -166,13 +166,11 @@ let notes = [];
 let rulers = new Rulers();
 let customization = 0;
 
-
 let biomesData = Biomes.getDefault();
 let nameBases = Names.getNameBases(); // cultures-related data
 
 let color = d3.scaleSequential(d3.interpolateSpectral); // default color scheme
 const lineGen = d3.line().curve(d3.curveBasis); // d3 line generator with default curve interpolation
-
 
 // Map Sizes - Width, Height, Cell Density
 const giantSize = [4320,2160,80];
@@ -235,7 +233,6 @@ function rsGet() {
 let rs;
 rsGet();
 
-
 function mapSizeInputChange() {
   setResolution;
   localStorage.setItem("mapSize", ms);
@@ -257,7 +254,6 @@ function restoreDefaultCanvasSize() {
   setResolution;
 }
 
-
 // on generate, on load, on resize, on canvas size change
 function setResolution() {
   rsGet();
@@ -272,12 +268,6 @@ function setResolution() {
   svgWidth = rs[0];
   svgHeight = rs[1];
   svg.attr("width", svgWidth).attr("height", svgHeight);
-  landmass.select("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
-  oceanPattern.select("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
-  oceanLayers.select("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
-  fogging.selectAll("rect").attr("x", 0).attr("y", 0).attr("width", svgWidth).attr("height", svgHeight);
-  defs.select("mask#fog > rect").attr("width", svgWidth).attr("height", svgHeight);
-  defs.select("mask#water > rect").attr("width", svgWidth).attr("height", svgHeight);
   zoomExtentMin.value = zoomMin;
   translateExtent;
   scaleExtent;
@@ -339,7 +329,6 @@ let options = {
   villageMaxPopulation: 2000
 };
 
-
 let mapCoordinates = {}; // map coordinates on globe
 let populationRate = +byId("populationRateInput").value;
 let distanceScale = +byId("distanceScaleInput").value;
@@ -348,7 +337,6 @@ let urbanDensity = +byId("urbanDensityInput").value;
 
 applyStoredOptions();
 setResolution();
-
 
 // main menu
 async function mainMenuInit() {
@@ -437,7 +425,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 });
 
-
 async function hideLoading() {
   d3.select("#loading").transition().duration(3000).style("opacity", 0);
   d3.select("#menu-screen").transition().duration(3000).style("opacity", 1);
@@ -459,7 +446,6 @@ async function menuScreen() {
     mainmenu.style.display = "flex";
   }
 }
-
 
 if (document.getElementById("menu-screen").style.display == "none") {
   mainMenuButton();
@@ -548,7 +534,6 @@ function exitButton() {
   window.location.href = "https://azazelsden.xyz";
 }
 
-
 // decide which map should be loaded or generated on page load
   let loadFunction = "menu";
   
@@ -613,7 +598,6 @@ function exitButton() {
 
 }
 
-
 async function generateMapOnLoad() {
   await applyStyleOnLoad(); // apply previously selected default or custom style
   await generate(); // generate map
@@ -669,7 +653,6 @@ function focusOn() {
     zoomTo(x, y, scale, 1600);
   }
 }
-
 
 // find burg for MFCG and focus on it
 function findBurgForMFCG(params) {

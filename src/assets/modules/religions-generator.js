@@ -365,7 +365,7 @@ window.Religions = (function () {
       Polytheism: 4,
       "Ancestor Worship": 2,
       "Nature Worship": 1,
-      Totemism: 1
+      Totemic: 1
     },
     Organized: {
       Polytheism: 7,
@@ -420,7 +420,7 @@ window.Religions = (function () {
     Polytheism: {Deities: 3, Faith: 1, Gods: 1, Pantheon: 1},
     "Ancestor Worship": {Beliefs: 1, Forefathers: 2, Ancestors: 2},
     "Nature Worship": {Beliefs: 3, Druids: 1},
-    Totemism: {Beliefs: 2, Totems: 2, Idols: 1},
+    Totemic: {Beliefs: 2, Totems: 2, Idols: 1},
 
     Monotheism: {Religion: 2, Church: 3, Faith: 1},
     Dualism: {Religion: 3, Faith: 1, Cult: 1},

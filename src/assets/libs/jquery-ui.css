@@ -65,7 +65,7 @@
 .ui-icon {
   display: inline-block;
   vertical-align: middle;
-  margin-top: -0.25em;
+  margin-top: -0.25dvb ;
   position: relative;
   text-indent: -99999px;
   overflow: hidden;
@@ -164,11 +164,11 @@
   touch-action: none;
 }
 .ui-button {
-  padding: 0.4em 1em;
+  padding: 0.4dvb  1dvb ;
   display: inline-block;
   position: relative;
   line-height: normal;
-  margin-right: 0.1em;
+  margin-right: 0.1dvb ;
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
@@ -191,7 +191,7 @@
 
 /* to make room for the icon, a width needs to be set here */
 .ui-button-icon-only {
-  width: 2em;
+  width: 2dvb ;
   box-sizing: border-box;
   white-space: nowrap;
 }
@@ -207,8 +207,8 @@
 
 .ui-button.ui-icon-notext .ui-icon {
   padding: 0;
-  width: 2.1em;
-  height: 2.1em;
+  width: 2.1dvb ;
+  height: 2.1dvb ;
   text-indent: -9999px;
   white-space: nowrap;
 }
@@ -218,7 +218,7 @@ input.ui-button.ui-icon-notext .ui-icon {
   height: auto;
   text-indent: 0;
   white-space: normal;
-  padding: 0.4em 1em;
+  padding: 0.4dvb  1dvb ;
 }
 
 /* workarounds */
@@ -253,7 +253,7 @@ button.ui-button::-moz-focus-inner {
   box-sizing: border-box;
 }
 .ui-controlgroup .ui-controlgroup-label {
-  padding: 0.4em 1em;
+  padding: 0.4dvb  1dvb ;
 }
 .ui-controlgroup .ui-controlgroup-label span {
   font-size: 80%;
@@ -275,7 +275,7 @@ button.ui-button::-moz-focus-inner {
 .ui-controlgroup-vertical .ui-spinner-input {
   /* Support: IE8 only, Android < 4.4 only */
   width: 75%;
-  width: calc(100% - 2.4em);
+  width: calc(100% - 2.4dvb );
 }
 .ui-controlgroup-vertical .ui-spinner .ui-spinner-up {
   border-top-style: solid;
@@ -283,13 +283,13 @@ button.ui-button::-moz-focus-inner {
 
 .ui-checkboxradio-label .ui-icon-background {
   box-shadow: inset 1px 1px 1px #ccc;
-  border-radius: 0.12em;
+  border-radius: 0.12dvb ;
   border: none;
 }
 .ui-checkboxradio-radio-label .ui-icon-background {
   width: 16px;
   height: 16px;
-  border-radius: 1em;
+  border-radius: 1dvb ;
   overflow: visible;
   border: none;
 }
@@ -304,25 +304,21 @@ button.ui-button::-moz-focus-inner {
 .ui-checkboxradio-disabled {
   pointer-events: none;
 }
-body .ui-dialog {
-  position: absolute;
-  top: 0;
-  left: 0;
-  outline: 0;
-  padding: 0;
-  background-color: inherit;
-}
 .ui-dialog .ui-dialog-titlebar {
   display: flex;
-  padding: 0.3em 0.8em;
+  padding: 0.3dvb  0.8dvb ;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1.2dvb ;
   min-width: 150px;
+  top: 0;
+  position: relative;
+  z-index: +1;
 }
 .ui-dialog .ui-dialog-title {
   white-space: nowrap;
   width: 100%;
+  height: 4dvb;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -334,13 +330,13 @@ body .ui-dialog {
   height: 18px;
   color: #ffffff;
   background: none;
-  font-size: 0.8em;
+  font-size: 0.8dvb ;
   border: 1px solid #c5c5c5;
 }
 
 @media (max-width: 600px) {
   .ui-dialog .ui-dialog-title {
-    font-size: 1.6em;
+    font-size: 1.6dvb ;
   }
 
   .ui-dialog .ui-dialog-titlebar button {
@@ -348,7 +344,7 @@ body .ui-dialog {
     margin-left: 10px;
     width: 40px;
     height: 32px;
-    font-size: 1.6em;
+    font-size: 1.6dvb ;
   }
 }
 
@@ -360,23 +356,23 @@ body .ui-dialog {
 .ui-dialog .ui-dialog-content {
   position: relative;
   border: 0;
-  padding: 0.5em 1em;
+  padding: 0.5dvb  1dvb ;
   background: none;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: auto;
 }
 .ui-dialog .ui-dialog-buttonpane {
   text-align: left;
   border-width: 1px 0 0 0;
   background-image: none;
-  margin-top: 0.5em;
-  padding: 0.3em 1em 0.5em 0.4em;
+  margin-top: 0.5dvb ;
+  padding: 0.3dvb  1dvb  0.5dvb  0.4dvb ;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
   float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-  margin: 0.5em 0.4em 0.5em 0;
+  margin: 0.5dvb  0.4dvb  0.5dvb  0;
   cursor: pointer;
 }
 .ui-dialog .ui-resizable-n {
@@ -426,13 +422,14 @@ body .ui-dialog {
 ----------------------------------*/
 .ui-widget {
   font-family: monospace;
+  height: 80%;
 }
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
   font-family: monospace;
-  font-size: 1em;
+  font-size: 1dvb ;
 }
 .ui-widget button[class^="icon-"] {
   padding: 1px 6px;
@@ -440,6 +437,7 @@ body .ui-dialog {
 .ui-widget.ui-widget-content {
   border: 1px solid #5e4fa2;
   color: #333333;
+  overflow-y: scroll;
 }
 .ui-widget-content {
   border: 1px solid #dddddd;
@@ -467,6 +465,9 @@ html .ui-button.ui-state-disabled:active {
   background: #f6f6f6;
   font-weight: normal;
   color: #454545;
+  top: 0;
+  position: relative;
+  z-index: +1;
 }
 .ui-state-default a,
 .ui-state-default a:link,

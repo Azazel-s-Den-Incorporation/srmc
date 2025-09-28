@@ -56,7 +56,7 @@ const tipBackgroundMap = {
 };
 
 function tip(tip, type = "info", time = 2500) {
-  tooltip.style.display = "flex"
+  tooltip.style.opacity = "1";
   tooltip.innerHTML = tip;
   tooltip.style.background = tipBackgroundMap[type];
 
@@ -67,13 +67,13 @@ function showMainTip() {
   if (tooltip.innerHTML == "") {
     clearMainTip();
   } else {
-    tooltip.style.display = "flex"
+    tooltip.style.opacity = "1";
     tooltip.innerHTML = tooltip.dataset.main;
 };
 }
 
 function clearMainTip() {
-  tooltip.style.display = "none";
+  tooltip.style.opacity = "0";
   tooltip.dataset.color = "";
   tooltip.dataset.main = "";
   tooltip.innerHTML = "";
@@ -105,30 +105,32 @@ function showElementLockTip(event) {
   }
 }
 
-// const onMouseMove = debounce(handleMouseMove, 100);
-// function handleMouseMove() {
-//   const point = d3.mouse(this);
-//   const i = findCell(point[0], point[1]); // pack cell id
-//   if (i === undefined)tooltip.style.display = "none";
-
-//   showNotes(d3.event);
-//   const gridCell = findGridCell(point[0], point[1], grid);
-//   if (tooltip.dataset.main) {showMainTip();} 
-//   else {showMapTooltip(point, d3.event, i, gridCell);}
-//   if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
-// }
-
-while (loadedComplete === true) {
-  let isCooldown = false;
+const onMouseMove = debounce(handleMouseMove, 100);
+function handleMouseMove() {
   const point = d3.mouse(this);
   const i = findCell(point[0], point[1]); // pack cell id
+  if (i === undefined)tooltip.style.opacity = "0";
+
+  showNotes(d3.event);
   const gridCell = findGridCell(point[0], point[1], grid);
-  while (isCooldown = false) {
-    isCooldown = true;
-    showMainTip(point, d3.event, i, gridCell);
-    setTimeout(() => (isCooldown = false), 200);
-  }
+  if (tooltip.dataset.main) {showMainTip();} 
+  else {showMapTooltip(point, d3.event, i, gridCell);}
+  if (cellInfo?.offsetParent) updateCellInfo(point, i, gridCell);
+
+  showMapTooltip(point, e, i, g);
 }
+
+// while (loadedComplete === true) {
+//   let isCooldown = false;
+//   const point = d3.mouse(this);
+//   const i = findCell(point[0], point[1]); // pack cell id
+//   const gridCell = findGridCell(point[0], point[1], grid);
+//   while (isCooldown = false) {
+//     isCooldown = true;
+//     showMainTip(point, d3.event, i, gridCell);
+//     setTimeout(() => (isCooldown = false), 200);
+//   }
+// }
 
 
 
@@ -182,9 +184,6 @@ function showNotes(e) {
 // show viewbox tooltip if main tooltip is blank
   viewbox.on("touchmove mousemove", );
 while ( loadedComplete == true) {
-  const point = d3.mouse(this);
-  const i = findCell(point[0], point[1]); // pack cell id
-  showMapTooltip(point, e, i, g);
 }
 function showMapTooltip(point, e, i, g, time = 8000) {
   tip(""); // clear tip
